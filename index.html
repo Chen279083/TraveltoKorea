@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026釜3行 | Travel Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+        
+        /* 模擬源泉丸ゴシック體感 */
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F8F9FF;
+            color: #4A4A4A;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .rounded-card { border-radius: 24px; }
+        .lavender-bg { background: linear-gradient(135deg, #E6E6FA 0%, #F3E5F5 100%); }
+        .tab-shadow { box-shadow: 0 -4px 20px rgba(230, 230, 250, 0.5); }
+        
+        /* 隱藏滾動條但保持功能 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .active-tab { color: #9575CD; font-weight: 700; }
+        
+        input, button { outline: none; }
+        .btn-purple { background-color: #D1C4E9; color: #5E35B1; }
+    </style>
+</head>
+<body class="max-w-md mx-auto">
+
+<div id="app" class="relative min-h-screen pb-32">
+    <!-- Header -->
+    <header class="p-6 pt-10 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+        <h1 class="text-2xl font-bold text-gray-800 tracking-tight">2026 釜3行 🇰🇷</h1>
+        <p class="text-sm text-purple-400 mt-1">2026.07.08 - 07.12</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="px-5 mt-4">
+        
+        <!-- Tab 1: 行程 (Itinerary) -->
+        <div v-if="activeTab === 'schedule'" class="space-y-6">
+            <div v-for="(day, index) in itinerary" :key="index">
+                <div class="flex items-center mb-4">
+                    <span class="bg-purple-200 text-purple-700 px-3 py-1 rounded-full text-xs font-bold">{{ day.date }}</span>
+                    <span class="ml-2 text-gray-500 text-sm font-medium">{{ day.title }}</span>
+                </div>
+                
+                <div v-for="item in day.events" :key="item.time" class="bg-white rounded-card p-4 mb-3 shadow-sm border border-purple-50 flex flex-col gap-2">
+                    <div class="flex justify-between items-start">
+                        <div class="flex gap-3">
+                            <span class="text-purple-400 font-mono text-sm mt-1">{{ item.time }}</span>
+                            <div>
+                                <h3 class="font-bold text-gray-800">{{ item.location }}</h3>
+                                <p class="text-xs text-gray-400 mt-1"><i class="fa-solid fa-train-subway mr-1"></i>{{ item.transport }}</p>
+                            </div>
+                        </div>
+                        <a :href="'https://www.google.com/maps/search/?api=1&query=' + item.location" target="_blank" 
+                           class="w-10 h-10 bg-purple-50 rounded-full flex items-center justify-center text-purple-400">
+                            <i class="fa-solid fa-location-arrow"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: 指南 & 工具 (Guide/Tools) -->
+        <div v-if="activeTab === 'guide'" class="space-y-8 animate-fadeIn">
+            <!-- 資料總匯 -->
+            <section>
+                <h2 class="text-lg font-bold mb-3 flex items-center"><i class="fa-solid fa-plane mr-2 text-purple-300"></i>航班與住宿</h2>
+                <div class="bg-white rounded-card p-5 shadow-sm space-y-4">
+                    <div class="border-l-2 border-purple-200 pl-4">
+                        <p class="text-xs text-gray-400 uppercase">去程 CI190</p>
+                        <p class="text-sm font-medium">07/08 TPE 06:15 → PUS 09:30</p>
+                    </div>
+                    <div class="border-l-2 border-purple-200 pl-4">
+                        <p class="text-xs text-gray-400 uppercase">回程 CI187</p>
+                        <p class="text-sm font-medium">07/12 PUS 20:00 → TPE 21:20</p>
+                    </div>
+                    <button class="w-full py-3 bg-purple-50 text-purple-600 rounded-xl text-sm font-medium">
+                        <i class="fa-solid fa-house-user mr-2"></i>開啟 Airbnb 訂單
+                    </button>
+                </div>
+            </section>
+
+            <!-- 行李打包清單 -->
+            <section>
+                <h2 class="text-lg font-bold mb-3 flex items-center"><i class="fa-solid fa-suitcase mr-2 text-purple-300"></i>行李打包</h2>
+                <div class="bg-white rounded-card p-5 shadow-sm">
+                    <div v-for="(cat, catName) in packingList" :key="catName" class="mb-6 last:mb-0">
+                        <h3 class="text-xs font-bold text-purple-400 mb-3 uppercase tracking-widest">{{ catName }}</h3>
+                        <div v-for="(item, idx) in cat" :key="idx" class="flex items-center justify-between mb-3">
+                            <div class="flex items-center">
+                                <input type="checkbox" v-model="item.done" class="w-5 h-5 accent-purple-400 rounded">
+                                <span class="ml-3 text-sm" :class="item.done ? 'line-through text-gray-300' : ''">{{ item.name }}</span>
+                            </div>
+                            <button @click="removePackingItem(catName, idx)" class="text-gray-300 text-xs"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <div class="flex mt-2">
+                            <input v-model="newItem[catName]" @keyup.enter="addPackingItem(catName)" placeholder="新增項目..." class="text-sm bg-gray-50 rounded-lg px-3 py-2 w-full">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 記帳頁面 -->
+            <section>
+                <div class="flex justify-between items-end mb-3">
+                    <h2 class="text-lg font-bold flex items-center"><i class="fa-solid fa-wallet mr-2 text-purple-300"></i>支出紀錄</h2>
+                    <span class="text-xs text-purple-500 font-bold">總計 NT$ {{ totalExpense }}</span>
+                </div>
+                <div class="bg-white rounded-card p-5 shadow-sm">
+                    <div class="space-y-4 mb-6">
+                        <div v-for="(ex, index) in expenses" :key="index" class="flex justify-between items-center border-b border-gray-50 pb-3">
+                            <div>
+                                <p class="text-sm font-medium">{{ ex.name }}</p>
+                                <p class="text-[10px] text-gray-400">{{ ex.category }}</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-sm font-mono font-bold">{{ ex.amount.toLocaleString() }}</span>
+                                <button @click="expenses.splice(index, 1)" class="text-red-200 text-xs"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input v-model="newEx.name" placeholder="項目" class="text-sm bg-gray-50 rounded-lg px-3 py-2 w-full">
+                        <input v-model.number="newEx.amount" type="number" placeholder="金額" class="text-sm bg-gray-50 rounded-lg px-3 py-2 w-full">
+                        <select v-model="newEx.category" class="text-sm bg-gray-50 rounded-lg px-3 py-2 w-full col-span-2">
+                            <option v-for="c in categories">{{ c }}</option>
+                        </select>
+                        <button @click="addExpense" class="col-span-2 py-3 btn-purple rounded-xl text-sm font-bold mt-2">新增支出</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Tab 3: 天氣 (Weather) -->
+        <div v-if="activeTab === 'weather'" class="animate-fadeIn">
+            <h2 class="text-lg font-bold mb-4">釜山 5 日天氣預報</h2>
+            <div class="grid gap-4">
+                <div v-for="w in weatherData" :key="w.day" class="lavender-bg rounded-card p-5 flex justify-between items-center">
+                    <div>
+                        <p class="font-bold text-gray-700">{{ w.day }}</p>
+                        <p class="text-xs text-purple-500">{{ w.desc }}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-2xl font-mono font-bold text-gray-800">{{ w.temp }}°</p>
+                        <p class="text-[10px] text-gray-500">體感 {{ w.feel }}° | 降雨 {{ w.rain }}%</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 text-center opacity-30">
+                <i class="fa-solid fa-map-location-dot text-6xl text-purple-300"></i>
+                <p class="text-xs mt-2">Busan, South Korea</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-6 left-5 right-5 bg-white/90 backdrop-blur-lg h-16 rounded-3xl tab-shadow flex items-center justify-around px-6 z-50 border border-white">
+        <button @click="activeTab = 'schedule'" :class="{ 'active-tab': activeTab === 'schedule' }" class="text-sm text-gray-400 transition-all">行程</button>
+        <button @click="activeTab = 'guide'" :class="{ 'active-tab': activeTab === 'guide' }" class="text-sm text-gray-400 transition-all">指南</button>
+        <button @click="activeTab = 'weather'" :class="{ 'active-tab': activeTab === 'weather' }" class="text-sm text-gray-400 transition-all">天氣</button>
+    </nav>
+</div>
+
+<script>
+    const { createApp, ref, computed } = Vue;
+
+    createApp({
+        setup() {
+            const activeTab = ref('schedule');
+            
+            // 行程資料
+            const itinerary = ref([
+                {
+                    date: '07.08 (三)',
+                    title: '抵達與廣安里',
+                    events: [
+                        { time: '09:30', location: '金海機場 PUS', transport: '輕軌-空港站 → 沙上站' },
+                        { time: '11:00', location: '金蓮山站 (寄行李)', transport: '地鐵-沙上站 → 金蓮山站' },
+                        { time: '14:00', location: 'Skyline Luge', transport: '地鐵奧希利亞站' },
+                        { time: '19:00', location: '廣安里豬肉湯飯', transport: '地鐵-廣安站' },
+                        { time: '21:00', location: 'Olive Young', transport: '步行' }
+                    ]
+                },
+                {
+                    date: '07.09 (四)',
+                    title: '大邱一日遊',
+                    events: [
+                        { time: '10:00', location: '東大邱站', transport: 'KTX 釜山站 → 東大邱站' },
+                        { time: '12:00', location: '大邱大食堂 (辣炒章魚)', transport: '地鐵或計程車' },
+                        { time: '18:00', location: '烤腸韓牛', transport: '地鐵-半月堂站' },
+                        { time: '22:00', location: '回釜山民宿', transport: 'KTX → 地鐵金蓮山站' }
+                    ]
+                },
+                {
+                    date: '07.10 (五)',
+                    title: '廣安里 + 西面',
+                    events: [
+                        { time: '11:00', location: '新世界百貨 Centum City', transport: '地鐵-Centum City站' },
+                        { time: '13:00', location: '廣安里 麵線&餃子', transport: '地鐵-廣安站' },
+                        { time: '18:00', location: '田浦站 大排檔', transport: '地鐵-金蓮山 → 田浦' }
+                    ]
+                }
+            ]);
+
+            // 打包清單資料
+            const packingList = ref({
+                '隨身背包': [{ name: '護照', done: true }, { name: '錢包/韓幣', done: false }],
+                '手提行李': [{ name: '行動電源', done: false }, { name: '耳機', done: true }],
+                '托運行李': [{ name: '換洗衣物', done: false }, { name: '轉接頭', done: false }],
+                '韓國購物清單': [{ name: '人蔘', done: false }]
+            });
+            const newItem = ref({ '隨身背包': '', '手提行李': '', '托運行李': '', '韓國購物清單': '' });
+
+            const addPackingItem = (cat) => {
+                if (newItem.value[cat]) {
+                    packingList.value[cat].push({ name: newItem.value[cat], done: false });
+                    newItem.value[cat] = '';
+                }
+            };
+            const removePackingItem = (cat, idx) => packingList.value[cat].splice(idx, 1);
+
+            // 記帳資料
+            const categories = ['機票', '住宿', '網卡', '飲食', '交通', '購物', '伴手禮', '保險'];
+            const expenses = ref([
+                { name: '機票預訂', amount: 12500, category: '機票' },
+                { name: 'Airbnb 訂金', amount: 4500, category: '住宿' }
+            ]);
+            const newEx = ref({ name: '', amount: null, category: '飲食' });
+            
+            const addExpense = () => {
+                if (newEx.value.name && newEx.value.amount) {
+                    expenses.value.push({ ...newEx.value });
+                    newEx.value = { name: '', amount: null, category: '飲食' };
+                }
+            };
+            const totalExpense = computed(() => expenses.value.reduce((sum, item) => sum + item.amount, 0));
+
+            // 天氣資料
+            const weatherData = ref([
+                { day: '07/08', temp: '28', feel: '30', rain: '10', desc: '晴時多雲' },
+                { day: '07/09', temp: '29', feel: '32', rain: '5', desc: '晴朗' },
+                { day: '07/10', temp: '26', feel: '28', rain: '40', desc: '午後陣雨' },
+                { day: '07/11', temp: '27', feel: '29', rain: '20', desc: '多雲' },
+                { day: '07/12', temp: '28', feel: '31', rain: '0', desc: '大晴天' }
+            ]);
+
+            return {
+                activeTab, itinerary, packingList, newItem, addPackingItem, removePackingItem,
+                expenses, newEx, categories, addExpense, totalExpense, weatherData
+            };
+        }
+    }).mount('#app');
+</script>
+
+</body>
+</html>
