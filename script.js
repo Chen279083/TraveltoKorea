@@ -1,13 +1,13 @@
 // 行程資料 (根據來源 [1, 2, 5] 整理)
 const itineraryData = {
     1: [
-        { time: "06:15-09:00", place: "TPE-PUS (中華航空)", transport: "飛機" },
-        { time: "09:30-11:00", place: "放行李", transport: "輕軌：(空港-沙上)<br>地鐵：沙上-金蓮山3號出口", map: "https://naver.me/5Vx8RWf6" },
-        { time: "11:30-13:00", place: "午餐<br>한다솥鮑魚粥", transport: "地鐵：奧希利亞站", map: "https://naver.me/5ZJxcmXX" },
-        { time: "13:30-15:30", place: "Skyline Luge", transport: "步行", map: "https://naver.me/IDFUcLWo" },
-        { time: "15:30-17:00", place: "咖啡廳<br>Music Complex", transport: "步行", map: "https://naver.me/GrmawSBe" },
-        { time: "17:00-18:30", place: "LOTTE MALL", transport: "步行", map: "https://naver.me/GwpMkOIT" },
-        { time: "19:00-20:30", place: "晚餐<br>豬肉血腸湯飯", transport: "地鐵：廣安站", map: "https://naver.me/G4Wo3D8L" }
+        { time: "06:15-09:00", place: "飛機上補眠中" },
+        { time: "09:30-11:00", place: "放行李<br>", transport: "輕軌：(空港-沙上)<br>地鐵：沙上-金蓮山3號出口<br>", map: "https://naver.me/5Vx8RWf6" },
+        { time: "11:30-13:00", place: "午餐<br>한다솥鮑魚粥", transport: "地鐵：奧希利亞站<br>", map: "https://naver.me/5ZJxcmXX" },
+        { time: "13:30-15:30", place: "Skyline Luge", transport: "步行<br>", map: "https://naver.me/IDFUcLWo" },
+        { time: "15:30-17:00", place: "咖啡廳<br>Music Complex", transport: "步行<br>", map: "https://naver.me/GrmawSBe" },
+        { time: "17:00-18:30", place: "LOTTE MALL", transport: "步行<br>", map: "https://naver.me/GwpMkOIT" },
+        { time: "19:00-20:30", place: "晚餐<br>豬肉血腸湯飯", transport: "地鐵：廣安站<br>", map: "https://naver.me/G4Wo3D8L" }
     ],
     2: [
         { time: "09:30-12:00", place: "前往大邱", transport: "KTX 釜山-東大邱", map: "https://map.naver.com" },
