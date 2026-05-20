@@ -1,3 +1,5 @@
+--- START OF FILE Paste May 20, 2026 - 2:56PM ---
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -357,7 +359,7 @@
 <script>
 // ============================================================
 // DATA — 在每個地點的 url 欄位填入你從 NAVER Maps 複製的連結
-// url: "" 表示尚未填入，按鈕會呈現灰色無法點擊
+// url: "" 表示尚未填入，修改後該按鈕將直接隱藏
 // ============================================================
 const itineraryData = [
   {
@@ -441,10 +443,13 @@ function renderItinerary(dayIdx) {
       });
     }
     const timeNoteHtml = item.timeNote ? '<div class="time-tag">' + item.timeNote + '</div>' : '';
-    // NAVER Maps button: active if url is filled, disabled placeholder if empty
-    const naverHtml = item.url
+    
+    // ============================================================
+    // 此處已修改：若 url 為空或未定義，則 naverHtml 為空字串
+    // ============================================================
+    const naverHtml = (item.url && item.url.trim() !== "")
       ? '<a class="naver-btn" href="' + item.url + '" target="_blank">NAVER Maps</a>'
-      : '<span class="naver-btn disabled">NAVER Maps</span>';
+      : '';
 
     html += '<div class="schedule-item">'
       + '<div class="schedule-time-col"><div class="schedule-time">' + item.time + '</div></div>'
