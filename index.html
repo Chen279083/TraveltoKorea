@@ -26,9 +26,7 @@
     --radius-sm: 12px;
     --font: 'M PLUS Rounded 1c', sans-serif;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
   body {
     font-family: var(--font);
     background: var(--cream);
@@ -39,8 +37,6 @@
     position: relative;
     overflow-x: hidden;
   }
-
-  /* HEADER */
   .header {
     background: linear-gradient(135deg, #c9bde8 0%, #b8cfe8 100%);
     padding: 52px 24px 28px;
@@ -63,771 +59,109 @@
     border-radius: 50%;
     background: rgba(255,255,255,0.12);
   }
-  .header-label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 3px;
-    color: rgba(255,255,255,0.8);
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .header-title {
-    font-size: 30px;
-    font-weight: 800;
-    color: #fff;
-    line-height: 1.1;
-    letter-spacing: -0.5px;
-  }
-  .header-sub {
-    font-size: 13px;
-    color: rgba(255,255,255,0.85);
-    margin-top: 6px;
-    font-weight: 400;
-  }
-  .header-dates {
-    margin-top: 16px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .date-chip {
-    background: rgba(255,255,255,0.3);
-    backdrop-filter: blur(8px);
-    border-radius: 20px;
-    padding: 5px 14px;
-    font-size: 12px;
-    color: #fff;
-    font-weight: 500;
-    border: 1px solid rgba(255,255,255,0.3);
-  }
-
-  /* MAIN CONTENT */
-  .content {
-    padding: 20px 16px 100px;
-  }
-
-  /* PAGE */
+  .header-label { font-size: 11px; font-weight: 500; letter-spacing: 3px; color: rgba(255,255,255,0.8); text-transform: uppercase; margin-bottom: 6px; }
+  .header-title { font-size: 30px; font-weight: 800; color: #fff; line-height: 1.1; letter-spacing: -0.5px; }
+  .header-sub { font-size: 13px; color: rgba(255,255,255,0.85); margin-top: 6px; font-weight: 400; }
+  .header-dates { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .date-chip { background: rgba(255,255,255,0.3); backdrop-filter: blur(8px); border-radius: 20px; padding: 5px 14px; font-size: 12px; color: #fff; font-weight: 500; border: 1px solid rgba(255,255,255,0.3); }
   .page { display: none; }
   .page.active { display: block; }
-
-  /* SECTION TITLE */
-  .section-title {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-soft);
-    margin: 24px 0 12px;
-  }
-
-  /* CARD */
-  .card {
-    background: var(--card-bg);
-    border-radius: var(--radius);
-    padding: 18px;
-    box-shadow: var(--shadow);
-    margin-bottom: 12px;
-    border: 1px solid rgba(184,169,217,0.15);
-  }
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 14px;
-  }
-  .card-icon {
-    width: 38px; height: 38px;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
-  }
-  .icon-lavender { background: var(--lavender-light); }
-  .icon-blue { background: var(--baby-blue-light); }
-  .card-title { font-size: 15px; font-weight: 700; }
-  .card-subtitle { font-size: 12px; color: var(--text-soft); margin-top: 2px; }
-
-  /* FLIGHT CARD */
-  .flight-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 0;
-  }
+  .section-title { font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-soft); margin: 24px 0 12px; }
+  .card { background: var(--card-bg); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); margin-bottom: 12px; border: 1px solid rgba(184,169,217,0.15); }
+  .flight-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; }
   .flight-row + .flight-row { border-top: 1px dashed var(--border); }
-  .flight-city {
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--text-dark);
-    letter-spacing: -1px;
-  }
-  .flight-time {
-    font-size: 12px;
-    color: var(--text-mid);
-    font-weight: 500;
-    margin-top: 2px;
-  }
-  .flight-arrow {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 10px;
-  }
-  .flight-line {
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, var(--lavender), var(--baby-blue));
-    position: relative;
-    margin: 4px 0;
-  }
-  .flight-line::after {
-    content: '';
-    position: absolute;
-    right: -3px; top: -3px;
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--baby-blue);
-  }
-  .flight-info {
-    font-size: 10px;
-    color: var(--text-soft);
-    font-weight: 500;
-    letter-spacing: 0.5px;
-  }
-  .flight-badge {
-    display: inline-block;
-    background: var(--lavender-light);
-    color: var(--lavender);
-    border-radius: 8px;
-    padding: 3px 9px;
-    font-size: 10px;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-
-  /* STAY CARD */
-  .stay-item {
-    display: flex;
-    gap: 12px;
-    padding: 12px 0;
-    align-items: flex-start;
-  }
+  .flight-city { font-size: 22px; font-weight: 800; color: var(--text-dark); letter-spacing: -1px; }
+  .flight-time { font-size: 12px; color: var(--text-mid); font-weight: 500; margin-top: 2px; }
+  .flight-arrow { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 0 10px; }
+  .flight-line { width: 100%; height: 1px; background: linear-gradient(90deg, var(--lavender), var(--baby-blue)); position: relative; margin: 4px 0; }
+  .flight-line::after { content: ''; position: absolute; right: -3px; top: -3px; width: 7px; height: 7px; border-radius: 50%; background: var(--baby-blue); }
+  .flight-info { font-size: 10px; color: var(--text-soft); font-weight: 500; letter-spacing: 0.5px; }
+  .flight-badge { display: inline-block; background: var(--lavender-light); color: var(--lavender); border-radius: 8px; padding: 3px 9px; font-size: 10px; font-weight: 700; margin-bottom: 4px; }
+  .stay-item { display: flex; gap: 12px; padding: 12px 0; align-items: flex-start; }
   .stay-item + .stay-item { border-top: 1px solid var(--border); }
-  .stay-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    margin-top: 5px;
-    flex-shrink: 0;
-  }
+  .stay-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
   .dot-lavender { background: var(--lavender); }
   .dot-blue { background: var(--baby-blue); }
   .stay-dates { font-size: 11px; color: var(--text-soft); font-weight: 500; margin-bottom: 3px; }
   .stay-name { font-size: 14px; font-weight: 700; }
-  .stay-link {
-    display: inline-block;
-    margin-top: 6px;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--lavender);
-    text-decoration: none;
-    background: var(--lavender-light);
-    padding: 4px 12px;
-    border-radius: 20px;
-  }
-
-  /* ITINERARY TABS */
-  .day-tabs {
-    display: flex;
-    gap: 6px;
-    overflow-x: auto;
-    padding-bottom: 4px;
-    scrollbar-width: none;
-    margin-bottom: 16px;
-  }
+  .stay-link { display: inline-block; margin-top: 6px; font-size: 11px; font-weight: 600; color: var(--lavender); text-decoration: none; background: var(--lavender-light); padding: 4px 12px; border-radius: 20px; }
+  .day-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; margin-bottom: 16px; }
   .day-tabs::-webkit-scrollbar { display: none; }
-  .day-tab {
-    flex-shrink: 0;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 700;
-    border: none;
-    cursor: pointer;
-    background: var(--card-bg);
-    color: var(--text-soft);
-    border: 1.5px solid var(--border);
-    font-family: var(--font);
-    transition: all 0.2s ease;
-  }
-  .day-tab.active {
-    background: linear-gradient(135deg, var(--lavender), var(--baby-blue));
-    color: #fff;
-    border-color: transparent;
-  }
-
-  /* SCHEDULE CARD */
-  .schedule-item {
-    display: flex;
-    gap: 14px;
-    margin-bottom: 10px;
-    position: relative;
-  }
-  .schedule-time-col {
-    width: 52px;
-    flex-shrink: 0;
-    padding-top: 4px;
-  }
-  .schedule-time {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--text-mid);
-  }
-  .schedule-line-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 16px;
-    flex-shrink: 0;
-  }
-  .schedule-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: var(--lavender);
-    flex-shrink: 0;
-    margin-top: 5px;
-    z-index: 1;
-  }
+  .day-tab { flex-shrink: 0; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; background: var(--card-bg); color: var(--text-soft); border: 1.5px solid var(--border); font-family: var(--font); transition: all 0.2s ease; }
+  .day-tab.active { background: linear-gradient(135deg, var(--lavender), var(--baby-blue)); color: #fff; border-color: transparent; }
+  .schedule-item { display: flex; gap: 14px; margin-bottom: 10px; position: relative; }
+  .schedule-time-col { width: 52px; flex-shrink: 0; padding-top: 4px; }
+  .schedule-time { font-size: 11px; font-weight: 700; color: var(--text-mid); }
+  .schedule-line-col { display: flex; flex-direction: column; align-items: center; width: 16px; flex-shrink: 0; }
+  .schedule-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--lavender); flex-shrink: 0; margin-top: 5px; z-index: 1; }
   .schedule-dot.blue { background: var(--baby-blue); }
-  .schedule-connector {
-    flex: 1;
-    width: 2px;
-    background: var(--border);
-    margin-top: 3px;
-  }
-  .schedule-card {
-    flex: 1;
-    background: var(--card-bg);
-    border-radius: var(--radius-sm);
-    padding: 12px 14px;
-    margin-bottom: 10px;
-    border: 1px solid rgba(184,169,217,0.2);
-    box-shadow: var(--shadow-sm);
-  }
-  .schedule-place {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-dark);
-    margin-bottom: 4px;
-  }
-  .transport-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    background: var(--baby-blue-light);
-    color: #4a7fa8;
-    border-radius: 8px;
-    padding: 3px 9px;
-    font-size: 10px;
-    font-weight: 600;
-    margin-right: 4px;
-    margin-top: 2px;
-  }
-  .transport-tag.purple {
-    background: var(--lavender-light);
-    color: #7a5da8;
-  }
-  .transport-tag.green {
-    background: #e2f5e8;
-    color: #4a8a5a;
-  }
-  .meal-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    background: #fff5e8;
-    color: #c07a30;
-    border-radius: 8px;
-    padding: 3px 9px;
-    font-size: 10px;
-    font-weight: 600;
-    margin-right: 4px;
-    margin-top: 2px;
-  }
-  .time-tag {
-    font-size: 10px;
-    color: var(--text-soft);
-    margin-top: 4px;
-    font-weight: 400;
-  }
-
-  /* WEATHER */
-  .weather-main {
-    background: linear-gradient(135deg, #c9bde8 0%, #a8c8e8 100%);
-    border-radius: var(--radius);
-    padding: 24px;
-    color: #fff;
-    margin-bottom: 12px;
-    position: relative;
-    overflow: hidden;
-  }
-  .weather-main::before {
-    content: '';
-    position: absolute;
-    top: -30px; right: -30px;
-    width: 140px; height: 140px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.15);
-  }
-  .weather-city {
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    opacity: 0.85;
-    margin-bottom: 8px;
-  }
-  .weather-temp {
-    font-size: 64px;
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: -3px;
-  }
-  .weather-desc {
-    font-size: 14px;
-    opacity: 0.9;
-    margin-top: 4px;
-    font-weight: 500;
-  }
-  .weather-stats {
-    display: flex;
-    gap: 0;
-    margin-top: 20px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 14px;
-    overflow: hidden;
-  }
-  .weather-stat {
-    flex: 1;
-    padding: 10px 8px;
-    text-align: center;
-  }
-  .weather-stat + .weather-stat { border-left: 1px solid rgba(255,255,255,0.25); }
-  .stat-label { font-size: 10px; opacity: 0.75; font-weight: 500; letter-spacing: 0.5px; }
-  .stat-value { font-size: 15px; font-weight: 700; margin-top: 2px; }
-
-  .weather-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 12px;
-  }
-  .weather-card {
-    background: var(--card-bg);
-    border-radius: var(--radius-sm);
-    padding: 14px;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border);
-  }
-  .wcard-label {
-    font-size: 10px;
-    color: var(--text-soft);
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .wcard-value { font-size: 20px; font-weight: 800; color: var(--text-dark); }
-  .wcard-unit { font-size: 12px; font-weight: 400; color: var(--text-mid); margin-left: 2px; }
-
-  /* Weather fetch notice */
-  .weather-note {
-    background: var(--lavender-light);
-    border-radius: var(--radius-sm);
-    padding: 12px 16px;
-    font-size: 12px;
-    color: var(--text-mid);
-    text-align: center;
-    margin-top: 10px;
-  }
-
-  /* ACCOUNTING */
-  .total-card {
-    background: linear-gradient(135deg, var(--lavender), var(--baby-blue));
-    border-radius: var(--radius);
-    padding: 20px 24px;
-    color: #fff;
-    margin-bottom: 16px;
-  }
+  .schedule-connector { flex: 1; width: 2px; background: var(--border); margin-top: 3px; }
+  .schedule-card { flex: 1; background: var(--card-bg); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 10px; border: 1px solid rgba(184,169,217,0.2); box-shadow: var(--shadow-sm); }
+  .schedule-place { font-size: 14px; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+  .transport-tag { display: inline-flex; align-items: center; gap: 4px; background: var(--baby-blue-light); color: #4a7fa8; border-radius: 8px; padding: 3px 9px; font-size: 10px; font-weight: 600; margin-right: 4px; margin-top: 2px; }
+  .transport-tag.purple { background: var(--lavender-light); color: #7a5da8; }
+  .transport-tag.green { background: #e2f5e8; color: #4a8a5a; }
+  .time-tag { font-size: 10px; color: var(--text-soft); margin-top: 4px; font-weight: 400; }
+  .naver-btn { display: inline-block; margin-top: 6px; font-size: 10px; font-weight: 700; color: #03c75a; text-decoration: none; background: #e8f9ee; padding: 3px 10px; border-radius: 8px; border: 1px solid #b8edcd; }
+  .naver-btn.disabled { color: #b0c8b8; background: #f0f8f3; border-color: #d8ede0; pointer-events: none; }
+  .total-card { background: linear-gradient(135deg, var(--lavender), var(--baby-blue)); border-radius: var(--radius); padding: 20px 24px; color: #fff; margin-bottom: 16px; }
   .total-label { font-size: 12px; opacity: 0.85; font-weight: 500; letter-spacing: 1px; margin-bottom: 4px; }
-  .total-amount {
-    font-size: 34px;
-    font-weight: 800;
-    letter-spacing: -1px;
-  }
+  .total-amount { font-size: 34px; font-weight: 800; letter-spacing: -1px; }
   .total-sub { font-size: 12px; opacity: 0.8; margin-top: 4px; }
-
-  .add-expense-card {
-    background: var(--card-bg);
-    border-radius: var(--radius);
-    padding: 18px;
-    box-shadow: var(--shadow);
-    margin-bottom: 12px;
-    border: 1px solid var(--border);
-  }
-  .form-label {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--text-soft);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-    display: block;
-  }
-  .form-input {
-    width: 100%;
-    border: 1.5px solid var(--border);
-    border-radius: 12px;
-    padding: 10px 14px;
-    font-size: 14px;
-    font-family: var(--font);
-    color: var(--text-dark);
-    background: var(--warm-white);
-    margin-bottom: 12px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
+  .add-expense-card { background: var(--card-bg); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); margin-bottom: 12px; border: 1px solid var(--border); }
+  .form-label { font-size: 11px; font-weight: 700; color: var(--text-soft); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; display: block; }
+  .form-input { width: 100%; border: 1.5px solid var(--border); border-radius: 12px; padding: 10px 14px; font-size: 14px; font-family: var(--font); color: var(--text-dark); background: var(--warm-white); margin-bottom: 12px; outline: none; transition: border-color 0.2s; }
   .form-input:focus { border-color: var(--lavender); }
   .form-row { display: flex; gap: 10px; }
   .form-row .form-group { flex: 1; }
   .form-group { margin-bottom: 0; }
-  .form-select {
-    width: 100%;
-    border: 1.5px solid var(--border);
-    border-radius: 12px;
-    padding: 10px 14px;
-    font-size: 13px;
-    font-family: var(--font);
-    color: var(--text-dark);
-    background: var(--warm-white);
-    outline: none;
-    appearance: none;
-    -webkit-appearance: none;
-    cursor: pointer;
-  }
-  .add-btn {
-    width: 100%;
-    background: linear-gradient(135deg, var(--lavender), var(--baby-blue));
-    color: #fff;
-    border: none;
-    border-radius: 14px;
-    padding: 13px;
-    font-size: 14px;
-    font-weight: 700;
-    font-family: var(--font);
-    cursor: pointer;
-    margin-top: 12px;
-    letter-spacing: 0.5px;
-  }
-
+  .form-select { width: 100%; border: 1.5px solid var(--border); border-radius: 12px; padding: 10px 14px; font-size: 13px; font-family: var(--font); color: var(--text-dark); background: var(--warm-white); outline: none; appearance: none; -webkit-appearance: none; cursor: pointer; }
+  .add-btn { width: 100%; background: linear-gradient(135deg, var(--lavender), var(--baby-blue)); color: #fff; border: none; border-radius: 14px; padding: 13px; font-size: 14px; font-weight: 700; font-family: var(--font); cursor: pointer; margin-top: 12px; letter-spacing: 0.5px; }
   .expense-list { margin-top: 4px; }
-  .expense-item {
-    background: var(--card-bg);
-    border-radius: var(--radius-sm);
-    padding: 14px 16px;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border);
-  }
+  .expense-item { background: var(--card-bg); border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
   .expense-info { flex: 1; }
   .expense-name { font-size: 14px; font-weight: 700; }
-  .expense-cat {
-    display: inline-block;
-    background: var(--lavender-light);
-    color: var(--lavender);
-    border-radius: 6px;
-    padding: 2px 8px;
-    font-size: 10px;
-    font-weight: 600;
-    margin-top: 3px;
-  }
+  .expense-cat { display: inline-block; background: var(--lavender-light); color: var(--lavender); border-radius: 6px; padding: 2px 8px; font-size: 10px; font-weight: 600; margin-top: 3px; }
   .expense-amount { font-size: 15px; font-weight: 800; color: var(--text-dark); text-align: right; }
   .expense-currency { font-size: 10px; color: var(--text-soft); font-weight: 500; }
-  .expense-delete {
-    background: #ffe8e8;
-    color: #c06060;
-    border: none;
-    border-radius: 8px;
-    padding: 6px 10px;
-    font-size: 12px;
-    cursor: pointer;
-    font-family: var(--font);
-    margin-left: 10px;
-    font-weight: 600;
-  }
-
-  /* LUGGAGE */
-  .luggage-tabs {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 14px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    padding-bottom: 2px;
-  }
+  .expense-delete { background: #ffe8e8; color: #c06060; border: none; border-radius: 8px; padding: 6px 10px; font-size: 12px; cursor: pointer; font-family: var(--font); margin-left: 10px; font-weight: 600; }
+  .luggage-tabs { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
   .luggage-tabs::-webkit-scrollbar { display: none; }
-  .luggage-tab {
-    flex-shrink: 0;
-    padding: 7px 14px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 700;
-    border: 1.5px solid var(--border);
-    cursor: pointer;
-    background: var(--card-bg);
-    color: var(--text-soft);
-    font-family: var(--font);
-    transition: all 0.2s;
-  }
-  .luggage-tab.active {
-    background: linear-gradient(135deg, var(--lavender), var(--baby-blue));
-    color: #fff;
-    border-color: transparent;
-  }
-  .luggage-add-row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 14px;
-  }
-  .luggage-add-input {
-    flex: 1;
-    border: 1.5px solid var(--border);
-    border-radius: 12px;
-    padding: 10px 14px;
-    font-size: 13px;
-    font-family: var(--font);
-    background: var(--warm-white);
-    outline: none;
-  }
-  .luggage-add-btn {
-    background: linear-gradient(135deg, var(--lavender), var(--baby-blue));
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    padding: 10px 16px;
-    font-weight: 700;
-    font-family: var(--font);
-    cursor: pointer;
-    font-size: 13px;
-  }
-  .luggage-item {
-    background: var(--card-bg);
-    border-radius: var(--radius-sm);
-    padding: 12px 14px;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border);
-  }
-  .luggage-check {
-    width: 20px; height: 20px;
-    border-radius: 6px;
-    border: 2px solid var(--lavender-mid);
-    flex-shrink: 0;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.15s;
-  }
-  .luggage-check.checked {
-    background: linear-gradient(135deg, var(--lavender), var(--baby-blue));
-    border-color: transparent;
-  }
+  .luggage-tab { flex-shrink: 0; padding: 7px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; border: 1.5px solid var(--border); cursor: pointer; background: var(--card-bg); color: var(--text-soft); font-family: var(--font); transition: all 0.2s; }
+  .luggage-tab.active { background: linear-gradient(135deg, var(--lavender), var(--baby-blue)); color: #fff; border-color: transparent; }
+  .luggage-add-row { display: flex; gap: 8px; margin-bottom: 14px; }
+  .luggage-add-input { flex: 1; border: 1.5px solid var(--border); border-radius: 12px; padding: 10px 14px; font-size: 13px; font-family: var(--font); background: var(--warm-white); outline: none; }
+  .luggage-add-btn { background: linear-gradient(135deg, var(--lavender), var(--baby-blue)); color: #fff; border: none; border-radius: 12px; padding: 10px 16px; font-weight: 700; font-family: var(--font); cursor: pointer; font-size: 13px; }
+  .luggage-item { background: var(--card-bg); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
+  .luggage-check { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--lavender-mid); flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+  .luggage-check.checked { background: linear-gradient(135deg, var(--lavender), var(--baby-blue)); border-color: transparent; }
   .check-mark { display: none; color: #fff; font-size: 12px; font-weight: 800; }
   .luggage-check.checked .check-mark { display: block; }
-  .luggage-name {
-    flex: 1;
-    font-size: 13px;
-    font-weight: 500;
-    transition: all 0.15s;
-  }
-  .luggage-name.done {
-    color: var(--text-soft);
-    text-decoration: line-through;
-  }
-  .qty-control {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .qty-btn {
-    width: 24px; height: 24px;
-    border-radius: 7px;
-    border: 1.5px solid var(--border);
-    background: var(--warm-white);
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--text-mid);
-    font-family: var(--font);
-    line-height: 1;
-  }
+  .luggage-name { flex: 1; font-size: 13px; font-weight: 500; transition: all 0.15s; }
+  .luggage-name.done { color: var(--text-soft); text-decoration: line-through; }
+  .qty-control { display: flex; align-items: center; gap: 8px; }
+  .qty-btn { width: 24px; height: 24px; border-radius: 7px; border: 1.5px solid var(--border); background: var(--warm-white); font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-mid); font-family: var(--font); line-height: 1; }
   .qty-num { font-size: 13px; font-weight: 700; min-width: 16px; text-align: center; }
-  .luggage-del {
-    background: none;
-    border: none;
-    color: var(--text-soft);
-    cursor: pointer;
-    font-size: 14px;
-    padding: 2px 4px;
-    font-family: var(--font);
-  }
-
-  /* BOTTOM NAV */
-  .bottom-nav {
-    position: fixed;
-    bottom: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 430px;
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(184,169,217,0.2);
-    padding: 8px 0 18px;
-    display: flex;
-    justify-content: space-around;
-    z-index: 100;
-  }
-  .nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    cursor: pointer;
-    padding: 6px 12px;
-    border-radius: 14px;
-    transition: all 0.2s;
-    border: none;
-    background: none;
-    font-family: var(--font);
-  }
-  .nav-dot {
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    background: transparent;
-    transition: all 0.2s;
-    margin-top: 2px;
-  }
-  .nav-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-soft);
-    transition: color 0.2s;
-  }
+  .luggage-del { background: none; border: none; color: var(--text-soft); cursor: pointer; font-size: 14px; padding: 2px 4px; font-family: var(--font); }
+  .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(184,169,217,0.2); padding: 8px 0 18px; display: flex; justify-content: space-around; z-index: 100; }
+  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; padding: 6px 12px; border-radius: 14px; transition: all 0.2s; border: none; background: none; font-family: var(--font); }
+  .nav-dot { width: 5px; height: 5px; border-radius: 50%; background: transparent; transition: all 0.2s; margin-top: 2px; }
+  .nav-label { font-size: 11px; font-weight: 600; color: var(--text-soft); transition: color 0.2s; }
   .nav-item.active .nav-label { color: var(--lavender); }
   .nav-item.active .nav-dot { background: var(--lavender); }
-
-  /* Scrollable area */
-  .page-scroll {
-    height: calc(100vh - 160px);
-    overflow-y: auto;
-    padding: 20px 16px 20px;
-    scrollbar-width: none;
-  }
+  .page-scroll { height: calc(100vh - 160px); overflow-y: auto; padding: 20px 16px 20px; scrollbar-width: none; }
   .page-scroll::-webkit-scrollbar { display: none; }
-
-  .empty-state {
-    text-align: center;
-    color: var(--text-soft);
-    font-size: 13px;
-    padding: 30px;
-  }
-
-  /* KRW TWD toggle in form */
-  .currency-toggle {
-    display: flex;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1.5px solid var(--border);
-    background: var(--warm-white);
-  }
-  .currency-opt {
-    flex: 1;
-    padding: 9px;
-    text-align: center;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--text-soft);
-    cursor: pointer;
-    font-family: var(--font);
-    border: none;
-    background: transparent;
-    transition: all 0.2s;
-  }
-  .currency-opt.active {
-    background: linear-gradient(135deg, var(--lavender), var(--baby-blue));
-    color: #fff;
-    border-radius: 8px;
-    margin: 2px;
-  }
-
-  /* Loading spinner */
-  .spinner {
-    display: inline-block;
-    width: 18px; height: 18px;
-    border: 2px solid rgba(255,255,255,0.4);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    vertical-align: middle;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* Separator line in schedule */
-  .day-label-bar {
-    background: linear-gradient(90deg, var(--lavender-light), var(--baby-blue-light));
-    border-radius: 10px;
-    padding: 8px 14px;
-    margin-bottom: 14px;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--text-mid);
-  }
-
-  .naver-btn {
-    display: inline-block;
-    margin-top: 6px;
-    font-size: 10px;
-    font-weight: 700;
-    color: #03c75a;
-    text-decoration: none;
-    background: #e8f9ee;
-    padding: 3px 10px;
-    border-radius: 8px;
-    border: 1px solid #b8edcd;
-  }
-  .tip-bar {
-    background: var(--lavender-light);
-    border-left: 3px solid var(--lavender);
-    border-radius: 0 10px 10px 0;
-    padding: 8px 12px;
-    font-size: 11px;
-    color: var(--text-mid);
-    margin: 8px 0 16px;
-    font-weight: 500;
-  }
+  .empty-state { text-align: center; color: var(--text-soft); font-size: 13px; padding: 30px; }
+  .currency-toggle { display: flex; border-radius: 10px; overflow: hidden; border: 1.5px solid var(--border); background: var(--warm-white); }
+  .currency-opt { flex: 1; padding: 9px; text-align: center; font-size: 12px; font-weight: 700; color: var(--text-soft); cursor: pointer; font-family: var(--font); border: none; background: transparent; transition: all 0.2s; }
+  .currency-opt.active { background: linear-gradient(135deg, var(--lavender), var(--baby-blue)); color: #fff; border-radius: 8px; margin: 2px; }
+  .day-label-bar { background: linear-gradient(90deg, var(--lavender-light), var(--baby-blue-light)); border-radius: 10px; padding: 8px 14px; margin-bottom: 14px; font-size: 13px; font-weight: 700; color: var(--text-mid); }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="header-label">2026韓國釜3</div>
+  <div class="header-label">2026 旅遊計畫</div>
   <div class="header-title">Travel<br>to Busan</div>
   <div class="header-sub">釜山 · 大邱 — 五日四夜</div>
   <div class="header-dates">
@@ -838,7 +172,6 @@
 <!-- OVERVIEW PAGE -->
 <div class="page active" id="page-overview">
   <div class="page-scroll">
-
     <div class="section-title">航班資訊</div>
     <div class="card">
       <div class="flight-row">
@@ -922,7 +255,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -948,12 +280,10 @@
       <div class="total-amount" id="total-display">KRW 0</div>
       <div class="total-sub" id="total-sub">TWD 0 · 共 0 筆</div>
     </div>
-
     <div class="add-expense-card">
       <div class="section-title" style="margin-top:0;">新增支出</div>
       <label class="form-label">項目名稱</label>
       <input class="form-input" id="exp-name" placeholder="例：烤腸韓牛" />
-
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">金額</label>
@@ -967,7 +297,6 @@
           </div>
         </div>
       </div>
-
       <label class="form-label" style="margin-top:12px;">分類</label>
       <select class="form-select" id="exp-cat">
         <option>飲食</option>
@@ -979,10 +308,8 @@
         <option>伴手禮</option>
         <option>保險</option>
       </select>
-
       <button class="add-btn" onclick="addExpense()">新增</button>
     </div>
-
     <div class="section-title">支出紀錄</div>
     <div class="expense-list" id="expense-list">
       <div class="empty-state">尚無支出紀錄</div>
@@ -999,12 +326,10 @@
       <button class="luggage-tab" onclick="switchLuggage('checked', this)">托運行李</button>
       <button class="luggage-tab" onclick="switchLuggage('korea', this)">韓國購買</button>
     </div>
-
     <div class="luggage-add-row">
       <input class="luggage-add-input" id="luggage-input" placeholder="新增項目..." />
       <button class="luggage-add-btn" onclick="addLuggageItem()">新增</button>
     </div>
-
     <div id="luggage-list"></div>
   </div>
 </div>
@@ -1031,71 +356,66 @@
 
 <script>
 // ============================================================
-// DATA
+// DATA — 在每個地點的 url 欄位填入你從 NAVER Maps 複製的連結
+// url: "" 表示尚未填入，按鈕會呈現灰色無法點擊
 // ============================================================
-
 const itineraryData = [
-  // Day 1 - 07/08 (三)
   {
     dayLabel: "Day 1 · 07/08 (三) · Busan is Good",
     items: [
-      { time: "06:15-09:00", place: "飛機上補眠中", transport: [{type:"blue", label:"中華航空 CI190"}], timeNote:"06:15 起飛 · 09:30 抵達" },
-      { time: "09:30-11:00", place: "前往民宿 · 放行李", transport: [{type:"purple", label:"輕軌：空港站→沙上站"<br>}, {type:"purple", label:"地鐵：沙上站→金蓮山站"}] },
-      { time: "12:00-13:30", place: "午餐한다솥<br>鮑魚粥 ", transport: [{type:"purple", label:"地鐵：奧希利亞站"}] },
-      { time: "13:30-15:30", place: "Skyline Luge", transport: [{type:"purple", label:"步行"}] },
-      { time: "15:30-16:30", place: "咖啡廳<br>Music Complex", transport: [{type:"green", label:"步行"}] },
-      { time: "16:30-18:30", place: "LOTTE MALL<br>*若時間太晚則略過", transport: [{type:"green", label:"步行"}], timeNote:"記得帶護照" },
-      { time: "18:30-20:30", place: "晚餐도박이/수변<br>豬肉血腸湯飯", transport: [{type:"green", label:"地鐵：廣安站"}] },
-      { time: "20:30-21:30", place: "Olive Young", transport: [{type:"green", label:"步行"}], timeNote:"記得帶護照" },
-      { time: "21:30-23:30", place: "廣安大橋晃晃<br>Corduroy Fellaz", transport: [{type:"green", label:"步行"}], timeNote:"記得帶護照" },
+      { time: "06:15-09:30", place: "飛機上補眠中",          transport: [{type:"blue",   label:"中華航空 CI190"}],                                                                          timeNote:"06:15 起飛 · 09:30 抵達", url:"" },
+      { time: "09:30-11:00", place: "前往民宿 · 放行李",      transport: [{type:"purple", label:"輕軌：空港站→沙上站"}, {type:"purple", label:"地鐵：沙上站→金蓮山站"}],                    timeNote:"約 30–40 分鐘",          url:"" },
+      { time: "12:00-13:30", place: "午餐 한다솥 鮑魚粥",     transport: [{type:"purple", label:"地鐵：奧希利亞站"}],                                                                        timeNote:"每日 11:00–21:00",        url:"" },
+      { time: "13:30-15:30", place: "Skyline Luge",           transport: [{type:"purple", label:"步行"}],                                                                                    timeNote:"每日 10:00–18:00 · 需先訂票", url:"" },
+      { time: "15:30-16:30", place: "咖啡廳 Music Complex",   transport: [{type:"green",  label:"步行"}],                                                                                    timeNote:"每日 12:00–23:00",        url:"" },
+      { time: "16:30-18:30", place: "LOTTE MALL",             transport: [{type:"green",  label:"步行"}],                                                                                    timeNote:"記得帶護照 · 若時間太晚則略過", url:"" },
+      { time: "18:30-20:30", place: "晚餐 도박이/수변 豬肉血腸湯飯", transport: [{type:"green", label:"地鐵：廣安站"}],                                                                     timeNote:"24小時",                  url:"" },
+      { time: "20:30-21:30", place: "Olive Young",            transport: [{type:"green",  label:"步行"}],                                                                                    timeNote:"每日 11:00–23:00",        url:"" },
+      { time: "21:30-23:30", place: "廣安大橋 · Corduroy Fellaz", transport: [{type:"green", label:"步行"}],                                                                                timeNote:"",                        url:"" }
     ]
   },
-  // Day 2 - 07/09 (四) 大邱
   {
     dayLabel: "Day 2 · 07/09 (四) · 大邱一日遊",
     items: [
-      { time: "09:00-12:00", place: "前往大邱", transport: [{type:"purple", label:"地鐵：金蓮山站-西面站→釜山站"}, {type:"blue", label:"KTX 釜山→東大邱"}] },
-      { time: "11:30-13:30", place: "午餐<br>大邱大食堂or辣炒章魚", transport: [{type:"purple", label:"杜開車or計程車"}] },
-      { time: "13:30-15:30", place: "半月堂晃晃", transport: [{type:"green", label:"公車轉地鐵"}] },
-      { time: "15:30-17:30", place: "咖啡廳접속", transport: [{type:"blue", label:"步行"}] },
-      { time: "17:30-20"30", place: "晚餐을찌로정<br>烤腸韓牛", transport: [{type:"green", label:"步行"}], timeNote:"每日 12:00–23:00" },
-      { time: "20:30", place: "返回釜山", transport: [{type:"blue", label:"KTX 東大邱→釜山"}, {type:"purple", label:"地鐵 釜山站→西面站→金蓮山站"}] },
+      { time: "09:00-11:00", place: "前往大邱",               transport: [{type:"purple", label:"地鐵：金蓮山站→西面站→釜山站"}, {type:"blue", label:"KTX 釜山→東大邱（需先訂票）"}],      timeNote:"約 20 分鐘車程",          url:"" },
+      { time: "11:30-13:30", place: "午餐 大邱大食堂 辣炒章魚", transport: [{type:"purple", label:"計程車"}],                                                                               timeNote:"",                        url:"" },
+      { time: "13:30-15:30", place: "半月堂晃晃",             transport: [{type:"blue",   label:"公車轉地鐵"}],                                                                             timeNote:"",                        url:"" },
+      { time: "15:30-17:30", place: "咖啡廳 접속",            transport: [{type:"blue",   label:"步行"}],                                                                                   timeNote:"",                        url:"" },
+      { time: "17:30-20:30", place: "晚餐 을찌로정 烤腸韓牛", transport: [{type:"green",  label:"步行"}],                                                                                   timeNote:"16:00–00:30",             url:"" },
+      { time: "20:30",       place: "返回釜山",               transport: [{type:"blue",   label:"KTX 東大邱→釜山（需先訂票）"}, {type:"purple", label:"地鐵：釜山站→西面站→金蓮山站"}],  timeNote:"",                        url:"" }
     ]
   },
-  // Day 3 - 07/10 (五) 廣安里+西面
   {
     dayLabel: "Day 3 · 07/10 (五) · 逛街血拚日",
     items: [
-      { time: "09:30", place: "出門" },
-      { time: "10:30-12:30", place: "新世界百貨", transport: [{type:"purple", label:"地鐵：Centum City站"}], timeNote:"記得帶護照" },
-      { time: "12:30-14:00", place: "午餐동면식<br>麵線&餃子", transport: [{type:"purple", label:"地鐵：廣安站"}] },
-      { time: "14:00-16:00", place: "廣安里晃晃", transport: [{type:"green", label:"步行"}] },
-      { time: "16:00-17:30", place: "咖啡廳<br>", transport: [{type:"green", label:"步行"}] },
-      { time: "17:30-18:30", place: "搬家 · 移至西面民宿", transport: [{type:"purple", label:"地鐵：金蓮山站→田浦站"}] },
-      { time: "18:30-21:30", place: "晚餐아는오빠<br>大排檔", transport: [{type:"purple", label:"步行"}] },
+      { time: "09:30",       place: "出門",                   transport: [],                                                                                                                  timeNote:"",                        url:"" },
+      { time: "10:30-12:30", place: "新世界百貨 Centum City", transport: [{type:"purple", label:"地鐵：Centum City站"}],                                                                    timeNote:"記得帶護照",              url:"" },
+      { time: "12:30-14:00", place: "午餐 동면식 麵線＆餃子", transport: [{type:"purple", label:"地鐵：廣安站"}],                                                                           timeNote:"",                        url:"" },
+      { time: "14:00-16:00", place: "廣安里晃晃",             transport: [{type:"green",  label:"步行"}],                                                                                   timeNote:"",                        url:"" },
+      { time: "16:00-17:30", place: "咖啡廳",                 transport: [{type:"green",  label:"步行"}],                                                                                   timeNote:"",                        url:"" },
+      { time: "17:30-18:30", place: "搬家 · 移至西面民宿",   transport: [{type:"purple", label:"地鐵：金蓮山站→田浦站"}],                                                                  timeNote:"",                        url:"" },
+      { time: "18:30-21:30", place: "晚餐 아는오빠 大排檔",   transport: [{type:"purple", label:"田浦站步行"}],                                                                             timeNote:"每日 18:00–04:00",        url:"" }
     ]
   },
-  // Day 4 - 07/11 (六) 西面
   {
     dayLabel: "Day 4 · 07/11 (六) · 變漂亮之路",
     items: [
-      { time: "11:00-12:30", place: "午餐하연정<br>嫩豆腐鍋", transport: [{type:"purple", label:"地鐵：西面站"}], timeNote:"每日 11:00–20:00" },
-      { time: "12:30-15:30", place: "醫美", transport: [{type:"green", label:"步行"}], timeNote:"預約" },
-      { time: "15:30-18:00", place: "田浦站晃晃<br>也可回飯店休息" },
-      { time: "18:00-19:30", place: "晚餐그집뱃살<br>生魚片", transport: [{type:"green", label:"地鐵：西面站"}], timeNote:"也可回飯店休息" },
-      { time: "19:30-22:30", place: "荒嶺山觀景台看夜景", transport: [{type:"purple", label:"計程車"}], timeNote:"宵夜可以吃炸雞" },
+      { time: "11:00-12:30", place: "午餐 하연정 嫩豆腐鍋",   transport: [{type:"purple", label:"地鐵：西面站"}],                                                                          timeNote:"每日 11:00–20:00",        url:"" },
+      { time: "12:30-15:30", place: "醫美",                   transport: [{type:"green",  label:"步行"}],                                                                                   timeNote:"需先預約 · 14:30停止收客", url:"" },
+      { time: "15:30-18:00", place: "田浦站晃晃",             transport: [],                                                                                                                  timeNote:"也可回飯店休息",          url:"" },
+      { time: "18:00-19:30", place: "晚餐 그집뱃살 生魚片",   transport: [{type:"green",  label:"地鐵：西面站"}],                                                                          timeNote:"16:30–02:00",             url:"" },
+      { time: "19:30-22:30", place: "荒嶺山觀景台看夜景",     transport: [{type:"purple", label:"計程車"}],                                                                                 timeNote:"宵夜可叫炸雞",            url:"" }
     ]
   },
-  // Day 5 - 07/12 (日) 返台
   {
     dayLabel: "Day 5 · 07/12 (日) · 最後一頁",
     items: [
-      { time: "09:30-12:00", place: "午餐<br>影島海女村", transport: [{type:"purple", label:"地鐵：田浦站-西面站-南浦站"<br>}, {type:"purple", label:"公車：南浦站 508/ 7/ 71號(往影島大橋方向) 南高橋站下車"}], timeNote:"盡量早點出門" },
-      { time: "12:00-13:30", place: "白淺灘文化村", transport: [{type:"purple", label:"計程車"}] },
-      { time: "13:30-15:00", place: "咖啡廳" },
-      { time: "15:00-16:00", place: "回飯店拿行李", transport: [{type:"purple", label:"計程車"}] },
-      { time: "16:00-17:00", place: "出發前往機場", transport: [{type:"purple", label:"地鐵 西面站→沙上站"}, {type:"blue", label:"輕軌 沙上站→空港站"}], timeNote:"晚餐在機場解決" },
-      { time: "20:00-21:20", place: "返台面對現實", transport: [{type:"blue", label:"中華航空 CI187"}], timeNote:"20:00 起飛 · 21:20 抵達" },
+      { time: "09:30-12:00", place: "午餐 영도해녀촌 影島海女村", transport: [{type:"purple", label:"地鐵：田浦站→西面站→南浦站"}, {type:"purple", label:"公車：508/7/71號→南高橋站下車"}], timeNote:"盡量早點出門",           url:"" },
+      { time: "12:00-13:30", place: "白淺灘文化村",           transport: [{type:"purple", label:"計程車"}],                                                                                 timeNote:"",                        url:"" },
+      { time: "13:30-15:00", place: "咖啡廳",                 transport: [],                                                                                                                  timeNote:"",                        url:"" },
+      { time: "15:00-16:00", place: "回飯店拿行李",           transport: [{type:"purple", label:"計程車"}],                                                                                 timeNote:"",                        url:"" },
+      { time: "16:00-17:00", place: "出發前往機場",           transport: [{type:"purple", label:"地鐵：西面站→沙上站"}, {type:"blue", label:"輕軌：沙上站→空港站"}],                       timeNote:"晚餐在機場解決",          url:"" },
+      { time: "20:00-21:20", place: "返台面對現實",           transport: [{type:"blue",   label:"中華航空 CI187"}],                                                                         timeNote:"20:00 起飛 · 21:20 抵達", url:"" }
     ]
   }
 ];
@@ -1108,33 +428,37 @@ let currentDay = 0;
 function renderItinerary(dayIdx) {
   const data = itineraryData[dayIdx];
   const container = document.getElementById('itinerary-content');
-  let html = `<div class="day-label-bar">${data.dayLabel}</div>`;
+  let html = '<div class="day-label-bar">' + data.dayLabel + '</div>';
 
-  data.items.forEach((item, i) => {
+  data.items.forEach(function(item, i) {
     const isLast = i === data.items.length - 1;
     const dotColor = i % 2 === 0 ? '' : 'blue';
     let transportHtml = '';
-    item.transport.forEach(t => {
-      transportHtml += `<span class="transport-tag ${t.type === 'purple' ? 'purple' : t.type === 'green' ? 'green' : ''}">${t.label}</span>`;
-    });
-    const timeNoteHtml = item.timeNote ? `<div class="time-tag">${item.timeNote}</div>` : '';
+    if (item.transport) {
+      item.transport.forEach(function(t) {
+        const cls = t.type === 'purple' ? 'purple' : t.type === 'green' ? 'green' : '';
+        transportHtml += '<span class="transport-tag ' + cls + '">' + t.label + '</span>';
+      });
+    }
+    const timeNoteHtml = item.timeNote ? '<div class="time-tag">' + item.timeNote + '</div>' : '';
+    // NAVER Maps button: active if url is filled, disabled placeholder if empty
+    const naverHtml = item.url
+      ? '<a class="naver-btn" href="' + item.url + '" target="_blank">NAVER Maps</a>'
+      : '<span class="naver-btn disabled">NAVER Maps</span>';
 
-    html += `
-      <div class="schedule-item">
-        <div class="schedule-time-col"><div class="schedule-time">${item.time}</div></div>
-        <div class="schedule-line-col">
-          <div class="schedule-dot ${dotColor}"></div>
-          ${!isLast ? '<div class="schedule-connector"></div>' : ''}
-        </div>
-        <div>
-          <div class="schedule-card">
-            <div class="schedule-place">${item.place}</div>
-            <div>${transportHtml}</div>
-            ${timeNoteHtml}
-            <a class="naver-btn" href="https://map.naver.com/p/search/${encodeURIComponent(item.place)}" target="_blank">NAVER Maps</a>
-          </div>
-        </div>
-      </div>`;
+    html += '<div class="schedule-item">'
+      + '<div class="schedule-time-col"><div class="schedule-time">' + item.time + '</div></div>'
+      + '<div class="schedule-line-col">'
+      + '<div class="schedule-dot ' + dotColor + '"></div>'
+      + (!isLast ? '<div class="schedule-connector"></div>' : '')
+      + '</div>'
+      + '<div style="flex:1"><div class="schedule-card">'
+      + '<div class="schedule-place">' + item.place + '</div>'
+      + '<div>' + transportHtml + '</div>'
+      + timeNoteHtml
+      + naverHtml
+      + '</div></div>'
+      + '</div>';
   });
 
   container.innerHTML = html;
@@ -1142,7 +466,7 @@ function renderItinerary(dayIdx) {
 
 function switchDay(idx, btn) {
   currentDay = idx;
-  document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.day-tab').forEach(function(t) { t.classList.remove('active'); });
   btn.classList.add('active');
   renderItinerary(idx);
 }
@@ -1153,18 +477,18 @@ renderItinerary(0);
 // PAGE NAVIGATION
 // ============================================================
 function switchPage(name, btn) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
   document.getElementById('page-' + name).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
   btn.classList.add('active');
 }
 
 // ============================================================
 // ACCOUNTING
 // ============================================================
-let expenses = JSON.parse(localStorage.getItem('busan_expenses') || '[]');
-let selectedCurrency = 'KRW';
-const KRW_TWD = 0.023;
+var expenses = JSON.parse(localStorage.getItem('busan_expenses') || '[]');
+var selectedCurrency = 'KRW';
+var KRW_TWD = 0.023;
 
 function setCurrency(cur) {
   selectedCurrency = cur;
@@ -1173,12 +497,11 @@ function setCurrency(cur) {
 }
 
 function addExpense() {
-  const name = document.getElementById('exp-name').value.trim();
-  const amount = parseFloat(document.getElementById('exp-amount').value);
-  const cat = document.getElementById('exp-cat').value;
+  var name = document.getElementById('exp-name').value.trim();
+  var amount = parseFloat(document.getElementById('exp-amount').value);
+  var cat = document.getElementById('exp-cat').value;
   if (!name || !amount) return;
-
-  expenses.push({ name, amount, currency: selectedCurrency, cat, id: Date.now() });
+  expenses.push({ name: name, amount: amount, currency: selectedCurrency, cat: cat, id: Date.now() });
   localStorage.setItem('busan_expenses', JSON.stringify(expenses));
   document.getElementById('exp-name').value = '';
   document.getElementById('exp-amount').value = '';
@@ -1186,42 +509,33 @@ function addExpense() {
 }
 
 function deleteExpense(id) {
-  expenses = expenses.filter(e => e.id !== id);
+  expenses = expenses.filter(function(e) { return e.id !== id; });
   localStorage.setItem('busan_expenses', JSON.stringify(expenses));
   renderExpenses();
 }
 
 function renderExpenses() {
-  const list = document.getElementById('expense-list');
+  var list = document.getElementById('expense-list');
   if (!expenses.length) { list.innerHTML = '<div class="empty-state">尚無支出紀錄</div>'; updateTotal(); return; }
-
-  list.innerHTML = expenses.map(e => {
-    const disp = e.currency === 'KRW'
-      ? `KRW ${e.amount.toLocaleString()}`
-      : `TWD ${e.amount.toLocaleString()}`;
-    return `<div class="expense-item">
-      <div class="expense-info">
-        <div class="expense-name">${e.name}</div>
-        <span class="expense-cat">${e.cat}</span>
-      </div>
-      <div>
-        <div class="expense-amount">${disp}</div>
-        <div class="expense-currency">${e.currency}</div>
-      </div>
-      <button class="expense-delete" onclick="deleteExpense(${e.id})">刪除</button>
-    </div>`;
+  list.innerHTML = expenses.map(function(e) {
+    var disp = e.currency === 'KRW' ? 'KRW ' + e.amount.toLocaleString() : 'TWD ' + e.amount.toLocaleString();
+    return '<div class="expense-item">'
+      + '<div class="expense-info"><div class="expense-name">' + e.name + '</div><span class="expense-cat">' + e.cat + '</span></div>'
+      + '<div><div class="expense-amount">' + disp + '</div><div class="expense-currency">' + e.currency + '</div></div>'
+      + '<button class="expense-delete" onclick="deleteExpense(' + e.id + ')">刪除</button>'
+      + '</div>';
   }).join('');
   updateTotal();
 }
 
 function updateTotal() {
-  let totalKRW = 0, totalTWD = 0;
-  expenses.forEach(e => {
+  var totalKRW = 0, totalTWD = 0;
+  expenses.forEach(function(e) {
     if (e.currency === 'KRW') { totalKRW += e.amount; totalTWD += e.amount * KRW_TWD; }
     else { totalTWD += e.amount; totalKRW += e.amount / KRW_TWD; }
   });
   document.getElementById('total-display').textContent = 'KRW ' + Math.round(totalKRW).toLocaleString();
-  document.getElementById('total-sub').textContent = `TWD ${Math.round(totalTWD).toLocaleString()} · 共 ${expenses.length} 筆`;
+  document.getElementById('total-sub').textContent = 'TWD ' + Math.round(totalTWD).toLocaleString() + ' · 共 ' + expenses.length + ' 筆';
 }
 
 renderExpenses();
@@ -1229,7 +543,7 @@ renderExpenses();
 // ============================================================
 // LUGGAGE
 // ============================================================
-const defaultLuggage = {
+var defaultLuggage = {
   backpack: [
     { name: '護照', qty: 1, done: false },
     { name: '手機', qty: 1, done: false },
@@ -1240,7 +554,7 @@ const defaultLuggage = {
     { name: '口罩', qty: 5, done: false },
     { name: '濕紙巾', qty: 1, done: false },
     { name: '旅遊保險文件', qty: 1, done: false },
-    { name: '網卡', qty: 1, done: false },
+    { name: '網卡', qty: 1, done: false }
   ],
   cabin: [
     { name: '換洗衣物（隨身）', qty: 1, done: false },
@@ -1248,7 +562,7 @@ const defaultLuggage = {
     { name: '充電器', qty: 1, done: false },
     { name: '筆電 / iPad', qty: 1, done: false },
     { name: '頸枕', qty: 1, done: false },
-    { name: '眼罩', qty: 1, done: false },
+    { name: '眼罩', qty: 1, done: false }
   ],
   checked: [
     { name: '衣服（5天份）', qty: 5, done: false },
@@ -1258,30 +572,30 @@ const defaultLuggage = {
     { name: '雨傘 / 折傘', qty: 1, done: false },
     { name: '拖鞋', qty: 1, done: false },
     { name: '藥品', qty: 1, done: false },
-    { name: '空置購物袋', qty: 3, done: false },
+    { name: '空置購物袋', qty: 3, done: false }
   ],
   korea: [
     { name: 'MISSHA 氣墊', qty: 1, done: false },
     { name: 'COSRX 精華', qty: 1, done: false },
-    { name: '零食伴手禮', qty: 1, done: false },
+    { name: '零食伴手禮', qty: 1, done: false }
   ]
 };
 
-let luggageData = JSON.parse(localStorage.getItem('busan_luggage') || 'null') || JSON.parse(JSON.stringify(defaultLuggage));
-let currentLuggageCat = 'backpack';
+var luggageData = JSON.parse(localStorage.getItem('busan_luggage') || 'null') || JSON.parse(JSON.stringify(defaultLuggage));
+var currentLuggageCat = 'backpack';
 
 function saveLuggage() { localStorage.setItem('busan_luggage', JSON.stringify(luggageData)); }
 
 function switchLuggage(cat, btn) {
   currentLuggageCat = cat;
-  document.querySelectorAll('.luggage-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.luggage-tab').forEach(function(t) { t.classList.remove('active'); });
   btn.classList.add('active');
   renderLuggage();
 }
 
 function addLuggageItem() {
-  const input = document.getElementById('luggage-input');
-  const val = input.value.trim();
+  var input = document.getElementById('luggage-input');
+  var val = input.value.trim();
   if (!val) return;
   luggageData[currentLuggageCat].push({ name: val, qty: 1, done: false });
   saveLuggage();
@@ -1296,7 +610,7 @@ function toggleLuggage(idx) {
 }
 
 function changeQty(idx, delta) {
-  const item = luggageData[currentLuggageCat][idx];
+  var item = luggageData[currentLuggageCat][idx];
   item.qty = Math.max(1, item.qty + delta);
   saveLuggage();
   renderLuggage();
@@ -1309,33 +623,25 @@ function deleteLuggage(idx) {
 }
 
 function renderLuggage() {
-  const items = luggageData[currentLuggageCat];
-  const list = document.getElementById('luggage-list');
+  var items = luggageData[currentLuggageCat];
+  var list = document.getElementById('luggage-list');
   if (!items.length) { list.innerHTML = '<div class="empty-state">清單是空的</div>'; return; }
-
-  list.innerHTML = items.map((item, i) => `
-    <div class="luggage-item">
-      <div class="luggage-check ${item.done ? 'checked' : ''}" onclick="toggleLuggage(${i})">
-        <span class="check-mark">✓</span>
-      </div>
-      <div class="luggage-name ${item.done ? 'done' : ''}">${item.name}</div>
-      <div class="qty-control">
-        <button class="qty-btn" onclick="changeQty(${i},-1)">−</button>
-        <span class="qty-num">${item.qty}</span>
-        <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
-      </div>
-      <button class="luggage-del" onclick="deleteLuggage(${i})">✕</button>
-    </div>`).join('');
+  list.innerHTML = items.map(function(item, i) {
+    return '<div class="luggage-item">'
+      + '<div class="luggage-check ' + (item.done ? 'checked' : '') + '" onclick="toggleLuggage(' + i + ')">'
+      + '<span class="check-mark">✓</span></div>'
+      + '<div class="luggage-name ' + (item.done ? 'done' : '') + '">' + item.name + '</div>'
+      + '<div class="qty-control">'
+      + '<button class="qty-btn" onclick="changeQty(' + i + ',-1)">−</button>'
+      + '<span class="qty-num">' + item.qty + '</span>'
+      + '<button class="qty-btn" onclick="changeQty(' + i + ',1)">+</button>'
+      + '</div>'
+      + '<button class="luggage-del" onclick="deleteLuggage(' + i + ')">✕</button>'
+      + '</div>';
+  }).join('');
 }
 
 renderLuggage();
-
-// ============================================================
-// LIVE DATE
-// ============================================================
-const now = new Date();
-document.getElementById('live-date').textContent =
-  now.toLocaleDateString('zh-TW', { month:'2-digit', day:'2-digit', weekday:'short' });
 </script>
 </body>
 </html>
