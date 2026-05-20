@@ -72,7 +72,7 @@
   .section-title { font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-soft); margin: 24px 0 12px; }
   .card { background: var(--card-bg); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); margin-bottom: 12px; border: 1px solid rgba(184,169,217,0.15); }
 
-  /* === 航班資訊 === */
+  /* === 航班對齊 === */
   .flight-row { display: flex; align-items: center; padding: 16px 0; width: 100%; }
   .flight-row + .flight-row { border-top: 1px dashed var(--border); }
   .flight-col { flex: 0 0 30%; }
@@ -87,47 +87,24 @@
   .flight-badge { display: inline-block; background: var(--lavender-light); color: var(--lavender); border-radius: 6px; padding: 2px 8px; font-size: 10px; font-weight: 700; margin-bottom: 6px; }
   .badge-ghost { visibility: hidden; pointer-events: none; }
 
-  /* === 住宿資訊 === */
-  .stay-item { display: flex; gap: 12px; padding: 12px 0; align-items: flex-start; }
-  .stay-item + .stay-item { border-top: 1px solid var(--border); }
+  /* === 住宿與行程標籤 === */
+  .stay-item { display: flex; gap: 12px; padding: 12px 0; align-items: flex-start; border-top: 1px solid var(--border); }
+  .stay-item:first-child { border-top: none; }
   .stay-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
   .stay-name { font-size: 14px; font-weight: 700; }
   .stay-link { display: inline-block; margin-top: 6px; font-size: 11px; font-weight: 600; color: var(--lavender); text-decoration: none; background: var(--lavender-light); padding: 4px 12px; border-radius: 20px; }
   
-  /* === 行程標籤 === */
   .day-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; margin-bottom: 16px; }
   .day-tabs::-webkit-scrollbar { display: none; }
   .day-tab { flex-shrink: 0; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; background: var(--card-bg); color: var(--text-soft); border: 1.5px solid var(--border); font-family: var(--font); transition: all 0.2s ease; }
   .day-tab.active { background: linear-gradient(135deg, var(--lavender), var(--baby-blue)); color: #fff; border-color: transparent; }
-  
-  /* === 記帳與幣別切換 === */
+
+  /* === 記帳切換明顯版 === */
   .currency-container { display: flex; border-radius: 12px; overflow: hidden; border: 1.5px solid var(--border); background: var(--warm-white); height: 44px; padding: 3px; }
   .cur-btn { flex: 1; border: none; background: transparent; cursor: pointer; font-weight: 800; font-size: 12px; color: var(--text-soft); transition: all 0.3s ease; border-radius: 9px; font-family: var(--font); }
   .cur-btn.active { background: linear-gradient(135deg, var(--lavender), var(--baby-blue)); color: #fff; box-shadow: 0 2px 8px rgba(184,169,217,0.3); }
-  
-  /* === 準備頁面數量按鈕設計 === */
-  .qty-control { display: flex; align-items: center; gap: 8px; margin-right: 5px; }
-  .qty-btn { width: 26px; height: 26px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--warm-white); font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-mid); line-height: 1; font-family: var(--font); }
-  .qty-num { font-size: 13px; font-weight: 800; min-width: 18px; text-align: center; color: var(--text-dark); }
 
-  /* === 底部導覽與捲動區 === */
-  .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(184,169,217,0.2); padding: 10px 0 calc(15px + env(safe-area-inset-bottom)); display: flex; justify-content: space-around; z-index: 100; }
-  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; background: none; border: none; font-family: var(--font); width: 25%; }
-  .nav-dot { width: 5px; height: 5px; border-radius: 50%; background: transparent; margin-top: 2px; }
-  .nav-item.active .nav-label { color: var(--lavender); }
-  .nav-item.active .nav-dot { background: var(--lavender); }
-  .nav-label { font-size: 11px; font-weight: 600; color: var(--text-soft); }
-
-  .page-scroll { height: calc(100vh - 160px); overflow-y: auto; padding: 20px 16px 120px; padding-bottom: calc(120px + env(safe-area-inset-bottom)); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-  .page-scroll::-webkit-scrollbar { display: none; }
-  .day-label-bar { background: linear-gradient(90deg, var(--lavender-light), var(--baby-blue-light)); border-radius: 10px; padding: 8px 14px; margin-bottom: 14px; font-size: 13px; font-weight: 700; color: var(--text-mid); }
-  .empty-state { text-align: center; color: var(--text-soft); font-size: 13px; padding: 30px; }
-
-  /* 行內元件樣式 */
-  .form-input { width: 100%; border: 1.5px solid var(--border); border-radius: 12px; padding: 10px 14px; font-size: 14px; font-family: var(--font); color: var(--text-dark); background: var(--warm-white); margin-bottom: 12px; outline: none; }
-  .add-btn { width: 100%; background: linear-gradient(135deg, var(--lavender), var(--baby-blue)); color: #fff; border: none; border-radius: 14px; padding: 13px; font-size: 14px; font-weight: 700; cursor: pointer; }
-  .expense-item { background: var(--card-bg); border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
-  .expense-delete { background: #ffe8e8; color: #c06060; border: none; border-radius: 8px; padding: 6px 10px; font-size: 12px; cursor: pointer; font-weight: 600; }
+  /* === 準備清單數量調整設計 === */
   .luggage-item { background: var(--card-bg); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
   .luggage-check { width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--lavender-mid); flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; }
   .luggage-check.checked { background: linear-gradient(135deg, var(--lavender), var(--baby-blue)); border-color: transparent; }
@@ -135,6 +112,20 @@
   .luggage-check.checked .check-mark { display: block; }
   .luggage-name.done { color: var(--text-soft); text-decoration: line-through; }
   
+  .qty-control { display: flex; align-items: center; gap: 8px; margin-right: 5px; }
+  .qty-btn { width: 26px; height: 26px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--warm-white); font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-mid); line-height: 1; }
+  .qty-num { font-size: 13px; font-weight: 800; min-width: 18px; text-align: center; color: var(--text-dark); }
+
+  /* === 底部導覽與捲動 === */
+  .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); border-top: 1px solid rgba(184,169,217,0.2); padding: 10px 0 calc(15px + env(safe-area-inset-bottom)); display: flex; justify-content: space-around; z-index: 100; }
+  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; background: none; border: none; font-family: var(--font); width: 25%; }
+  .nav-item.active .nav-label { color: var(--lavender); }
+  .nav-item.active .nav-dot { background: var(--lavender); width: 5px; height: 5px; border-radius: 50%; margin-top: 2px; }
+  .nav-label { font-size: 11px; font-weight: 600; color: var(--text-soft); }
+  .page-scroll { height: calc(100vh - 160px); overflow-y: auto; padding: 20px 16px 150px; padding-bottom: calc(150px + env(safe-area-inset-bottom)); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .page-scroll::-webkit-scrollbar { display: none; }
+  .form-input { width: 100%; border: 1.5px solid var(--border); border-radius: 12px; padding: 10px 14px; font-size: 14px; font-family: var(--font); background: var(--warm-white); margin-bottom: 12px; outline: none; }
+  .add-btn { width: 100%; background: linear-gradient(135deg, var(--lavender), var(--baby-blue)); color: #fff; border: none; border-radius: 14px; padding: 13px; font-size: 14px; font-weight: 700; cursor: pointer; }
   .schedule-item { display: flex; gap: 14px; margin-bottom: 10px; position: relative; }
   .schedule-time-col { width: 52px; flex-shrink: 0; padding-top: 4px; font-size: 11px; font-weight: 700; color: var(--text-mid); }
   .schedule-line-col { display: flex; flex-direction: column; align-items: center; width: 16px; flex-shrink: 0; }
@@ -146,6 +137,8 @@
   .transport-tag { display: inline-flex; align-items: center; gap: 4px; background: var(--baby-blue-light); color: #4a7fa8; border-radius: 8px; padding: 3px 9px; font-size: 10px; font-weight: 600; margin-right: 4px; margin-top: 2px; }
   .transport-tag.purple { background: var(--lavender-light); color: #7a5da8; }
   .naver-btn { display: inline-block; margin-top: 6px; font-size: 10px; font-weight: 700; color: #03c75a; text-decoration: none; background: #e8f9ee; padding: 3px 10px; border-radius: 8px; border: 1px solid #b8edcd; }
+  .day-label-bar { background: linear-gradient(90deg, var(--lavender-light), var(--baby-blue-light)); border-radius: 10px; padding: 8px 14px; margin-bottom: 14px; font-size: 13px; font-weight: 700; color: var(--text-mid); }
+  .empty-state { text-align: center; color: var(--text-soft); font-size: 13px; padding: 30px; }
 </style>
 </head>
 <body>
@@ -175,37 +168,19 @@
         <div class="flight-col right"><div class="flight-badge badge-ghost">回程</div><div class="flight-city">TPE</div><div class="flight-time">07/12 · 21:20</div></div>
       </div>
     </div>
-
     <div class="section-title">住宿資訊</div>
     <div class="card">
-      <div class="stay-item">
-        <div class="stay-dot" style="background:var(--lavender)"></div>
-        <div>
-          <div class="stay-dates" style="font-size:11px;color:var(--text-soft);margin-bottom:3px;">07/08 — 07/10 · 2 晚</div>
-          <div class="stay-name">Yeobak Stay</div>
-          <div style="font-size:11px;color:var(--text-soft);margin-top:2px;">金蓮山站 · 15點check-in / 11點check-out</div>
-          <a class="stay-link" href="https://naver.me/5Vx8RWf6" target="_blank">導航</a>
-        </div>
-      </div>
-      <div class="stay-item">
-        <div class="stay-dot" style="background:var(--baby-blue)"></div>
-        <div>
-          <div class="stay-dates" style="font-size:11px;color:var(--text-soft);margin-bottom:3px;">07/10 — 07/12 · 2 晚</div>
-          <div class="stay-name">Urban Cozy</div>
-          <div style="font-size:11px;color:var(--text-soft);margin-top:2px;">田浦站 · 17點check-in / 12點check-out</div>
-          <a class="stay-link" href="https://naver.me/xWzXDkLz" target="_blank">導航</a>
-        </div>
-      </div>
+      <div class="stay-item"><div class="stay-dot" style="background:var(--lavender)"></div><div><div class="stay-dates">07/08 — 07/10 · 2 晚</div><div class="stay-name">Yeobak Stay（金蓮山站）</div><div style="font-size:11px;color:var(--text-soft);margin-top:2px;">15:00 check-in / 11:00 check-out</div><a class="stay-link" href="https://naver.me/5Vx8RWf6" target="_blank">導航</a></div></div>
+      <div class="stay-item"><div class="stay-dot" style="background:var(--baby-blue)"></div><div><div class="stay-dates">07/10 — 07/12 · 2 晚</div><div class="stay-name">Urban Cozy（田浦站）</div><div style="font-size:11px;color:var(--text-soft);margin-top:2px;">17:00 check-in / 12:00 check-out</div><a class="stay-link" href="https://naver.me/xWzXDkLz" target="_blank">導航</a></div></div>
     </div>
-
     <div class="section-title">行程總覽</div>
     <div class="card" style="padding:14px 18px;">
       <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;align-items:center;gap:12px;"><div style="width:38px;height:38px;background:var(--lavender-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--lavender);">D1</div><div><div style="font-size:13px;font-weight:700;">07/08 (三) · Busan is Good</div></div></div>
+        <div style="display:flex;align-items:center;gap:12px;"><div style="width:38px;height:38px;background:var(--lavender-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--lavender);">D1</div><div><div style="font-size:13px;font-weight:700;">07/08 (三) · 機張 Luge</div></div></div>
         <div style="display:flex;align-items:center;gap:12px;"><div style="width:38px;height:38px;background:var(--baby-blue-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#5a9bc8;">D2</div><div><div style="font-size:13px;font-weight:700;">07/09 (四) · 大邱一日遊</div></div></div>
-        <div style="display:flex;align-items:center;gap:12px;"><div style="width:38px;height:38px;background:var(--lavender-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--lavender);">D3</div><div><div style="font-size:13px;font-weight:700;">07/10 (五) · 逛街血拚日</div></div></div>
-        <div style="display:flex;align-items:center;gap:12px;"><div style="width:38px;height:38px;background:var(--baby-blue-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#5a9bc8;">D4</div><div><div style="font-size:13px;font-weight:700;">07/11 (六) · 變漂亮之路</div></div></div>
-        <div style="display:flex;align-items:center;gap:12px;"><div style="width:38px;height:38px;background:var(--lavender-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--lavender);">D5</div><div><div style="font-size:13px;font-weight:700;">07/12 (日) · 最後一頁</div></div></div>
+        <div style="display:flex;align-items:center;gap:12px;"><div style="width:38px;height:38px;background:var(--lavender-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--lavender);">D3</div><div><div style="font-size:13px;font-weight:700;">07/10 (五) · 廣安里與血拚</div></div></div>
+        <div style="display:flex;align-items:center;gap:12px;"><div style="width:38px;height:38px;background:var(--baby-blue-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#5a9bc8;">D4</div><div><div style="font-size:13px;font-weight:700;">07/11 (六) · 醫美變美之路</div></div></div>
+        <div style="display:flex;align-items:center;gap:12px;"><div style="width:38px;height:38px;background:var(--lavender-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--lavender);">D5</div><div><div style="font-size:13px;font-weight:700;">07/12 (日) · 白淺灘返台</div></div></div>
       </div>
     </div>
   </div>
@@ -214,7 +189,7 @@
 <!-- ITINERARY PAGE -->
 <div class="page" id="page-itinerary">
   <div class="page-scroll">
-    <div class="day-tabs" id="day-tabs">
+    <div class="day-tabs">
       <button class="day-tab active" onclick="switchDay(0, this)">Day 1<br><span style="font-size:10px;opacity:0.7;">07/08</span></button>
       <button class="day-tab" onclick="switchDay(1, this)">Day 2<br><span style="font-size:10px;opacity:0.7;">07/09</span></button>
       <button class="day-tab" onclick="switchDay(2, this)">Day 3<br><span style="font-size:10px;opacity:0.7;">07/10</span></button>
@@ -259,7 +234,7 @@
       <button class="day-tab active" onclick="switchLuggage('backpack', this)">隨身背包</button>
       <button class="day-tab" onclick="switchLuggage('cabin', this)">手提行李</button>
       <button class="day-tab" onclick="switchLuggage('checked', this)">托運行李</button>
-      <button class="day-tab" onclick="switchLuggage('korea', this)">購買清單</button>
+      <button class="day-tab" onclick="switchLuggage('korea', this)">韓國購買</button>
     </div>
     <div style="display:flex;gap:8px;margin-bottom:14px;">
       <input class="form-input" id="luggage-input" placeholder="新增項目..." style="margin-bottom:0" />
@@ -355,7 +330,7 @@ function updateTotal() {
 }
 renderExpenses();
 
-/* LUGGAGE LOGIC WITH QTY */
+/* LUGGAGE WITH QTY */
 var luggageData = JSON.parse(localStorage.getItem('busan_luggage')) || { backpack:[], cabin:[], checked:[], korea:[] };
 var currentLuggageCat = 'backpack';
 function switchLuggage(cat, btn) { currentLuggageCat = cat; document.querySelectorAll('#page-luggage .day-tab').forEach(t => t.classList.remove('active')); btn.classList.add('active'); renderLuggage(); }
@@ -366,12 +341,7 @@ function addLuggageItem() {
   document.getElementById('luggage-input').value = ''; renderLuggage();
 }
 function toggleLuggage(i) { luggageData[currentLuggageCat][i].done = !luggageData[currentLuggageCat][i].done; localStorage.setItem('busan_luggage', JSON.stringify(luggageData)); renderLuggage(); }
-function changeQty(i, delta) { 
-  let item = luggageData[currentLuggageCat][i];
-  item.qty = Math.max(1, (item.qty || 1) + delta); 
-  localStorage.setItem('busan_luggage', JSON.stringify(luggageData)); 
-  renderLuggage(); 
-}
+function changeQty(i, delta) { luggageData[currentLuggageCat][i].qty = Math.max(1, (luggageData[currentLuggageCat][i].qty || 1) + delta); localStorage.setItem('busan_luggage', JSON.stringify(luggageData)); renderLuggage(); }
 function deleteLuggage(i) { luggageData[currentLuggageCat].splice(i, 1); localStorage.setItem('busan_luggage', JSON.stringify(luggageData)); renderLuggage(); }
 function renderLuggage() {
   var items = luggageData[currentLuggageCat], list = document.getElementById('luggage-list');
