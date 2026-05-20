@@ -6,6 +6,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Busan 2026</title>
+<!-- iOS 裝置的圖示 -->
+<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/8244/8244583.png">
+<!-- iOS 設定：標題名稱 -->
+<meta name="apple-mobile-web-app-title" content="Busan 2026">
+<!-- iOS 設定：全螢幕模式（隱藏網址列） -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<!-- Android / Chrome 的 Web App 設定 -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#b8a9d9">
+
+<!-- 為了讓 Android 識別圖示，建議加上一個簡單的 Web Manifest -->
+<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Busan%202026%22,%22short_name%22:%22Busan%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%23faf8f5%22,%22theme_color%22:%22%23b8a9d9%22,%22icons%22:[{%22src%22:%22https://cdn-icons-png.flaticon.com/512/8244/8244583.png%22,%22sizes%22:%22512x512%22,%22type%22:%22image/png%22}]}">
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -366,57 +380,57 @@ const itineraryData = [
     dayLabel: "Day 1 · 07/08 (三) · Busan is Good",
     items: [
       { time: "06:15-09:30", place: "飛機上補眠中",          transport: [{type:"blue",   label:"中華航空 CI190"}],                                                                          timeNote:"06:15 起飛 · 09:30 抵達" },
-      { time: "09:30-11:00", place: "前往民宿 · 放行李",      transport: [{type:"purple", label:"輕軌：空港站→沙上站"}, {type:"purple", label:"地鐵：沙上站→金蓮山站"}] },
-      { time: "12:00-13:30", place: "午餐 한다솥 鮑魚粥",     transport: [{type:"purple", label:"地鐵：奧希利亞站"}],                                                                        timeNote:"每日 11:00–21:00",        url:"https://naver.me/5ZJxcmXX" },
-      { time: "13:30-15:30", place: "Skyline Luge",           transport: [{type:"purple", label:"步行"}],                                                                                    timeNote:"每日 10:00–18:00 · 需先訂票", url:"https://naver.me/IDFUcLWo" },
-      { time: "15:30-16:30", place: "咖啡廳 Music Complex",   transport: [{type:"green",  label:"步行"}],                                                                                    timeNote:"每日 12:00–23:00",        url:"https://naver.me/GrmawSBe" },
-      { time: "16:30-18:30", place: "LOTTE MALL",             transport: [{type:"green",  label:"步行"}],                                                                                    timeNote:"記得帶護照 · 若時間太晚則略過", url:"https://naver.me/GwpMkOIT" },
-      { time: "18:30-20:30", place: "晚餐 도박이/수변 豬肉血腸湯飯", transport: [{type:"green", label:"地鐵：廣安站"}],                                                                     timeNote:"24小時",                  url:"https://naver.me/G4Wo3D8L" },
-      { time: "20:30-21:30", place: "Olive Young",            transport: [{type:"green",  label:"步行"}] },
-      { time: "21:30-23:30", place: "廣安大橋 · Corduroy Fellaz", transport: [{type:"green", label:"步行"}],                                                                                timeNote:"預約",                        url:"https://map.naver.com/p/entry/place/1275531593?placePath=%2Fhome" }
+      { time: "09:30-11:00", place: "前往民宿 · 放行李",      transport: [{type:"purple", label:"輕軌：空港站→沙上站"}, {type:"blue", label:"地鐵：沙上站→金蓮山站"}], timeNote:"17:00後Check-in" },
+      { time: "12:00-13:30", place: "午餐 한다솥 鮑魚粥",     transport: [{type:"blue", label:"地鐵：奧希利亞站"}],                                                                        timeNote:"每日 11:00–21:00",        url:"https://naver.me/5ZJxcmXX" },
+      { time: "13:30-15:30", place: "Skyline Luge",           transport: [{type:"blue", label:"步行"}],                                                                                    timeNote:"每日 10:00–18:00 · 需先訂票", url:"https://naver.me/IDFUcLWo" },
+      { time: "15:30-16:30", place: "咖啡廳 Music Complex",   transport: [{type:"blue",  label:"步行"}],                                                                                    timeNote:"每日 12:00–23:00",        url:"https://naver.me/GrmawSBe" },
+      { time: "16:30-18:30", place: "LOTTE MALL",             transport: [{type:"blue",  label:"步行"}],                                                                                    timeNote:"記得帶護照 · 若時間太晚則略過", url:"https://naver.me/GwpMkOIT" },
+      { time: "18:30-20:30", place: "晚餐 도박이/수변 豬肉血腸湯飯", transport: [{type:"blue", label:"地鐵：廣安站"}],                                                                     timeNote:"24小時",                  url:"https://naver.me/G4Wo3D8L" },
+      { time: "20:30-21:30", place: "Olive Young",            transport: [{type:"blue",  label:"步行"}] },
+      { time: "21:30-23:30", place: "廣安大橋 · Corduroy Fellaz", transport: [{type:"blue", label:"步行"}],                                                                                timeNote:"預約",                        url:"https://map.naver.com/p/entry/place/1275531593?placePath=%2Fhome" }
     ]
   },
   {
     dayLabel: "Day 2 · 07/09 (四) · 大邱一日遊",
     items: [
-      { time: "09:00-11:00", place: "前往大邱",               transport: [{type:"purple", label:"地鐵：金蓮山站→西面站→釜山站"}, {type:"blue", label:"KTX：釜山→東大邱"}] },
-      { time: "11:30-13:30", place: "午餐 大邱大食堂or辣炒章魚", transport: [{type:"purple", label:"計程車"}],                                                                               timeNote:"",                        url:"https://naver.me/GEXhM3Vl" },
-      { time: "13:30-15:30", place: "半月堂晃晃",             transport: [{type:"blue",   label:"公車：河陽站下車"}, {type:"purple", label:"地鐵：河陽站→半月堂站"}] },
+      { time: "09:00-11:00", place: "前往大邱",               transport: [{type:"blue", label:"地鐵：金蓮山站→西面站→釜山站"}, {type:"purple", label:"KTX：釜山→東大邱"}] },
+      { time: "11:30-13:30", place: "午餐 大邱大食堂or辣炒章魚", transport: [{type:"blue", label:"計程車"}],                                                                               timeNote:"",                        url:"https://naver.me/GEXhM3Vl" },
+      { time: "13:30-15:30", place: "半月堂晃晃",             transport: [{type:"purple",   label:"公車：河陽站下車"}, {type:"purple", label:"地鐵：河陽站→半月堂站"}] },
       { time: "15:30-17:30", place: "咖啡廳 접속",            transport: [{type:"blue",   label:"步行"}], url:"https://naver.me/5OQyT7jj" },
-      { time: "17:30-20:30", place: "晚餐 을찌로정 烤腸韓牛", transport: [{type:"green",  label:"步行"}],                                                                                   timeNote:"16:00–00:30",             url:"https://naver.me/GCvqQXrn" },
-      { time: "20:30",       place: "返回釜山",               transport: [{type:"blue",   label:"KTX 東大邱→釜山"}, {type:"purple", label:"地鐵：釜山站→西面站→金蓮山站"}],  timeNote:"" }
+      { time: "17:30-20:30", place: "晚餐 을찌로정 烤腸韓牛", transport: [{type:"blue",  label:"步行"}],                                                                                   timeNote:"16:00–00:30",             url:"https://naver.me/GCvqQXrn" },
+      { time: "20:30",       place: "返回釜山",               transport: [{type:"purple",   label:"KTX 東大邱→釜山"}, {type:"purple", label:"地鐵：釜山站→西面站→金蓮山站"}],  timeNote:"" }
     ]
   },
   {
     dayLabel: "Day 3 · 07/10 (五) · 逛街血拚日",
     items: [
       { time: "09:30",       place: "出門" },
-      { time: "10:30-12:30", place: "新世界百貨", transport: [{type:"purple", label:"地鐵：Centum City站"}],                                                                    timeNote:"記得帶護照",              url:"https://naver.me/5chuGOAf" },
-      { time: "12:30-14:00", place: "午餐 동면식 麵線＆餃子", transport: [{type:"purple", label:"地鐵：廣安站"}], url:"https://naver.me/FDnC5nha" },
-      { time: "14:00-16:00", place: "廣安里晃晃",             transport: [{type:"green",  label:"步行"}] },
-      { time: "16:00-17:30", place: "咖啡廳",                 transport: [{type:"green",  label:"步行"}], url:"" },
-      { time: "17:30-18:30", place: "搬家 · 移至西面民宿",   transport: [{type:"purple", label:"地鐵：金蓮山站→田浦站"}],                                                                  timeNote:"17:00後Check-in" },
-      { time: "18:30-21:30", place: "晚餐 아는오빠 大排檔",   transport: [{type:"purple", label:"步行"}],                                                                             timeNote:"每日 18:00–04:00",        url:"https://naver.me/FK5dWmTD" }
+      { time: "10:30-12:30", place: "新世界百貨", transport: [{type:"blue", label:"地鐵：Centum City站"}],                                                                    timeNote:"記得帶護照",              url:"https://naver.me/5chuGOAf" },
+      { time: "12:30-14:00", place: "午餐 동면식 麵線＆餃子", transport: [{type:"blue", label:"地鐵：廣安站"}], url:"https://naver.me/FDnC5nha" },
+      { time: "14:00-16:00", place: "廣安里晃晃",             transport: [{type:"blue",  label:"步行"}] },
+      { time: "16:00-17:30", place: "咖啡廳",                 transport: [{type:"blue",  label:"步行"}], url:"" },
+      { time: "17:30-18:30", place: "搬家 · 移至西面民宿",   transport: [{type:"blue", label:"地鐵：金蓮山站→田浦站"}],                                                                  timeNote:"17:00後Check-in" },
+      { time: "18:30-21:30", place: "晚餐 아는오빠 大排檔",   transport: [{type:"blue", label:"步行"}],                                                                             timeNote:"每日 18:00–04:00",        url:"https://naver.me/FK5dWmTD" }
     ]
   },
   {
     dayLabel: "Day 4 · 07/11 (六) · 變漂亮之路",
     items: [
-      { time: "11:00-12:30", place: "午餐 하연정 嫩豆腐鍋",   transport: [{type:"purple", label:"地鐵：西面站"}],                                                                          timeNote:"每日 11:00–20:00",        url:"https://naver.me/F42HsyRG" },
-      { time: "12:30-15:30", place: "醫美",                   transport: [{type:"green",  label:"步行"}],                                                                                   timeNote:"預約", url:"https://naver.me/xY47wOLP" },
+      { time: "11:00-12:30", place: "午餐 하연정 嫩豆腐鍋",   transport: [{type:"blue", label:"地鐵：西面站"}],                                                                          timeNote:"每日 11:00–20:00",        url:"https://naver.me/F42HsyRG" },
+      { time: "12:30-15:30", place: "醫美",                   transport: [{type:"blue",  label:"步行"}],                                                                                   timeNote:"預約", url:"https://naver.me/xY47wOLP" },
       { time: "15:30-18:00", place: "田浦站晃晃" },
-      { time: "18:00-19:30", place: "晚餐 그집뱃살 生魚片",   transport: [{type:"green",  label:"地鐵：西面站"}],                                                                          timeNote:"16:30–02:00",             url:"https://naver.me/xxY2Ul3S" },
-      { time: "19:30-22:30", place: "荒嶺山觀景台看夜景",     transport: [{type:"purple", label:"計程車"}],                                                                                 timeNote:"宵夜可叫炸雞",            url:"https://naver.me/Fbq9QkVy" }
+      { time: "18:00-19:30", place: "晚餐 그집뱃살 生魚片",   transport: [{type:"blue",  label:"地鐵：西面站"}],                                                                          timeNote:"16:30–02:00",             url:"https://naver.me/xxY2Ul3S" },
+      { time: "19:30-22:30", place: "荒嶺山觀景台看夜景",     transport: [{type:"blue", label:"計程車"}],                                                                                 timeNote:"宵夜可叫炸雞",            url:"https://naver.me/Fbq9QkVy" }
     ]
   },
   {
     dayLabel: "Day 5 · 07/12 (日) · 最後一頁",
     items: [
-      { time: "09:30-12:00", place: "午餐 영도해녀촌 影島海女村", transport: [{type:"purple", label:"地鐵：田浦站→西面站→南浦站"}, {type:"purple", label:"公車：508/7/71號→南高橋站下車"}], timeNote:"盡量早點出門",           url:"https://naver.me/GCvq1edv" },
-      { time: "12:00-13:30", place: "白淺灘文化村",           transport: [{type:"purple", label:"計程車"}],                                                                                 timeNote:"",                        url:"https://naver.me/xLWAPvjS" },
+      { time: "09:30-12:00", place: "午餐 영도해녀촌 影島海女村", transport: [{type:"blue", label:"地鐵：田浦站→西面站→南浦站"}, {type:"purple", label:"公車：508/7/71號→南高橋站下車"}], timeNote:"盡量早點出門",           url:"https://naver.me/GCvq1edv" },
+      { time: "12:00-13:30", place: "白淺灘文化村",           transport: [{type:"blue", label:"計程車"}],                                                                                 timeNote:"",                        url:"https://naver.me/xLWAPvjS" },
       { time: "13:30-15:00", place: "咖啡廳",url:"" },
-      { time: "15:00-16:00", place: "回飯店拿行李",           transport: [{type:"purple", label:"計程車"}] },
-      { time: "16:00-17:00", place: "出發前往機場",           transport: [{type:"purple", label:"地鐵：西面站→沙上站"}, {type:"blue", label:"輕軌：沙上站→空港站"}],                       timeNote:"晚餐在機場解決" },
+      { time: "15:00-16:00", place: "回飯店拿行李",           transport: [{type:"blue", label:"計程車"}] },
+      { time: "16:00-17:00", place: "出發前往機場",           transport: [{type:"blue", label:"地鐵：西面站→沙上站"}, {type:"purple", label:"輕軌：沙上站→空港站"}],                       timeNote:"晚餐在機場解決" },
       { time: "20:00-21:20", place: "返台面對現實",           transport: [{type:"blue",   label:"中華航空 CI187"}],                                                                         timeNote:"20:00 起飛 · 21:20 抵達" }
     ]
   }
