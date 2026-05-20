@@ -1,135 +1,1347 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel to Busan</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- 載入源泉丸體或類似圓體字型 -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Busan 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lavender: #b8a9d9;
+    --lavender-light: #e8e2f5;
+    --lavender-mid: #cfc4e8;
+    --baby-blue: #a8c8e8;
+    --baby-blue-light: #daeaf7;
+    --baby-blue-mid: #bcd8f0;
+    --cream: #faf8f5;
+    --warm-white: #f7f5f0;
+    --text-dark: #2d2a35;
+    --text-mid: #6b6575;
+    --text-soft: #9e97ac;
+    --card-bg: #ffffff;
+    --border: #ede9f5;
+    --shadow: 0 4px 20px rgba(184,169,217,0.15);
+    --shadow-sm: 0 2px 10px rgba(184,169,217,0.12);
+    --radius: 20px;
+    --radius-sm: 12px;
+    --font: 'M PLUS Rounded 1c', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: var(--font);
+    background: var(--cream);
+    color: var(--text-dark);
+    min-height: 100vh;
+    max-width: 430px;
+    margin: 0 auto;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #c9bde8 0%, #b8cfe8 100%);
+    padding: 52px 24px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: 30px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+  }
+  .header-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.8);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .header-title {
+    font-size: 30px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    margin-top: 6px;
+    font-weight: 400;
+  }
+  .header-dates {
+    margin-top: 16px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .date-chip {
+    background: rgba(255,255,255,0.3);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px;
+    color: #fff;
+    font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  /* MAIN CONTENT */
+  .content {
+    padding: 20px 16px 100px;
+  }
+
+  /* PAGE */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin: 24px 0 12px;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 18px;
+    box-shadow: var(--shadow);
+    margin-bottom: 12px;
+    border: 1px solid rgba(184,169,217,0.15);
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .card-icon {
+    width: 38px; height: 38px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .icon-lavender { background: var(--lavender-light); }
+  .icon-blue { background: var(--baby-blue-light); }
+  .card-title { font-size: 15px; font-weight: 700; }
+  .card-subtitle { font-size: 12px; color: var(--text-soft); margin-top: 2px; }
+
+  /* FLIGHT CARD */
+  .flight-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+  }
+  .flight-row + .flight-row { border-top: 1px dashed var(--border); }
+  .flight-city {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-dark);
+    letter-spacing: -1px;
+  }
+  .flight-time {
+    font-size: 12px;
+    color: var(--text-mid);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  .flight-arrow {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 10px;
+  }
+  .flight-line {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--lavender), var(--baby-blue));
+    position: relative;
+    margin: 4px 0;
+  }
+  .flight-line::after {
+    content: '';
+    position: absolute;
+    right: -3px; top: -3px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--baby-blue);
+  }
+  .flight-info {
+    font-size: 10px;
+    color: var(--text-soft);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  .flight-badge {
+    display: inline-block;
+    background: var(--lavender-light);
+    color: var(--lavender);
+    border-radius: 8px;
+    padding: 3px 9px;
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  /* STAY CARD */
+  .stay-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    align-items: flex-start;
+  }
+  .stay-item + .stay-item { border-top: 1px solid var(--border); }
+  .stay-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+  .dot-lavender { background: var(--lavender); }
+  .dot-blue { background: var(--baby-blue); }
+  .stay-dates { font-size: 11px; color: var(--text-soft); font-weight: 500; margin-bottom: 3px; }
+  .stay-name { font-size: 14px; font-weight: 700; }
+  .stay-link {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--lavender);
+    text-decoration: none;
+    background: var(--lavender-light);
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  /* ITINERARY TABS */
+  .day-tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    margin-bottom: 16px;
+  }
+  .day-tabs::-webkit-scrollbar { display: none; }
+  .day-tab {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    background: var(--card-bg);
+    color: var(--text-soft);
+    border: 1.5px solid var(--border);
+    font-family: var(--font);
+    transition: all 0.2s ease;
+  }
+  .day-tab.active {
+    background: linear-gradient(135deg, var(--lavender), var(--baby-blue));
+    color: #fff;
+    border-color: transparent;
+  }
+
+  /* SCHEDULE CARD */
+  .schedule-item {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .schedule-time-col {
+    width: 52px;
+    flex-shrink: 0;
+    padding-top: 4px;
+  }
+  .schedule-time {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-mid);
+  }
+  .schedule-line-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 16px;
+    flex-shrink: 0;
+  }
+  .schedule-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--lavender);
+    flex-shrink: 0;
+    margin-top: 5px;
+    z-index: 1;
+  }
+  .schedule-dot.blue { background: var(--baby-blue); }
+  .schedule-connector {
+    flex: 1;
+    width: 2px;
+    background: var(--border);
+    margin-top: 3px;
+  }
+  .schedule-card {
+    flex: 1;
+    background: var(--card-bg);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(184,169,217,0.2);
+    box-shadow: var(--shadow-sm);
+  }
+  .schedule-place {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+  }
+  .transport-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--baby-blue-light);
+    color: #4a7fa8;
+    border-radius: 8px;
+    padding: 3px 9px;
+    font-size: 10px;
+    font-weight: 600;
+    margin-right: 4px;
+    margin-top: 2px;
+  }
+  .transport-tag.purple {
+    background: var(--lavender-light);
+    color: #7a5da8;
+  }
+  .transport-tag.green {
+    background: #e2f5e8;
+    color: #4a8a5a;
+  }
+  .meal-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    background: #fff5e8;
+    color: #c07a30;
+    border-radius: 8px;
+    padding: 3px 9px;
+    font-size: 10px;
+    font-weight: 600;
+    margin-right: 4px;
+    margin-top: 2px;
+  }
+  .time-tag {
+    font-size: 10px;
+    color: var(--text-soft);
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  /* WEATHER */
+  .weather-main {
+    background: linear-gradient(135deg, #c9bde8 0%, #a8c8e8 100%);
+    border-radius: var(--radius);
+    padding: 24px;
+    color: #fff;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .weather-main::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+  }
+  .weather-city {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 8px;
+  }
+  .weather-temp {
+    font-size: 64px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -3px;
+  }
+  .weather-desc {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+  .weather-stats {
+    display: flex;
+    gap: 0;
+    margin-top: 20px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .weather-stat {
+    flex: 1;
+    padding: 10px 8px;
+    text-align: center;
+  }
+  .weather-stat + .weather-stat { border-left: 1px solid rgba(255,255,255,0.25); }
+  .stat-label { font-size: 10px; opacity: 0.75; font-weight: 500; letter-spacing: 0.5px; }
+  .stat-value { font-size: 15px; font-weight: 700; margin-top: 2px; }
+
+  .weather-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .weather-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+  }
+  .wcard-label {
+    font-size: 10px;
+    color: var(--text-soft);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .wcard-value { font-size: 20px; font-weight: 800; color: var(--text-dark); }
+  .wcard-unit { font-size: 12px; font-weight: 400; color: var(--text-mid); margin-left: 2px; }
+
+  /* Weather fetch notice */
+  .weather-note {
+    background: var(--lavender-light);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    font-size: 12px;
+    color: var(--text-mid);
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  /* ACCOUNTING */
+  .total-card {
+    background: linear-gradient(135deg, var(--lavender), var(--baby-blue));
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  .total-label { font-size: 12px; opacity: 0.85; font-weight: 500; letter-spacing: 1px; margin-bottom: 4px; }
+  .total-amount {
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+  .total-sub { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+
+  .add-expense-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 18px;
+    box-shadow: var(--shadow);
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+  }
+  .form-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-soft);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .form-input {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-family: var(--font);
+    color: var(--text-dark);
+    background: var(--warm-white);
+    margin-bottom: 12px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: var(--lavender); }
+  .form-row { display: flex; gap: 10px; }
+  .form-row .form-group { flex: 1; }
+  .form-group { margin-bottom: 0; }
+  .form-select {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-family: var(--font);
+    color: var(--text-dark);
+    background: var(--warm-white);
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+  }
+  .add-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--lavender), var(--baby-blue));
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 13px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: var(--font);
+    cursor: pointer;
+    margin-top: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .expense-list { margin-top: 4px; }
+  .expense-item {
+    background: var(--card-bg);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+  }
+  .expense-info { flex: 1; }
+  .expense-name { font-size: 14px; font-weight: 700; }
+  .expense-cat {
+    display: inline-block;
+    background: var(--lavender-light);
+    color: var(--lavender);
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    margin-top: 3px;
+  }
+  .expense-amount { font-size: 15px; font-weight: 800; color: var(--text-dark); text-align: right; }
+  .expense-currency { font-size: 10px; color: var(--text-soft); font-weight: 500; }
+  .expense-delete {
+    background: #ffe8e8;
+    color: #c06060;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: var(--font);
+    margin-left: 10px;
+    font-weight: 600;
+  }
+
+  /* LUGGAGE */
+  .luggage-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .luggage-tabs::-webkit-scrollbar { display: none; }
+  .luggage-tab {
+    flex-shrink: 0;
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    border: 1.5px solid var(--border);
+    cursor: pointer;
+    background: var(--card-bg);
+    color: var(--text-soft);
+    font-family: var(--font);
+    transition: all 0.2s;
+  }
+  .luggage-tab.active {
+    background: linear-gradient(135deg, var(--lavender), var(--baby-blue));
+    color: #fff;
+    border-color: transparent;
+  }
+  .luggage-add-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .luggage-add-input {
+    flex: 1;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-family: var(--font);
+    background: var(--warm-white);
+    outline: none;
+  }
+  .luggage-add-btn {
+    background: linear-gradient(135deg, var(--lavender), var(--baby-blue));
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-weight: 700;
+    font-family: var(--font);
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .luggage-item {
+    background: var(--card-bg);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+  }
+  .luggage-check {
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    border: 2px solid var(--lavender-mid);
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .luggage-check.checked {
+    background: linear-gradient(135deg, var(--lavender), var(--baby-blue));
+    border-color: transparent;
+  }
+  .check-mark { display: none; color: #fff; font-size: 12px; font-weight: 800; }
+  .luggage-check.checked .check-mark { display: block; }
+  .luggage-name {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.15s;
+  }
+  .luggage-name.done {
+    color: var(--text-soft);
+    text-decoration: line-through;
+  }
+  .qty-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .qty-btn {
+    width: 24px; height: 24px;
+    border-radius: 7px;
+    border: 1.5px solid var(--border);
+    background: var(--warm-white);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-mid);
+    font-family: var(--font);
+    line-height: 1;
+  }
+  .qty-num { font-size: 13px; font-weight: 700; min-width: 16px; text-align: center; }
+  .luggage-del {
+    background: none;
+    border: none;
+    color: var(--text-soft);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px 4px;
+    font-family: var(--font);
+  }
+
+  /* BOTTOM NAV */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(184,169,217,0.2);
+    padding: 8px 0 18px;
+    display: flex;
+    justify-content: space-around;
+    z-index: 100;
+  }
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 14px;
+    transition: all 0.2s;
+    border: none;
+    background: none;
+    font-family: var(--font);
+  }
+  .nav-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: transparent;
+    transition: all 0.2s;
+    margin-top: 2px;
+  }
+  .nav-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-soft);
+    transition: color 0.2s;
+  }
+  .nav-item.active .nav-label { color: var(--lavender); }
+  .nav-item.active .nav-dot { background: var(--lavender); }
+
+  /* Scrollable area */
+  .page-scroll {
+    height: calc(100vh - 160px);
+    overflow-y: auto;
+    padding: 20px 16px 20px;
+    scrollbar-width: none;
+  }
+  .page-scroll::-webkit-scrollbar { display: none; }
+
+  .empty-state {
+    text-align: center;
+    color: var(--text-soft);
+    font-size: 13px;
+    padding: 30px;
+  }
+
+  /* KRW TWD toggle in form */
+  .currency-toggle {
+    display: flex;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1.5px solid var(--border);
+    background: var(--warm-white);
+  }
+  .currency-opt {
+    flex: 1;
+    padding: 9px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-soft);
+    cursor: pointer;
+    font-family: var(--font);
+    border: none;
+    background: transparent;
+    transition: all 0.2s;
+  }
+  .currency-opt.active {
+    background: linear-gradient(135deg, var(--lavender), var(--baby-blue));
+    color: #fff;
+    border-radius: 8px;
+    margin: 2px;
+  }
+
+  /* Loading spinner */
+  .spinner {
+    display: inline-block;
+    width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Separator line in schedule */
+  .day-label-bar {
+    background: linear-gradient(90deg, var(--lavender-light), var(--baby-blue-light));
+    border-radius: 10px;
+    padding: 8px 14px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-mid);
+  }
+
+  .naver-btn {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #03c75a;
+    text-decoration: none;
+    background: #e8f9ee;
+    padding: 3px 10px;
+    border-radius: 8px;
+    border: 1px solid #b8edcd;
+  }
+  .tip-bar {
+    background: var(--lavender-light);
+    border-left: 3px solid var(--lavender);
+    border-radius: 0 10px 10px 0;
+    padding: 8px 12px;
+    font-size: 11px;
+    color: var(--text-mid);
+    margin: 8px 0 16px;
+    font-weight: 500;
+  }
+</style>
 </head>
 <body>
 
-    <header class="app-header">
-        <h1>Travel to Busan</h1>
-        <p class="date-range">2026/07/08 - 07/12</p>
-    </header>
+<div class="header">
+  <div class="header-label">2026韓國釜3</div>
+  <div class="header-title">Travel<br>to Busan</div>
+  <div class="header-sub">釜山 · 大邱 — 五日四夜</div>
+  <div class="header-dates">
+    <span class="date-chip">07 / 08 — 07 / 12</span>
+  </div>
+</div>
 
-    <main id="app-content">
-        <!-- 總覽頁面 -->
-        <section id="overview" class="page active">
-            <div class="card">
-                <h3>航班資訊</h3>
-                <div class="flight-info">
-                    <div class="flight-row">
-                        <span class="label">去程 07/08</span>
-                        <p>中華航空 CI190 | TPE 06:15 ➔ PUS 09:30</p>
-                    </div>
-                    <div class="flight-divider"></div>
-                    <div class="flight-row">
-                        <span class="label">回程 07/12</span>
-                        <p>中華航空 CI187 | PUS 20:00 ➔ TPE 21:20</p>
-                    </div>
-                </div>
-            </div>
+<!-- OVERVIEW PAGE -->
+<div class="page active" id="page-overview">
+  <div class="page-scroll">
 
-            <div class="card">
-                <h3>住宿資訊</h3>
-                <div class="stay-info">
-                    <div class="stay-item">
-                        <p class="stay-name">Yeobak Stay (金蓮山站)</p>
-                        <p class="stay-date">07/08 - 07/10</p>
-                        <a href="https://www.airbnb.com.tw/rooms/1594131752343628102" class="btn-link">查看 Airbnb 訂單</a>
-                    </div>
-                    <div class="stay-item">
-                        <p class="stay-name">Urban Cozy (田浦站)</p>
-                        <p class="stay-date">07/10 - 07/12</p>
-                        <a href="https://www.airbnb.com.tw/rooms/1543081715862743106" class="btn-link">查看 Airbnb 訂單</a>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <div class="section-title">航班資訊</div>
+    <div class="card">
+      <div class="flight-row">
+        <div>
+          <div class="flight-badge">去程</div>
+          <div class="flight-city">TPE</div>
+          <div class="flight-time">07/08 · 06:15</div>
+        </div>
+        <div class="flight-arrow">
+          <div class="flight-info">CI 190</div>
+          <div class="flight-line"></div>
+          <div class="flight-info">中華航空</div>
+        </div>
+        <div style="text-align:right">
+          <div class="flight-city">PUS</div>
+          <div class="flight-time">07/08 · 09:30</div>
+        </div>
+      </div>
+      <div class="flight-row">
+        <div>
+          <div class="flight-badge">回程</div>
+          <div class="flight-city">PUS</div>
+          <div class="flight-time">07/12 · 20:00</div>
+        </div>
+        <div class="flight-arrow">
+          <div class="flight-info">CI 187</div>
+          <div class="flight-line"></div>
+          <div class="flight-info">中華航空</div>
+        </div>
+        <div style="text-align:right">
+          <div class="flight-city">TPE</div>
+          <div class="flight-time">07/12 · 21:20</div>
+        </div>
+      </div>
+    </div>
 
-        <!-- 行程頁面 -->
-        <section id="itinerary" class="page">
-            <div class="day-tabs">
-                <button class="day-tab active" onclick="showDay(1)">Day 1</button>
-                <button class="day-tab" onclick="showDay(2)">Day 2</button>
-                <button class="day-tab" onclick="showDay(3)">Day 3</button>
-                <button class="day-tab" onclick="showDay(4)">Day 4</button>
-                <button class="day-tab" onclick="showDay(5)">Day 5</button>
-            </div>
-            <div id="day-content">
-                <!-- 由 script.js 動態渲染 -->
-            </div>
-        </section>
+    <div class="section-title">住宿資訊</div>
+    <div class="card">
+      <div class="stay-item">
+        <div class="stay-dot dot-lavender"></div>
+        <div>
+          <div class="stay-dates">07/08 — 07/10 · 2 晚</div>
+          <div class="stay-name">Yeobak Stay</div>
+          <div style="font-size:11px;color:var(--text-soft);margin-top:2px;">金蓮山站 / 廣安里區域</div>
+          <a class="stay-link" href="https://naver.me/5Vx8RWf6" target="_blank">導航</a>
+        </div>
+      </div>
+      <div class="stay-item">
+        <div class="stay-dot dot-blue"></div>
+        <div>
+          <div class="stay-dates">07/10 — 07/12 · 2 晚</div>
+          <div class="stay-name">Urban Cozy</div>
+          <div style="font-size:11px;color:var(--text-soft);margin-top:2px;">田浦站 / 西面區域</div>
+          <a class="stay-link" href="https://naver.me/xWzXDkLz" target="_blank">導航</a>
+        </div>
+      </div>
+    </div>
 
-        <!-- 記帳頁面 -->
-        <section id="expenses" class="page">
-            <div class="card total-card">
-                <h3>總支出預算</h3>
-                <p class="total-amount">TWD <span id="grand-total">0</span></p>
-            </div>
-            <div class="card">
-                <h3>新增支出</h3>
-                <input type="text" id="exp-name" placeholder="項目名稱">
-                <div class="input-group">
-                    <input type="number" id="exp-amount" placeholder="金額">
-                    <select id="exp-currency">
-                        <option value="TWD">台幣 (TWD)</option>
-                        <option value="KRW">韓元 (KRW)</option>
-                    </select>
-                </div>
-                <select id="exp-category">
-                    <option>機票</option>
-                    <option>住宿</option>
-                    <option>網卡</option>
-                    <option>飲食</option>
-                    <option>交通</option>
-                    <option>購物</option>
-                    <option>伴手禮</option>
-                    <option>保險</option>
-                </select>
-                <button class="btn-add" onclick="addExpense()">新增紀錄</button>
-            </div>
-            <div id="expense-list"></div>
-        </section>
+    <div class="section-title">行程總覽</div>
+    <div class="card" style="padding:14px 18px;">
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:38px;height:38px;background:var(--lavender-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--lavender);flex-shrink:0;">D1</div>
+          <div><div style="font-size:13px;font-weight:700;">07/08 (三) · Busan is Good</div><div style="font-size:11px;color:var(--text-soft);">機張 · Skyline Luge · 廣安大橋</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:38px;height:38px;background:var(--baby-blue-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#5a9bc8;flex-shrink:0;">D2</div>
+          <div><div style="font-size:13px;font-weight:700;">07/09 (四) · 大邱一日遊</div><div style="font-size:11px;color:var(--text-soft);">大邱大 · 半月堂 · 東城路</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:38px;height:38px;background:var(--lavender-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--lavender);flex-shrink:0;">D3</div>
+          <div><div style="font-size:13px;font-weight:700;">07/10 (五) · 逛街血拚日</div><div style="font-size:11px;color:var(--text-soft);">新世界百貨 · 廣安里 · 西面</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:38px;height:38px;background:var(--baby-blue-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#5a9bc8;flex-shrink:0;">D4</div>
+          <div><div style="font-size:13px;font-weight:700;">07/11 (六) · 變漂亮之路</div><div style="font-size:11px;color:var(--text-soft);">醫美 · 荒山嶺夜景</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:38px;height:38px;background:var(--lavender-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--lavender);flex-shrink:0;">D5</div>
+          <div><div style="font-size:13px;font-weight:700;">07/12 (日) · 最後一頁</div><div style="font-size:11px;color:var(--text-soft);">影島海女村 · 白淺灘文化村 · 回台</div></div>
+        </div>
+      </div>
+    </div>
 
-        <!-- 準備頁面 -->
-        <section id="prep" class="page">
-            <div class="card">
-                <h3>行李打包清單</h3>
-                <div class="packing-section">
-                    <h4>隨身背包</h4>
-                    <ul id="list-personal" class="check-list"></ul>
-                    <input type="text" id="input-personal" placeholder="新增項目..." onkeypress="handlePackEnter(event, 'personal')">
-                </div>
-                <div class="packing-section">
-                    <h4>手提行李</h4>
-                    <ul id="list-carryon" class="check-list"></ul>
-                    <input type="text" id="input-carryon" placeholder="新增項目..." onkeypress="handlePackEnter(event, 'carryon')">
-                </div>
-                <div class="packing-section">
-                    <h4>托運行李</h4>
-                    <ul id="list-checked" class="check-list"></ul>
-                    <input type="text" id="input-checked" placeholder="新增項目..." onkeypress="handlePackEnter(event, 'checked')">
-                </div>
-            </div>
-            <div class="card">
-                <h3>韓國購買清單</h3>
-                <ul id="list-shopping" class="check-list"></ul>
-                <input type="text" id="input-shopping" placeholder="想要買的東西..." onkeypress="handlePackEnter(event, 'shopping')">
-            </div>
-        </section>
-    </main>
+  </div>
+</div>
 
-    <nav class="bottom-nav">
-        <button onclick="switchPage('overview')" class="nav-item active">總覽</button>
-        <button onclick="switchPage('itinerary')" class="nav-item">行程</button>
-        <button onclick="switchPage('expenses')" class="nav-item">記帳</button>
-        <button onclick="switchPage('prep')" class="nav-item">準備</button>
-    </nav>
+<!-- ITINERARY PAGE -->
+<div class="page" id="page-itinerary">
+  <div class="page-scroll">
+    <div class="day-tabs" id="day-tabs">
+      <button class="day-tab active" onclick="switchDay(0, this)">Day 1<br><span style="font-size:10px;opacity:0.7;">07/08</span></button>
+      <button class="day-tab" onclick="switchDay(1, this)">Day 2<br><span style="font-size:10px;opacity:0.7;">07/09</span></button>
+      <button class="day-tab" onclick="switchDay(2, this)">Day 3<br><span style="font-size:10px;opacity:0.7;">07/10</span></button>
+      <button class="day-tab" onclick="switchDay(3, this)">Day 4<br><span style="font-size:10px;opacity:0.7;">07/11</span></button>
+      <button class="day-tab" onclick="switchDay(4, this)">Day 5<br><span style="font-size:10px;opacity:0.7;">07/12</span></button>
+    </div>
+    <div id="itinerary-content"></div>
+  </div>
+</div>
 
-    <script src="script.js"></script>
+<!-- ACCOUNTING PAGE -->
+<div class="page" id="page-account">
+  <div class="page-scroll">
+    <div class="total-card">
+      <div class="total-label">總支出</div>
+      <div class="total-amount" id="total-display">KRW 0</div>
+      <div class="total-sub" id="total-sub">TWD 0 · 共 0 筆</div>
+    </div>
+
+    <div class="add-expense-card">
+      <div class="section-title" style="margin-top:0;">新增支出</div>
+      <label class="form-label">項目名稱</label>
+      <input class="form-input" id="exp-name" placeholder="例：烤腸韓牛" />
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">金額</label>
+          <input class="form-input" id="exp-amount" type="number" placeholder="0" style="margin-bottom:0" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">幣別</label>
+          <div class="currency-toggle">
+            <button class="currency-opt active" id="cur-krw" onclick="setCurrency('KRW')">KRW</button>
+            <button class="currency-opt" id="cur-twd" onclick="setCurrency('TWD')">TWD</button>
+          </div>
+        </div>
+      </div>
+
+      <label class="form-label" style="margin-top:12px;">分類</label>
+      <select class="form-select" id="exp-cat">
+        <option>飲食</option>
+        <option>交通</option>
+        <option>購物</option>
+        <option>住宿</option>
+        <option>機票</option>
+        <option>網卡</option>
+        <option>伴手禮</option>
+        <option>保險</option>
+      </select>
+
+      <button class="add-btn" onclick="addExpense()">新增</button>
+    </div>
+
+    <div class="section-title">支出紀錄</div>
+    <div class="expense-list" id="expense-list">
+      <div class="empty-state">尚無支出紀錄</div>
+    </div>
+  </div>
+</div>
+
+<!-- LUGGAGE PAGE -->
+<div class="page" id="page-luggage">
+  <div class="page-scroll">
+    <div class="luggage-tabs">
+      <button class="luggage-tab active" onclick="switchLuggage('backpack', this)">隨身背包</button>
+      <button class="luggage-tab" onclick="switchLuggage('cabin', this)">手提行李</button>
+      <button class="luggage-tab" onclick="switchLuggage('checked', this)">托運行李</button>
+      <button class="luggage-tab" onclick="switchLuggage('korea', this)">韓國購買</button>
+    </div>
+
+    <div class="luggage-add-row">
+      <input class="luggage-add-input" id="luggage-input" placeholder="新增項目..." />
+      <button class="luggage-add-btn" onclick="addLuggageItem()">新增</button>
+    </div>
+
+    <div id="luggage-list"></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-item active" onclick="switchPage('overview', this)">
+    <span class="nav-label">總覽</span>
+    <div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" onclick="switchPage('itinerary', this)">
+    <span class="nav-label">行程</span>
+    <div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" onclick="switchPage('account', this)">
+    <span class="nav-label">記帳</span>
+    <div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" onclick="switchPage('luggage', this)">
+    <span class="nav-label">準備</span>
+    <div class="nav-dot"></div>
+  </button>
+</nav>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+
+const itineraryData = [
+  // Day 1 - 07/08 (三)
+  {
+    dayLabel: "Day 1 · 07/08 (三) · 抵達釜山",
+    items: [
+      { time: "06:15-09:00", place: "飛機上補眠中", transport: [{type:"blue", label:"中華航空 CI190"}] },
+      { time: "09:30-11:00", place: "前往民宿 · 放行李", transport: [{type:"purple", label:"輕軌：空港站→沙上站"<br>}, {type:"purple", label:"地鐵：沙上站→金蓮山站"}] },
+      { time: "12:00-13:00", place: "午餐한다솥<br>鮑魚粥 ", transport: [{type:"purple", label:"地鐵：奧希利亞站"}] },
+      { time: "13:30-15:00", place: "Skyline Luge", transport: [{type:"purple", label:"步行"}] },
+      { time: "15:30-16:30", place: "咖啡廳<br>Music Complex", transport: [{type:"green", label:"步行"}] },
+      { time: "17:00-18:30", place: "LOTTE MALL<br>*若時間太晚則略過", transport: [{type:"green", label:"步行"}], timeNote:"記得帶護照" },
+      { time: "19:00-20:30", place: "晚餐도박이/수변<br>豬肉血腸湯飯", transport: [{type:"green", label:"地鐵：廣安站"}] },
+      { time: "21:00-21:30", place: "Olive Young", transport: [{type:"green", label:"步行"}], timeNote:"記得帶護照" },
+      { time: "22:00-23:30", place: "廣安大橋晃晃<br>Corduroy Fellaz", transport: [{type:"green", label:"步行"}], timeNote:"記得帶護照" },
+    ]
+  },
+  // Day 2 - 07/09 (四) 大邱
+  {
+    dayLabel: "Day 2 · 07/09 (四) · 大邱一日遊",
+    items: [
+      { time: "09:00", place: "前往大邱", transport: [{type:"purple", label:"地鐵 金蓮山站→西面站→釜山站"}, {type:"blue", label:"KTX 釜山→東大邱（需先訂票）"}], timeNote:"約 20 分鐘車程" },
+      { time: "11:00", place: "午餐 한다솥 · 鮑魚粥", transport: [{type:"purple", label:"地鐵 奧希利亞站"}], timeNote:"每日 11:00–21:00" },
+      { time: "12:30", place: "大邱大食堂 · 辣炒章魚", transport: [{type:"green", label:"步行 / 計程車"}], timeNote:"" },
+      { time: "14:00", place: "半月堂晃晃", transport: [{type:"blue", label:"公車轉地鐵"}], timeNote:"" },
+      { time: "16:00", place: "咖啡廳 Music Complex", transport: [{type:"green", label:"步行"}], timeNote:"每日 12:00–23:00" },
+      { time: "21:00", place: "返回釜山", transport: [{type:"blue", label:"KTX 東大邱→釜山（需先訂票）"}, {type:"purple", label:"地鐵 釜山站→西面站→金蓮山站"}], timeNote:"" },
+    ]
+  },
+  // Day 3 - 07/10 (五) 廣安里+西面
+  {
+    dayLabel: "Day 3 · 07/10 (五) · 廣安里＋西面",
+    items: [
+      { time: "10:00", place: "午餐 영도해녀촌 · 影島海女村", transport: [{type:"purple", label:"地鐵 田浦站→西面站→南浦站"}, {type:"blue", label:"公車 南浦站 508/7/71號→南高橋站"}], timeNote:"盡量提早出門" },
+      { time: "12:00", place: "午餐 동면식 · 麵線＆餃子", transport: [{type:"purple", label:"地鐵 廣安站"}], timeNote:"" },
+      { time: "13:00", place: "醫美", transport: [], timeNote:"10:00–16:00 · 14:30停止收客 · 需先預約" },
+      { time: "14:30", place: "廣安里晃晃", transport: [{type:"green", label:"步行"}], timeNote:"" },
+      { time: "15:30", place: "咖啡廳 접속", transport: [{type:"green", label:"步行"}], timeNote:"" },
+      { time: "17:00", place: "搬家 · 移至西面民宿", transport: [{type:"purple", label:"地鐵 金蓮山站→田浦站"}], timeNote:"" },
+      { time: "18:30", place: "晚餐 아는오빠 · 大排檔", transport: [{type:"purple", label:"田浦站步行"}], timeNote:"每日 18:00–04:00" },
+      { time: "20:30", place: "荒嶺山觀景台 · 看夜景", transport: [{type:"green", label:"計程車"}], timeNote:"" },
+      { time: "22:00", place: "廣安大橋晃晃", transport: [{type:"green", label:"計程車 / 步行"}], timeNote:"" },
+      { time: "23:00", place: "Corduroy Fellaz", transport: [{type:"green", label:"步行"}], timeNote:"" },
+    ]
+  },
+  // Day 4 - 07/11 (六) 西面
+  {
+    dayLabel: "Day 4 · 07/11 (六) · 西面",
+    items: [
+      { time: "11:00", place: "午餐 하연정 · 嫩豆腐鍋", transport: [{type:"purple", label:"西面站"}], timeNote:"每日 11:00–20:00" },
+      { time: "13:30", place: "白淺灘文化村", transport: [{type:"green", label:"計程車"}], timeNote:"" },
+      { time: "13:30", place: "Skyline Luge", transport: [{type:"green", label:"計程車"}], timeNote:"每日 10:00–18:00 · 需先訂票" },
+      { time: "15:30", place: "咖啡廳 隨意找", transport: [{type:"green", label:"步行"}], timeNote:"也可回飯店休息" },
+      { time: "17:00", place: "LOTTE MALL", transport: [{type:"purple", label:"步行 / 地鐵"}], timeNote:"若時間太晚則略過 · 每日 10:30–21:00" },
+      { time: "18:30", place: "晚餐 그집뱃살 · 生魚片", transport: [{type:"purple", label:"西面站"}], timeNote:"16:30–02:00" },
+      { time: "19:00", place: "晚餐 도박이/수변 · 豬肉血腸湯飯", transport: [{type:"purple", label:"廣安站步行"}], timeNote:"24小時" },
+      { time: "21:00", place: "Oliveyoung", transport: [{type:"green", label:"步行"}], timeNote:"每日 11:00–23:00" },
+      { time: "23:00", place: "宵夜 · 叫炸雞外送", transport: [], timeNote:"" },
+    ]
+  },
+  // Day 5 - 07/12 (日) 返台
+  {
+    dayLabel: "Day 5 · 07/12 (日) · 返台",
+    items: [
+      { time: "12:00", place: "午餐 한다솥 · 鮑魚粥", transport: [{type:"purple", label:"地鐵 奧希利亞站"}], timeNote:"每日 11:00–21:00" },
+      { time: "15:00", place: "田浦站晃晃", transport: [{type:"purple", label:"田浦站步行"}], timeNote:"" },
+      { time: "17:00", place: "回飯店拿行李", transport: [], timeNote:"" },
+      { time: "17:30", place: "出發前往機場", transport: [{type:"purple", label:"地鐵 西面站→沙上站"}, {type:"blue", label:"輕軌 沙上站→空港站"}], timeNote:"晚餐在機場解決" },
+      { time: "20:00", place: "PUS 金海國際機場 · CI187 返台", transport: [{type:"blue", label:"中華航空 CI187"}], timeNote:"20:00 起飛 · 21:20 抵達 TPE" },
+    ]
+  }
+];
+
+// ============================================================
+// ITINERARY
+// ============================================================
+let currentDay = 0;
+
+function renderItinerary(dayIdx) {
+  const data = itineraryData[dayIdx];
+  const container = document.getElementById('itinerary-content');
+  let html = `<div class="day-label-bar">${data.dayLabel}</div>`;
+
+  data.items.forEach((item, i) => {
+    const isLast = i === data.items.length - 1;
+    const dotColor = i % 2 === 0 ? '' : 'blue';
+    let transportHtml = '';
+    item.transport.forEach(t => {
+      transportHtml += `<span class="transport-tag ${t.type === 'purple' ? 'purple' : t.type === 'green' ? 'green' : ''}">${t.label}</span>`;
+    });
+    const timeNoteHtml = item.timeNote ? `<div class="time-tag">${item.timeNote}</div>` : '';
+
+    html += `
+      <div class="schedule-item">
+        <div class="schedule-time-col"><div class="schedule-time">${item.time}</div></div>
+        <div class="schedule-line-col">
+          <div class="schedule-dot ${dotColor}"></div>
+          ${!isLast ? '<div class="schedule-connector"></div>' : ''}
+        </div>
+        <div>
+          <div class="schedule-card">
+            <div class="schedule-place">${item.place}</div>
+            <div>${transportHtml}</div>
+            ${timeNoteHtml}
+            <a class="naver-btn" href="https://map.naver.com/p/search/${encodeURIComponent(item.place)}" target="_blank">NAVER Maps</a>
+          </div>
+        </div>
+      </div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+function switchDay(idx, btn) {
+  currentDay = idx;
+  document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderItinerary(idx);
+}
+
+renderItinerary(0);
+
+// ============================================================
+// PAGE NAVIGATION
+// ============================================================
+function switchPage(name, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ============================================================
+// ACCOUNTING
+// ============================================================
+let expenses = JSON.parse(localStorage.getItem('busan_expenses') || '[]');
+let selectedCurrency = 'KRW';
+const KRW_TWD = 0.023;
+
+function setCurrency(cur) {
+  selectedCurrency = cur;
+  document.getElementById('cur-krw').classList.toggle('active', cur === 'KRW');
+  document.getElementById('cur-twd').classList.toggle('active', cur === 'TWD');
+}
+
+function addExpense() {
+  const name = document.getElementById('exp-name').value.trim();
+  const amount = parseFloat(document.getElementById('exp-amount').value);
+  const cat = document.getElementById('exp-cat').value;
+  if (!name || !amount) return;
+
+  expenses.push({ name, amount, currency: selectedCurrency, cat, id: Date.now() });
+  localStorage.setItem('busan_expenses', JSON.stringify(expenses));
+  document.getElementById('exp-name').value = '';
+  document.getElementById('exp-amount').value = '';
+  renderExpenses();
+}
+
+function deleteExpense(id) {
+  expenses = expenses.filter(e => e.id !== id);
+  localStorage.setItem('busan_expenses', JSON.stringify(expenses));
+  renderExpenses();
+}
+
+function renderExpenses() {
+  const list = document.getElementById('expense-list');
+  if (!expenses.length) { list.innerHTML = '<div class="empty-state">尚無支出紀錄</div>'; updateTotal(); return; }
+
+  list.innerHTML = expenses.map(e => {
+    const disp = e.currency === 'KRW'
+      ? `KRW ${e.amount.toLocaleString()}`
+      : `TWD ${e.amount.toLocaleString()}`;
+    return `<div class="expense-item">
+      <div class="expense-info">
+        <div class="expense-name">${e.name}</div>
+        <span class="expense-cat">${e.cat}</span>
+      </div>
+      <div>
+        <div class="expense-amount">${disp}</div>
+        <div class="expense-currency">${e.currency}</div>
+      </div>
+      <button class="expense-delete" onclick="deleteExpense(${e.id})">刪除</button>
+    </div>`;
+  }).join('');
+  updateTotal();
+}
+
+function updateTotal() {
+  let totalKRW = 0, totalTWD = 0;
+  expenses.forEach(e => {
+    if (e.currency === 'KRW') { totalKRW += e.amount; totalTWD += e.amount * KRW_TWD; }
+    else { totalTWD += e.amount; totalKRW += e.amount / KRW_TWD; }
+  });
+  document.getElementById('total-display').textContent = 'KRW ' + Math.round(totalKRW).toLocaleString();
+  document.getElementById('total-sub').textContent = `TWD ${Math.round(totalTWD).toLocaleString()} · 共 ${expenses.length} 筆`;
+}
+
+renderExpenses();
+
+// ============================================================
+// LUGGAGE
+// ============================================================
+const defaultLuggage = {
+  backpack: [
+    { name: '護照', qty: 1, done: false },
+    { name: '手機', qty: 1, done: false },
+    { name: '充電線', qty: 2, done: false },
+    { name: '行動電源', qty: 1, done: false },
+    { name: '錢包', qty: 1, done: false },
+    { name: '耳機', qty: 1, done: false },
+    { name: '口罩', qty: 5, done: false },
+    { name: '濕紙巾', qty: 1, done: false },
+    { name: '旅遊保險文件', qty: 1, done: false },
+    { name: '網卡', qty: 1, done: false },
+  ],
+  cabin: [
+    { name: '換洗衣物（隨身）', qty: 1, done: false },
+    { name: '盥洗用品', qty: 1, done: false },
+    { name: '充電器', qty: 1, done: false },
+    { name: '筆電 / iPad', qty: 1, done: false },
+    { name: '頸枕', qty: 1, done: false },
+    { name: '眼罩', qty: 1, done: false },
+  ],
+  checked: [
+    { name: '衣服（5天份）', qty: 5, done: false },
+    { name: '洗髮精', qty: 1, done: false },
+    { name: '沐浴乳', qty: 1, done: false },
+    { name: '防曬乳', qty: 1, done: false },
+    { name: '雨傘 / 折傘', qty: 1, done: false },
+    { name: '拖鞋', qty: 1, done: false },
+    { name: '藥品', qty: 1, done: false },
+    { name: '空置購物袋', qty: 3, done: false },
+  ],
+  korea: [
+    { name: 'MISSHA 氣墊', qty: 1, done: false },
+    { name: 'COSRX 精華', qty: 1, done: false },
+    { name: '零食伴手禮', qty: 1, done: false },
+  ]
+};
+
+let luggageData = JSON.parse(localStorage.getItem('busan_luggage') || 'null') || JSON.parse(JSON.stringify(defaultLuggage));
+let currentLuggageCat = 'backpack';
+
+function saveLuggage() { localStorage.setItem('busan_luggage', JSON.stringify(luggageData)); }
+
+function switchLuggage(cat, btn) {
+  currentLuggageCat = cat;
+  document.querySelectorAll('.luggage-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderLuggage();
+}
+
+function addLuggageItem() {
+  const input = document.getElementById('luggage-input');
+  const val = input.value.trim();
+  if (!val) return;
+  luggageData[currentLuggageCat].push({ name: val, qty: 1, done: false });
+  saveLuggage();
+  input.value = '';
+  renderLuggage();
+}
+
+function toggleLuggage(idx) {
+  luggageData[currentLuggageCat][idx].done = !luggageData[currentLuggageCat][idx].done;
+  saveLuggage();
+  renderLuggage();
+}
+
+function changeQty(idx, delta) {
+  const item = luggageData[currentLuggageCat][idx];
+  item.qty = Math.max(1, item.qty + delta);
+  saveLuggage();
+  renderLuggage();
+}
+
+function deleteLuggage(idx) {
+  luggageData[currentLuggageCat].splice(idx, 1);
+  saveLuggage();
+  renderLuggage();
+}
+
+function renderLuggage() {
+  const items = luggageData[currentLuggageCat];
+  const list = document.getElementById('luggage-list');
+  if (!items.length) { list.innerHTML = '<div class="empty-state">清單是空的</div>'; return; }
+
+  list.innerHTML = items.map((item, i) => `
+    <div class="luggage-item">
+      <div class="luggage-check ${item.done ? 'checked' : ''}" onclick="toggleLuggage(${i})">
+        <span class="check-mark">✓</span>
+      </div>
+      <div class="luggage-name ${item.done ? 'done' : ''}">${item.name}</div>
+      <div class="qty-control">
+        <button class="qty-btn" onclick="changeQty(${i},-1)">−</button>
+        <span class="qty-num">${item.qty}</span>
+        <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
+      </div>
+      <button class="luggage-del" onclick="deleteLuggage(${i})">✕</button>
+    </div>`).join('');
+}
+
+renderLuggage();
+
+// ============================================================
+// LIVE DATE
+// ============================================================
+const now = new Date();
+document.getElementById('live-date').textContent =
+  now.toLocaleDateString('zh-TW', { month:'2-digit', day:'2-digit', weekday:'short' });
+</script>
 </body>
 </html>
