@@ -96,7 +96,7 @@
   .luggage-check.checked { background:linear-gradient(135deg,var(--lavender),var(--baby-blue)); border-color:transparent; }
   .check-mark { display:none; color:#fff; font-size:12px; font-weight:800; }
   .luggage-check.checked .check-mark { display:block; }
-  .luggage-name { flex:1; font-size:13px; font-weight:500; }
+  .luggage-name { flex:1; font-size:14px; font-weight:500; }
   .luggage-name.done { color:var(--text-soft); text-decoration:line-through; }
   .qty-control { display:flex; align-items:center; gap:8px; margin-right:5px; }
   .qty-btn { width:26px; height:26px; border-radius:8px; border:1.5px solid var(--border); background:var(--warm-white); font-size:16px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--text-mid); line-height:1; font-family:var(--font); }
@@ -612,7 +612,7 @@ function renderLuggage() {
         + '<div class="luggage-check '+(item.done?'checked':'')+'" onclick="toggleLuggage('+i+')"><span class="check-mark">✓</span></div>'
         + thumbHtml
         + '<div class="luggage-name '+(item.done?'done':'')+'" style="flex:1">'+item.name
-        + (item.note ? '<div style="font-size:10px;color:var(--text-soft);font-weight:400;margin-top:2px;">'+item.note+'</div>' : '')
+        + (item.note ? '<div style="font-size:13px;color:var(--text-soft);font-weight:400;margin-top:2px;">'+item.note+'</div>' : '')
         + '</div>'
         + '<div class="qty-control">'
         + '<button class="qty-btn" onclick="changeQty('+i+',-1)">-</button>'
@@ -628,7 +628,7 @@ function renderLuggage() {
       return '<div class="luggage-item">'
         + '<div class="luggage-check '+(item.done?'checked':'')+'" onclick="toggleLuggage('+i+')"><span class="check-mark">✓</span></div>'
         + '<div class="luggage-name '+(item.done?'done':'')+'" style="flex:1">'+item.name
-        + (item.note ? '<div style="font-size:10px;color:var(--text-soft);font-weight:400;margin-top:2px;">'+item.note+'</div>' : '')
+        + (item.note ? '<div style="font-size:13px;color:var(--text-soft);font-weight:400;margin-top:2px;">'+item.note+'</div>' : '')
         + '</div>'
         + '<div class="qty-control">'
         + '<button class="qty-btn" onclick="changeQty('+i+',-1)">-</button>'
