@@ -318,9 +318,10 @@
     </div>
 
     <!-- 一般分類（非購買清單）的新增列 -->
-    <div id="normal-add-row" style="display:flex;gap:8px;margin-bottom:14px;">
-      <input class="form-input" id="luggage-input" placeholder="新增項目..." style="margin-bottom:0" />
-      <button class="add-btn" onclick="addLuggageItem()" style="margin-top:0;width:auto;padding:0 20px;">新增</button>
+    <div id="normal-add-row" style="margin-bottom:14px;">
+      <input class="form-input" id="luggage-input" placeholder="品項名稱" style="margin-bottom:8px;" />
+      <input class="form-input" id="luggage-note" placeholder="備註說明" style="margin-bottom:0;" />
+      <button class="add-btn" onclick="addLuggageItem()">新增</button>
     </div>
 
     <!-- 購買清單的新增列（文字 + 上傳照片） -->
@@ -332,19 +333,18 @@
           <button class="remove-photo" onclick="clearPhoto()">✕</button>
         </div>
       </div>
-      <div class="shopping-add-row">
-        <input class="form-input" id="shopping-input" placeholder="品項名稱..." style="margin-bottom:0" />
-        <!-- 隱藏的 file input -->
+      <div style="display:flex;gap:8px;margin-bottom:8px;align-items:center;">
+        <input class="form-input" id="shopping-input" placeholder="品項名稱" style="margin-bottom:0;flex:1;" />
         <input type="file" id="photo-file-input" accept="image/*" style="display:none" onchange="handlePhotoSelect(event)" />
         <label for="photo-file-input" class="photo-upload-btn" title="上傳照片">
-          <!-- 相機 icon -->
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--lavender)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
             <circle cx="12" cy="13" r="4"/>
           </svg>
         </label>
-        <button class="add-btn" onclick="addShoppingItem()" style="margin-top:0;width:auto;padding:0 20px;flex-shrink:0;">新增</button>
       </div>
+      <input class="form-input" id="shopping-note" placeholder="備註說明" style="margin-bottom:0;" />
+      <button class="add-btn" onclick="addShoppingItem()">新增</button>
     </div>
 
     <div id="luggage-list"></div>
@@ -403,8 +403,8 @@ var itineraryData = [
   {
     dayLabel: "Day 4 · 07/11 (六) · 變漂亮之路",
     items: [
-      { time:"09:30-11:30", place:"午餐 Dino Brunch & Dining",        transport:[{type:"blue",   label:"步行"}],                                                                          url:"https://naver.me/FZ277ygI" },
-      { time:"12:00-15:30", place:"醫美",                        transport:[{type:"purple", label:"步行"}],                                                                                   url:"https://naver.me/FQV8nnS9" },
+      { time:"11:00-12:30", place:"午餐 하연정 嫩豆腐鍋",        transport:[{type:"blue",   label:"地鐵：西面站"}],                                                                          url:"https://naver.me/F42HsyRG" },
+      { time:"12:30-15:30", place:"醫美",                        transport:[{type:"purple", label:"步行"}],                                                                                   url:"https://naver.me/FQV8nnS9" },
       { time:"15:30-18:00", place:"田浦站晃晃" },
       { time:"18:00-19:30", place:"晚餐 그집뱃살 生魚片",        transport:[{type:"blue",   label:"地鐵：西面站"}],                                                                          url:"https://naver.me/xxY2Ul3S" },
       { time:"19:30-22:30", place:"荒嶺山觀景台看夜景",          transport:[{type:"purple", label:"計程車"}],                                                                                 url:"https://naver.me/Fbq9QkVy" }
@@ -527,7 +527,7 @@ function switchLuggage(cat, btn) {
   btn.classList.add('active');
   // 切換新增列
   var isShop = cat === 'shopping';
-  document.getElementById('normal-add-row').style.display = isShop ? 'none' : 'flex';
+  document.getElementById('normal-add-row').style.display = isShop ? 'none' : 'block';
   document.getElementById('shopping-add-row').style.display = isShop ? 'block' : 'none';
   if (!isShop) clearPhoto();
   renderLuggage();
@@ -558,9 +558,11 @@ function addShoppingItem() {
   var val = document.getElementById('shopping-input').value.trim();
   if (!val && !pendingPhotoDataUrl) return;
   var name = val || '（未命名）';
-  luggageData.shopping.push({name:name, done:false, qty:1, photo: pendingPhotoDataUrl || null});
+  var note = document.getElementById('shopping-note').value.trim();
+  luggageData.shopping.push({name:name, done:false, qty:1, photo: pendingPhotoDataUrl || null, note:note||''});
   localStorage.setItem('busan_luggage', JSON.stringify(luggageData));
   document.getElementById('shopping-input').value = '';
+  document.getElementById('shopping-note').value = '';
   clearPhoto();
   renderLuggage();
 }
@@ -569,9 +571,11 @@ function addShoppingItem() {
 function addLuggageItem() {
   var val = document.getElementById('luggage-input').value.trim();
   if (!val) return;
-  luggageData[currentLuggageCat].push({name:val, done:false, qty:1});
+  var note = document.getElementById('luggage-note').value.trim();
+  luggageData[currentLuggageCat].push({name:val, done:false, qty:1, note:note||''});
   localStorage.setItem('busan_luggage', JSON.stringify(luggageData));
   document.getElementById('luggage-input').value = '';
+  document.getElementById('luggage-note').value = '';
   renderLuggage();
 }
 
@@ -607,7 +611,9 @@ function renderLuggage() {
       return '<div class="shopping-item">'
         + '<div class="luggage-check '+(item.done?'checked':'')+'" onclick="toggleLuggage('+i+')"><span class="check-mark">✓</span></div>'
         + thumbHtml
-        + '<div class="luggage-name '+(item.done?'done':'')+'" style="flex:1">'+item.name+'</div>'
+        + '<div class="luggage-name '+(item.done?'done':'')+'" style="flex:1">'+item.name
+        + (item.note ? '<div style="font-size:10px;color:var(--text-soft);font-weight:400;margin-top:2px;">'+item.note+'</div>' : '')
+        + '</div>'
         + '<div class="qty-control">'
         + '<button class="qty-btn" onclick="changeQty('+i+',-1)">-</button>'
         + '<span class="qty-num">'+(item.qty||1)+'</span>'
@@ -621,7 +627,9 @@ function renderLuggage() {
     list.innerHTML = items.map(function(item, i) {
       return '<div class="luggage-item">'
         + '<div class="luggage-check '+(item.done?'checked':'')+'" onclick="toggleLuggage('+i+')"><span class="check-mark">✓</span></div>'
-        + '<div class="luggage-name '+(item.done?'done':'')+'" style="flex:1">'+item.name+'</div>'
+        + '<div class="luggage-name '+(item.done?'done':'')+'" style="flex:1">'+item.name
+        + (item.note ? '<div style="font-size:10px;color:var(--text-soft);font-weight:400;margin-top:2px;">'+item.note+'</div>' : '')
+        + '</div>'
         + '<div class="qty-control">'
         + '<button class="qty-btn" onclick="changeQty('+i+',-1)">-</button>'
         + '<span class="qty-num">'+(item.qty||1)+'</span>'
