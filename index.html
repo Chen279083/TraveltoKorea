@@ -419,6 +419,7 @@ function setCurrency(cur){
   document.getElementById('cur-twd').classList.toggle('active',cur==='TWD');
 }
 function addExpense(){
+  if(!_lock()) return;
   var name=document.getElementById('exp-name').value.trim();
   var amount=parseFloat(document.getElementById('exp-amount').value);
   if(!name||!amount)return;
@@ -494,7 +495,16 @@ function clearPhoto(){
   document.getElementById('photo-preview-area').style.display='none';
 }
 
+var _addLock = false;
+function _lock() {
+  if (_addLock) return false;
+  _addLock = true;
+  setTimeout(function(){ _addLock = false; }, 600);
+  return true;
+}
+
 function addShoppingItem(){
+  if(!_lock()) return;
   var val=document.getElementById('shopping-input').value.trim();
   if(!val&&!pendingPhotoDataUrl)return;
   var note=document.getElementById('shopping-note').value.trim();
@@ -507,6 +517,7 @@ function addShoppingItem(){
 }
 
 function addLuggageItem(){
+  if(!_lock()) return;
   var val=document.getElementById('luggage-input').value.trim();
   if(!val)return;
   var note=document.getElementById('luggage-note').value.trim();
