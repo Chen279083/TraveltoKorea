@@ -413,6 +413,16 @@ function switchPage(name,btn){
 // ============================================================
 var expenses=JSON.parse(localStorage.getItem('busan_expenses')||'[]');
 var selectedCurrency='KRW';
+
+// 防抖鎖：所有新增操作共用，600ms 內只能觸發一次
+var _addLock=false;
+function _lock(){
+  if(_addLock)return false;
+  _addLock=true;
+  setTimeout(function(){_addLock=false;},600);
+  return true;
+}
+
 function setCurrency(cur){
   selectedCurrency=cur;
   document.getElementById('cur-krw').classList.toggle('active',cur==='KRW');
@@ -493,14 +503,6 @@ function clearPhoto(){
   pendingPhotoDataUrl=null;
   document.getElementById('photo-preview-img').src='';
   document.getElementById('photo-preview-area').style.display='none';
-}
-
-var _addLock = false;
-function _lock() {
-  if (_addLock) return false;
-  _addLock = true;
-  setTimeout(function(){ _addLock = false; }, 600);
-  return true;
 }
 
 function addShoppingItem(){
