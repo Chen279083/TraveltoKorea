@@ -91,7 +91,23 @@
   .expense-delete { background:#ffe8e8; color:#c06060; border:none; border-radius:8px; padding:6px 10px; font-size:12px; cursor:pointer; font-weight:600; font-family:var(--font); }
 
   /* 準備清單通用 */
-  .luggage-item { background:var(--card-bg); border-radius:var(--radius-sm); padding:12px 14px; margin-bottom:8px; display:flex; align-items:center; gap:10px; box-shadow:var(--shadow-sm); border:1px solid var(--border); }
+  .luggage-item, .shopping-item {
+    background:var(--card-bg); border-radius:var(--radius-sm); padding:12px 14px;
+    margin-bottom:8px; display:flex; align-items:center; gap:10px;
+    box-shadow:var(--shadow-sm); border:1px solid var(--border);
+    transition: opacity 0.15s, transform 0.15s;
+    user-select: none; -webkit-user-select: none;
+  }
+  /* 拖曳中的樣式 */
+  .luggage-item.dragging, .shopping-item.dragging {
+    opacity: 0.4;
+    transform: scale(0.98);
+  }
+  /* 拖曳目標的插入指示線 */
+  .luggage-item.drag-over, .shopping-item.drag-over {
+    border-top: 2px solid var(--lavender);
+  }
+
   .luggage-check { width:22px; height:22px; border-radius:6px; border:2px solid var(--lavender-mid); flex-shrink:0; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.15s; }
   .luggage-check.checked { background:linear-gradient(135deg,var(--lavender),var(--baby-blue)); border-color:transparent; }
   .check-mark { display:none; color:#fff; font-size:12px; font-weight:800; }
@@ -102,90 +118,43 @@
   .qty-btn { width:26px; height:26px; border-radius:8px; border:1.5px solid var(--border); background:var(--warm-white); font-size:16px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--text-mid); line-height:1; font-family:var(--font); }
   .qty-num { font-size:13px; font-weight:800; min-width:18px; text-align:center; color:var(--text-dark); }
 
-  /* ── 購買清單專屬樣式 ── */
-  /* 新增列：文字 + 相機上傳並排 */
-  .shopping-add-row { display:flex; gap:8px; margin-bottom:14px; align-items:center; }
-  .shopping-add-row .form-input { margin-bottom:0; flex:1; }
-  /* 上傳照片按鈕（偽裝成 label） */
-  .photo-upload-btn {
+  /* 拖曳把手 */
+  .drag-handle {
     flex-shrink:0;
-    width:44px; height:44px;
-    border-radius:12px;
-    background:var(--lavender-light);
-    border:1.5px solid var(--lavender-mid);
-    display:flex; align-items:center; justify-content:center;
-    cursor:pointer;
-    transition:background 0.2s;
+    width:20px;
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+    align-items:center;
+    justify-content:center;
+    cursor:grab;
+    padding:4px 2px;
+    opacity:0.35;
   }
+  .drag-handle:active { cursor:grabbing; }
+  .drag-handle span {
+    display:block;
+    width:14px; height:2px;
+    background:var(--text-soft);
+    border-radius:2px;
+  }
+
+  /* 購買清單專屬 */
+  .photo-upload-btn { flex-shrink:0; width:44px; height:44px; border-radius:12px; background:var(--lavender-light); border:1.5px solid var(--lavender-mid); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background 0.2s; }
   .photo-upload-btn:active { background:var(--lavender-mid); }
   .photo-upload-btn svg { width:20px; height:20px; }
-  /* 預覽縮圖（新增時） */
-  .photo-preview-wrap {
-    position:relative;
-    width:54px; height:54px;
-    border-radius:10px;
-    overflow:hidden;
-    border:1.5px solid var(--lavender-mid);
-    flex-shrink:0;
-    background:var(--lavender-light);
-    display:flex; align-items:center; justify-content:center;
-  }
+  .photo-preview-wrap { position:relative; width:54px; height:54px; border-radius:10px; overflow:hidden; border:1.5px solid var(--lavender-mid); flex-shrink:0; background:var(--lavender-light); display:flex; align-items:center; justify-content:center; }
   .photo-preview-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
-  .photo-preview-wrap .remove-photo {
-    position:absolute; top:2px; right:2px;
-    width:16px; height:16px;
-    background:rgba(0,0,0,0.45);
-    border-radius:50%;
-    color:#fff; font-size:10px; font-weight:800;
-    display:flex; align-items:center; justify-content:center;
-    cursor:pointer;
-    line-height:1;
-    border:none;
-  }
-  /* 購買清單 item 卡片 */
-  .shopping-item {
-    background:var(--card-bg);
-    border-radius:var(--radius-sm);
-    padding:12px 14px;
-    margin-bottom:8px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    box-shadow:var(--shadow-sm);
-    border:1px solid var(--border);
-  }
-  /* 縮圖（item 內） */
-  .shopping-thumb {
-    width:52px; height:52px;
-    border-radius:10px;
-    object-fit:cover;
-    flex-shrink:0;
-    border:1.5px solid var(--lavender-mid);
-    cursor:pointer;
-    background:var(--lavender-light);
-  }
-  .shopping-thumb-placeholder {
-    width:52px; height:52px;
-    border-radius:10px;
-    flex-shrink:0;
-    border:1.5px dashed var(--lavender-mid);
-    background:var(--lavender-light);
-    display:flex; align-items:center; justify-content:center;
-  }
+  .photo-preview-wrap .remove-photo { position:absolute; top:2px; right:2px; width:16px; height:16px; background:rgba(0,0,0,0.45); border-radius:50%; color:#fff; font-size:10px; font-weight:800; display:flex; align-items:center; justify-content:center; cursor:pointer; line-height:1; border:none; }
+  .shopping-thumb { width:52px; height:52px; border-radius:10px; object-fit:cover; flex-shrink:0; border:1.5px solid var(--lavender-mid); cursor:pointer; background:var(--lavender-light); }
+  .shopping-thumb-placeholder { width:52px; height:52px; border-radius:10px; flex-shrink:0; border:1.5px dashed var(--lavender-mid); background:var(--lavender-light); display:flex; align-items:center; justify-content:center; }
   .shopping-thumb-placeholder svg { width:20px; height:20px; opacity:0.4; }
-  /* 點開的放大燈箱 */
-  .lightbox {
-    display:none;
-    position:fixed; inset:0;
-    background:rgba(0,0,0,0.72);
-    z-index:999;
-    align-items:center; justify-content:center;
-  }
+
+  .lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.72); z-index:999; align-items:center; justify-content:center; }
   .lightbox.open { display:flex; }
   .lightbox img { max-width:88vw; max-height:80vh; border-radius:16px; object-fit:contain; box-shadow:0 8px 40px rgba(0,0,0,0.4); }
   .lightbox-close { position:absolute; top:20px; right:20px; width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.2); border:none; color:#fff; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-family:var(--font); }
 
-  /* 底部導覽 */
   .bottom-nav { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:430px; background:rgba(255,255,255,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-top:1px solid rgba(184,169,217,0.2); padding:10px 0 calc(15px + env(safe-area-inset-bottom)); display:flex; justify-content:space-around; z-index:100; }
   .nav-item { display:flex; flex-direction:column; align-items:center; gap:2px; cursor:pointer; background:none; border:none; font-family:var(--font); width:25%; }
   .nav-dot { width:5px; height:5px; border-radius:50%; background:transparent; margin-top:2px; }
@@ -201,7 +170,6 @@
 </head>
 <body>
 
-<!-- 放大燈箱 -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
   <img id="lightbox-img" src="" alt="">
@@ -230,7 +198,6 @@
         <div class="flight-col right"><div class="flight-badge badge-ghost">回程</div><div class="flight-city">TPE</div><div class="flight-time">07/12 · 21:20</div></div>
       </div>
     </div>
-
     <div class="section-title">住宿資訊</div>
     <div class="card">
       <div class="stay-item">
@@ -252,7 +219,6 @@
         </div>
       </div>
     </div>
-
     <div class="section-title">行程總覽</div>
     <div class="card" style="padding:14px 18px;">
       <div style="display:flex;flex-direction:column;gap:10px;">
@@ -317,16 +283,13 @@
       <button class="day-tab" onclick="switchLuggage('shopping',this)">購買清單</button>
     </div>
 
-    <!-- 一般分類（非購買清單）的新增列 -->
     <div id="normal-add-row" style="margin-bottom:14px;">
       <input class="form-input" id="luggage-input" placeholder="品項名稱" style="margin-bottom:8px;" />
       <input class="form-input" id="luggage-note" placeholder="備註說明" style="margin-bottom:0;" />
       <button class="add-btn" onclick="addLuggageItem()">新增</button>
     </div>
 
-    <!-- 購買清單的新增列（文字 + 上傳照片） -->
     <div id="shopping-add-row" style="display:none;">
-      <!-- 預覽區 -->
       <div id="photo-preview-area" style="margin-bottom:10px;display:none;">
         <div class="photo-preview-wrap">
           <img id="photo-preview-img" src="" alt="預覽">
@@ -364,102 +327,83 @@
 // 行程資料
 // ============================================================
 var itineraryData = [
-  {
-    dayLabel: "Day 1 · 07/08 (三) · Busan is Good",
-    items: [
-      { time:"06:15-09:30", place:"飛機上補眠中",               transport:[{type:"purple", label:"中華航空 CI190"}],                                                                         timeNote:"06:15 起飛 · 09:30 抵達" },
-      { time:"09:30-11:00", place:"前往民宿 · 放行李",           transport:[{type:"purple", label:"輕軌：空港站→沙上站"},{type:"blue", label:"地鐵：沙上站→金蓮山站"}] },
-      { time:"12:00-13:30", place:"午餐 한다솥 鮑魚粥",          transport:[{type:"blue",   label:"地鐵：奧希利亞站"}],                                                                       url:"https://naver.me/5ZJxcmXX" },
-      { time:"13:30-15:30", place:"Skyline Luge",                transport:[{type:"purple", label:"步行"}],                                                                                   url:"https://naver.me/IDFUcLWo" },
-      { time:"15:30-16:30", place:"咖啡廳 Music Complex",        transport:[{type:"purple", label:"步行"}],                                                                                   url:"https://naver.me/GrmawSBe" },
-      { time:"16:30-18:30", place:"LOTTE MALL",                  transport:[{type:"purple", label:"步行"}],                                                                                   url:"https://naver.me/GwpMkOIT" },
-      { time:"18:30-20:30", place:"晚餐 토박이 豬肉血腸湯飯",    transport:[{type:"blue",   label:"地鐵：廣安站"}],                                                                           url:"https://naver.me/G4Wo3D8L" },
-      { time:"20:30-21:30", place:"Olive Young",                 transport:[{type:"purple", label:"步行"}] },
-      { time:"21:30-23:30", place:"廣安大橋 · Corduroy Fellaz",  transport:[{type:"purple", label:"步行"}],                                                                                   url:"https://naver.me/FJOIl40T" }
-    ]
-  },
-  {
-    dayLabel: "Day 2 · 07/09 (四) · 大邱一日遊",
-    items: [
-      { time:"09:00-11:00", place:"前往大邱",                    transport:[{type:"blue",   label:"地鐵：金蓮山站→西面站→釜山站"},{type:"purple", label:"KTX：釜山→東大邱"}] },
-      { time:"11:30-13:30", place:"午餐 大邱大食堂 辣炒章魚",    transport:[{type:"purple", label:"計程車"}],                                                                                 url:"https://naver.me/GEXhM3Vl" },
-      { time:"13:30-15:30", place:"半月堂晃晃",                  transport:[{type:"purple", label:"公車：河陽站下車"},{type:"blue", label:"地鐵：河陽站→半月堂站"}] },
-      { time:"15:30-17:30", place:"咖啡廳 접속",                 transport:[{type:"purple", label:"步行"}],                                                                                   url:"https://naver.me/5OQyT7jj" },
-      { time:"17:30-20:30", place:"晚餐 을찌로정 烤腸韓牛",      transport:[{type:"purple", label:"步行"}],                                                                                   url:"https://naver.me/GCvqQXrn" },
-      { time:"20:30",       place:"返回釜山",                    transport:[{type:"purple", label:"KTX：東大邱→釜山"},{type:"blue", label:"地鐵：釜山站→西面站→金蓮山站"}] }
-    ]
-  },
-  {
-    dayLabel: "Day 3 · 07/10 (五) · 逛街血拚日",
-    items: [
-      { time:"10:30-12:30", place:"新世界百貨",                  transport:[{type:"blue",   label:"地鐵：Centum City站"}],                                                                    url:"https://naver.me/5chuGOAf" },
-      { time:"12:30-14:00", place:"午餐 동면식 麵線＆餃子",      transport:[{type:"blue",   label:"地鐵：廣安站"}],                                                                           url:"https://naver.me/FDnC5nha" },
-      { time:"14:00-16:00", place:"廣安里晃晃",                  transport:[{type:"purple", label:"步行"}] },
-      { time:"16:00-17:30", place:"咖啡廳 CUP&CUP",                                                                                                                                          url:"https://naver.me/IDk3hTT1" },
-      { time:"17:30-18:30", place:"搬家 · 移至西面民宿",        transport:[{type:"blue",   label:"地鐵：金蓮山站→田浦站"}] },
-      { time:"18:30-21:30", place:"晚餐 아는오빠 大排檔",        transport:[{type:"purple", label:"步行"}],                                                                                   url:"https://naver.me/FK5dWmTD" }
-    ]
-  },
-  {
-    dayLabel: "Day 4 · 07/11 (六) · 變漂亮之路",
-    items: [
-      { time:"11:00-12:30", place:"午餐 하연정 嫩豆腐鍋",        transport:[{type:"blue",   label:"地鐵：西面站"}],                                                                          url:"https://naver.me/F42HsyRG" },
-      { time:"12:30-15:30", place:"醫美",                        transport:[{type:"purple", label:"步行"}],                                                                                   url:"https://naver.me/FQV8nnS9" },
-      { time:"15:30-18:00", place:"田浦站晃晃" },
-      { time:"18:00-19:30", place:"晚餐 그집뱃살 生魚片",        transport:[{type:"blue",   label:"地鐵：西面站"}],                                                                          url:"https://naver.me/xxY2Ul3S" },
-      { time:"19:30-22:30", place:"荒嶺山觀景台看夜景",          transport:[{type:"purple", label:"計程車"}],                                                                                 url:"https://naver.me/Fbq9QkVy" }
-    ]
-  },
-  {
-    dayLabel: "Day 5 · 07/12 (日) · 最後一頁",
-    items: [
-      { time:"09:30-12:00", place:"午餐 影島海女村",             transport:[{type:"blue",   label:"地鐵：田浦站→南浦站"},{type:"purple", label:"公車：南高橋站下車"}],                       url:"https://naver.me/GCvq1edv" },
-      { time:"12:00-13:30", place:"白淺灘文化村",                transport:[{type:"purple", label:"計程車"}],                                                                                 url:"https://naver.me/xLWAPvjS" },
-      { time:"13:30-15:00", place:"咖啡廳 해빙모먼트",           transport:[{type:"purple", label:"步行"}],                                                                                   url:"https://naver.me/5wrNDvAS" },
-      { time:"15:00-16:00", place:"拿行李",                      transport:[{type:"purple", label:"計程車"}] },
-      { time:"16:00-17:00", place:"出發前往機場",                transport:[{type:"blue",   label:"地鐵：西面站→沙上站"},{type:"purple", label:"輕軌：沙上站→空港站"}],                      timeNote:"晚餐在機場" },
-      { time:"20:00-21:20", place:"返台面對現實",                transport:[{type:"purple", label:"中華航空 CI187"}],                                                                         timeNote:"20:00 起飛 · 21:20 抵達" }
-    ]
-  }
+  { dayLabel:"Day 1 · 07/08 (三) · Busan is Good", items:[
+    { time:"06:15-09:30", place:"飛機上補眠中",              transport:[{type:"purple",label:"中華航空 CI190"}], timeNote:"06:15 起飛 · 09:30 抵達" },
+    { time:"09:30-11:00", place:"前往民宿 · 放行李",          transport:[{type:"purple",label:"輕軌：空港站→沙上站"},{type:"blue",label:"地鐵：沙上站→金蓮山站"}] },
+    { time:"12:00-13:30", place:"午餐 한다솥 鮑魚粥",         transport:[{type:"blue",label:"地鐵：奧希利亞站"}], url:"https://naver.me/5ZJxcmXX" },
+    { time:"13:30-15:30", place:"Skyline Luge",               transport:[{type:"purple",label:"步行"}], url:"https://naver.me/IDFUcLWo" },
+    { time:"15:30-16:30", place:"咖啡廳 Music Complex",       transport:[{type:"purple",label:"步行"}], url:"https://naver.me/GrmawSBe" },
+    { time:"16:30-18:30", place:"LOTTE MALL",                 transport:[{type:"purple",label:"步行"}], url:"https://naver.me/GwpMkOIT" },
+    { time:"18:30-20:30", place:"晚餐 토박이 豬肉血腸湯飯",   transport:[{type:"blue",label:"地鐵：廣安站"}], url:"https://naver.me/G4Wo3D8L" },
+    { time:"20:30-21:30", place:"Olive Young",                transport:[{type:"purple",label:"步行"}] },
+    { time:"21:30-23:30", place:"廣安大橋 · Corduroy Fellaz", transport:[{type:"purple",label:"步行"}], url:"https://naver.me/FJOIl40T" }
+  ]},
+  { dayLabel:"Day 2 · 07/09 (四) · 大邱一日遊", items:[
+    { time:"09:00-11:00", place:"前往大邱",                   transport:[{type:"blue",label:"地鐵：金蓮山站→西面站→釜山站"},{type:"purple",label:"KTX：釜山→東大邱"}] },
+    { time:"11:30-13:30", place:"午餐 大邱大食堂 辣炒章魚",   transport:[{type:"purple",label:"計程車"}], url:"https://naver.me/GEXhM3Vl" },
+    { time:"13:30-15:30", place:"半月堂晃晃",                 transport:[{type:"purple",label:"公車：河陽站下車"},{type:"blue",label:"地鐵：河陽站→半月堂站"}] },
+    { time:"15:30-17:30", place:"咖啡廳 접속",                transport:[{type:"purple",label:"步行"}], url:"https://naver.me/5OQyT7jj" },
+    { time:"17:30-20:30", place:"晚餐 을찌로정 烤腸韓牛",     transport:[{type:"purple",label:"步行"}], url:"https://naver.me/GCvqQXrn" },
+    { time:"20:30",       place:"返回釜山",                   transport:[{type:"purple",label:"KTX：東大邱→釜山"},{type:"blue",label:"地鐵：釜山站→西面站→金蓮山站"}] }
+  ]},
+  { dayLabel:"Day 3 · 07/10 (五) · 逛街血拚日", items:[
+    { time:"10:30-12:30", place:"新世界百貨",                 transport:[{type:"blue",label:"地鐵：Centum City站"}], url:"https://naver.me/5chuGOAf" },
+    { time:"12:30-14:00", place:"午餐 동면식 麵線＆餃子",     transport:[{type:"blue",label:"地鐵：廣安站"}], url:"https://naver.me/FDnC5nha" },
+    { time:"14:00-16:00", place:"廣安里晃晃",                 transport:[{type:"purple",label:"步行"}] },
+    { time:"16:00-17:30", place:"咖啡廳 CUP&CUP",            url:"https://naver.me/IDk3hTT1" },
+    { time:"17:30-18:30", place:"搬家 · 移至西面民宿",       transport:[{type:"blue",label:"地鐵：金蓮山站→田浦站"}] },
+    { time:"18:30-21:30", place:"晚餐 아는오빠 大排檔",       transport:[{type:"purple",label:"步行"}], url:"https://naver.me/FK5dWmTD" }
+  ]},
+  { dayLabel:"Day 4 · 07/11 (六) · 變漂亮之路", items:[
+    { time:"11:00-12:30", place:"午餐 하연정 嫩豆腐鍋",       transport:[{type:"blue",label:"地鐵：西面站"}], url:"https://naver.me/F42HsyRG" },
+    { time:"12:30-15:30", place:"醫美",                       transport:[{type:"purple",label:"步行"}], url:"https://naver.me/FQV8nnS9" },
+    { time:"15:30-18:00", place:"田浦站晃晃" },
+    { time:"18:00-19:30", place:"晚餐 그집뱃살 生魚片",       transport:[{type:"blue",label:"地鐵：西面站"}], url:"https://naver.me/xxY2Ul3S" },
+    { time:"19:30-22:30", place:"荒嶺山觀景台看夜景",         transport:[{type:"purple",label:"計程車"}], url:"https://naver.me/Fbq9QkVy" }
+  ]},
+  { dayLabel:"Day 5 · 07/12 (日) · 最後一頁", items:[
+    { time:"09:30-12:00", place:"午餐 影島海女村",            transport:[{type:"blue",label:"地鐵：田浦站→南浦站"},{type:"purple",label:"公車：南高橋站下車"}], url:"https://naver.me/GCvq1edv" },
+    { time:"12:00-13:30", place:"白淺灘文化村",               transport:[{type:"purple",label:"計程車"}], url:"https://naver.me/xLWAPvjS" },
+    { time:"13:30-15:00", place:"咖啡廳 해빙모먼트",          transport:[{type:"purple",label:"步行"}], url:"https://naver.me/5wrNDvAS" },
+    { time:"15:00-16:00", place:"拿行李",                     transport:[{type:"purple",label:"計程車"}] },
+    { time:"16:00-17:00", place:"出發前往機場",               transport:[{type:"blue",label:"地鐵：西面站→沙上站"},{type:"purple",label:"輕軌：沙上站→空港站"}], timeNote:"晚餐在機場" },
+    { time:"20:00-21:20", place:"返台面對現實",               transport:[{type:"purple",label:"中華航空 CI187"}], timeNote:"20:00 起飛 · 21:20 抵達" }
+  ]}
 ];
 
 function renderItinerary(dayIdx) {
   var data = itineraryData[dayIdx];
   var container = document.getElementById('itinerary-content');
-  var html = '<div class="day-label-bar">' + data.dayLabel + '</div>';
-  data.items.forEach(function(item, i) {
-    var transportHtml = '';
-    if (item.transport) {
-      item.transport.forEach(function(t) {
-        var cls = t.type === 'purple' ? 'purple' : t.type === 'green' ? 'green' : '';
-        transportHtml += '<span class="transport-tag ' + cls + '">' + t.label + '</span>';
-      });
-    }
-    var naverHtml = (item.url && item.url.trim() !== '')
-      ? '<a class="naver-btn" href="' + item.url + '" target="_blank">NAVER Maps</a>' : '';
-    html += '<div class="schedule-item">'
-      + '<div class="schedule-time-col"><div class="schedule-time">' + item.time + '</div></div>'
-      + '<div class="schedule-line-col"><div class="schedule-dot ' + (i%2===0?'':'blue') + '"></div>'
-      + (i < data.items.length-1 ? '<div class="schedule-connector"></div>' : '')
-      + '</div>'
-      + '<div style="flex:1"><div class="schedule-card">'
-      + '<div class="schedule-place">' + item.place + '</div>'
-      + '<div>' + transportHtml + '</div>'
-      + (item.timeNote ? '<div class="time-tag">' + item.timeNote + '</div>' : '')
-      + naverHtml + '</div></div></div>';
+  var html = '<div class="day-label-bar">'+data.dayLabel+'</div>';
+  data.items.forEach(function(item,i){
+    var tHtml='';
+    if(item.transport) item.transport.forEach(function(t){
+      var cls=t.type==='purple'?'purple':t.type==='green'?'green':'';
+      tHtml+='<span class="transport-tag '+cls+'">'+t.label+'</span>';
+    });
+    var nHtml=(item.url&&item.url.trim()!=='')?'<a class="naver-btn" href="'+item.url+'" target="_blank">NAVER Maps</a>':'';
+    html+='<div class="schedule-item">'
+      +'<div class="schedule-time-col"><div class="schedule-time">'+item.time+'</div></div>'
+      +'<div class="schedule-line-col"><div class="schedule-dot '+(i%2===0?'':'blue')+'"></div>'
+      +(i<data.items.length-1?'<div class="schedule-connector"></div>':'')+'</div>'
+      +'<div style="flex:1"><div class="schedule-card">'
+      +'<div class="schedule-place">'+item.place+'</div>'
+      +'<div>'+tHtml+'</div>'
+      +(item.timeNote?'<div class="time-tag">'+item.timeNote+'</div>':'')
+      +nHtml+'</div></div></div>';
   });
-  container.innerHTML = html;
+  container.innerHTML=html;
 }
-function switchDay(idx, btn) {
+function switchDay(idx,btn){
   document.querySelectorAll('.day-tab').forEach(function(t){t.classList.remove('active');});
   btn.classList.add('active');
   renderItinerary(idx);
 }
 renderItinerary(0);
 
-function switchPage(name, btn) {
+function switchPage(name,btn){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
-  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('page-'+name).classList.add('active');
   document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active');});
   btn.classList.add('active');
 }
@@ -467,33 +411,33 @@ function switchPage(name, btn) {
 // ============================================================
 // 記帳
 // ============================================================
-var expenses = JSON.parse(localStorage.getItem('busan_expenses') || '[]');
-var selectedCurrency = 'KRW';
-function setCurrency(cur) {
-  selectedCurrency = cur;
-  document.getElementById('cur-krw').classList.toggle('active', cur==='KRW');
-  document.getElementById('cur-twd').classList.toggle('active', cur==='TWD');
+var expenses=JSON.parse(localStorage.getItem('busan_expenses')||'[]');
+var selectedCurrency='KRW';
+function setCurrency(cur){
+  selectedCurrency=cur;
+  document.getElementById('cur-krw').classList.toggle('active',cur==='KRW');
+  document.getElementById('cur-twd').classList.toggle('active',cur==='TWD');
 }
-function addExpense() {
-  var name = document.getElementById('exp-name').value.trim();
-  var amount = parseFloat(document.getElementById('exp-amount').value);
-  if (!name || !amount) return;
-  expenses.push({name:name, amount:amount, currency:selectedCurrency, cat:document.getElementById('exp-cat').value, id:Date.now()});
-  localStorage.setItem('busan_expenses', JSON.stringify(expenses));
-  document.getElementById('exp-name').value = '';
-  document.getElementById('exp-amount').value = '';
+function addExpense(){
+  var name=document.getElementById('exp-name').value.trim();
+  var amount=parseFloat(document.getElementById('exp-amount').value);
+  if(!name||!amount)return;
+  expenses.push({name:name,amount:amount,currency:selectedCurrency,cat:document.getElementById('exp-cat').value,id:Date.now()});
+  localStorage.setItem('busan_expenses',JSON.stringify(expenses));
+  document.getElementById('exp-name').value='';
+  document.getElementById('exp-amount').value='';
   renderExpenses();
 }
-function deleteExpense(id) {
-  expenses = expenses.filter(function(e){return e.id!==id;});
-  localStorage.setItem('busan_expenses', JSON.stringify(expenses));
+function deleteExpense(id){
+  expenses=expenses.filter(function(e){return e.id!==id;});
+  localStorage.setItem('busan_expenses',JSON.stringify(expenses));
   renderExpenses();
 }
-function renderExpenses() {
-  var list = document.getElementById('expense-list');
-  if (!expenses.length) { list.innerHTML='<div class="empty-state">尚無支出紀錄</div>'; updateTotal(); return; }
-  list.innerHTML = expenses.map(function(e){
-    var disp = e.currency==='KRW' ? 'KRW '+e.amount.toLocaleString() : 'TWD '+e.amount.toLocaleString();
+function renderExpenses(){
+  var list=document.getElementById('expense-list');
+  if(!expenses.length){list.innerHTML='<div class="empty-state">尚無支出紀錄</div>';updateTotal();return;}
+  list.innerHTML=expenses.map(function(e){
+    var disp=e.currency==='KRW'?'KRW '+e.amount.toLocaleString():'TWD '+e.amount.toLocaleString();
     return '<div class="expense-item">'
       +'<div style="flex:1"><div style="font-weight:700">'+e.name+'</div>'
       +'<span style="font-size:10px;color:var(--lavender);background:var(--lavender-light);padding:2px 6px;border-radius:4px">'+e.cat+'</span></div>'
@@ -502,8 +446,8 @@ function renderExpenses() {
   }).join('');
   updateTotal();
 }
-function updateTotal() {
-  var totalKRW=0, totalTWD=0, rate=0.023;
+function updateTotal(){
+  var totalKRW=0,totalTWD=0,rate=0.023;
   expenses.forEach(function(e){
     if(e.currency==='KRW'){totalKRW+=e.amount;totalTWD+=e.amount*rate;}
     else{totalTWD+=e.amount;totalKRW+=e.amount/rate;}
@@ -516,140 +460,239 @@ renderExpenses();
 // ============================================================
 // 準備清單
 // ============================================================
-var luggageData = JSON.parse(localStorage.getItem('busan_luggage')) || {backpack:[],cabin:[],checked:[],shopping:[]};
-if (!luggageData.shopping) luggageData.shopping = []; // 舊資料補齊
-var currentLuggageCat = 'backpack';
-var pendingPhotoDataUrl = null; // 暫存待新增的照片 base64
+var luggageData=JSON.parse(localStorage.getItem('busan_luggage'))||{backpack:[],cabin:[],checked:[],shopping:[]};
+if(!luggageData.shopping)luggageData.shopping=[];
+var currentLuggageCat='backpack';
+var pendingPhotoDataUrl=null;
 
-function switchLuggage(cat, btn) {
-  currentLuggageCat = cat;
+function switchLuggage(cat,btn){
+  currentLuggageCat=cat;
   document.querySelectorAll('#page-luggage .day-tab').forEach(function(t){t.classList.remove('active');});
   btn.classList.add('active');
-  // 切換新增列
-  var isShop = cat === 'shopping';
-  document.getElementById('normal-add-row').style.display = isShop ? 'none' : 'block';
-  document.getElementById('shopping-add-row').style.display = isShop ? 'block' : 'none';
-  if (!isShop) clearPhoto();
+  var isShop=cat==='shopping';
+  document.getElementById('normal-add-row').style.display=isShop?'none':'block';
+  document.getElementById('shopping-add-row').style.display=isShop?'block':'none';
+  if(!isShop)clearPhoto();
   renderLuggage();
 }
 
-// ── 照片處理 ──
-function handlePhotoSelect(evt) {
-  var file = evt.target.files[0];
-  if (!file) return;
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    pendingPhotoDataUrl = e.target.result;
-    document.getElementById('photo-preview-img').src = pendingPhotoDataUrl;
-    document.getElementById('photo-preview-area').style.display = 'block';
+function handlePhotoSelect(evt){
+  var file=evt.target.files[0];
+  if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    pendingPhotoDataUrl=e.target.result;
+    document.getElementById('photo-preview-img').src=pendingPhotoDataUrl;
+    document.getElementById('photo-preview-area').style.display='block';
   };
   reader.readAsDataURL(file);
-  // 清空 input 讓同一張圖可再次選
-  evt.target.value = '';
+  evt.target.value='';
 }
-function clearPhoto() {
-  pendingPhotoDataUrl = null;
-  document.getElementById('photo-preview-img').src = '';
-  document.getElementById('photo-preview-area').style.display = 'none';
+function clearPhoto(){
+  pendingPhotoDataUrl=null;
+  document.getElementById('photo-preview-img').src='';
+  document.getElementById('photo-preview-area').style.display='none';
 }
 
-// ── 新增購買清單項目 ──
-function addShoppingItem() {
-  var val = document.getElementById('shopping-input').value.trim();
-  if (!val && !pendingPhotoDataUrl) return;
-  var name = val || '（未命名）';
-  var note = document.getElementById('shopping-note').value.trim();
-  luggageData.shopping.push({name:name, done:false, qty:1, photo: pendingPhotoDataUrl || null, note:note||''});
-  localStorage.setItem('busan_luggage', JSON.stringify(luggageData));
-  document.getElementById('shopping-input').value = '';
-  document.getElementById('shopping-note').value = '';
+function addShoppingItem(){
+  var val=document.getElementById('shopping-input').value.trim();
+  if(!val&&!pendingPhotoDataUrl)return;
+  var note=document.getElementById('shopping-note').value.trim();
+  luggageData.shopping.push({name:val||'（未命名）',done:false,qty:1,photo:pendingPhotoDataUrl||null,note:note||''});
+  localStorage.setItem('busan_luggage',JSON.stringify(luggageData));
+  document.getElementById('shopping-input').value='';
+  document.getElementById('shopping-note').value='';
   clearPhoto();
   renderLuggage();
 }
 
-// ── 一般清單新增 ──
-function addLuggageItem() {
-  var val = document.getElementById('luggage-input').value.trim();
-  if (!val) return;
-  var note = document.getElementById('luggage-note').value.trim();
-  luggageData[currentLuggageCat].push({name:val, done:false, qty:1, note:note||''});
-  localStorage.setItem('busan_luggage', JSON.stringify(luggageData));
-  document.getElementById('luggage-input').value = '';
-  document.getElementById('luggage-note').value = '';
+function addLuggageItem(){
+  var val=document.getElementById('luggage-input').value.trim();
+  if(!val)return;
+  var note=document.getElementById('luggage-note').value.trim();
+  luggageData[currentLuggageCat].push({name:val,done:false,qty:1,note:note||''});
+  localStorage.setItem('busan_luggage',JSON.stringify(luggageData));
+  document.getElementById('luggage-input').value='';
+  document.getElementById('luggage-note').value='';
   renderLuggage();
 }
 
-function toggleLuggage(i) {
-  luggageData[currentLuggageCat][i].done = !luggageData[currentLuggageCat][i].done;
-  localStorage.setItem('busan_luggage', JSON.stringify(luggageData));
+function toggleLuggage(i){
+  luggageData[currentLuggageCat][i].done=!luggageData[currentLuggageCat][i].done;
+  localStorage.setItem('busan_luggage',JSON.stringify(luggageData));
   renderLuggage();
 }
-function changeQty(i, delta) {
-  var item = luggageData[currentLuggageCat][i];
-  if (!item.qty) item.qty = 1;
-  item.qty = Math.max(1, item.qty + delta);
-  localStorage.setItem('busan_luggage', JSON.stringify(luggageData));
+function changeQty(i,delta){
+  var item=luggageData[currentLuggageCat][i];
+  if(!item.qty)item.qty=1;
+  item.qty=Math.max(1,item.qty+delta);
+  localStorage.setItem('busan_luggage',JSON.stringify(luggageData));
   renderLuggage();
 }
-function deleteLuggage(i) {
-  luggageData[currentLuggageCat].splice(i, 1);
-  localStorage.setItem('busan_luggage', JSON.stringify(luggageData));
+function deleteLuggage(i){
+  luggageData[currentLuggageCat].splice(i,1);
+  localStorage.setItem('busan_luggage',JSON.stringify(luggageData));
   renderLuggage();
 }
 
-function renderLuggage() {
-  var items = luggageData[currentLuggageCat];
-  var list = document.getElementById('luggage-list');
-  if (!items.length) { list.innerHTML='<div class="empty-state">清單是空的</div>'; return; }
+// ── 把手 SVG ──
+var HANDLE_SVG='<div class="drag-handle"><span></span><span></span><span></span></div>';
 
-  if (currentLuggageCat === 'shopping') {
-    // 購買清單：有照片縮圖
-    list.innerHTML = items.map(function(item, i) {
-      var thumbHtml = item.photo
-        ? '<img class="shopping-thumb" src="'+item.photo+'" alt="'+item.name+'" onclick="openLightbox(\''+encodeURIComponent(item.photo)+'\')" />'
-        : '<div class="shopping-thumb-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="var(--lavender-mid)" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>';
-      return '<div class="shopping-item">'
-        + '<div class="luggage-check '+(item.done?'checked':'')+'" onclick="toggleLuggage('+i+')"><span class="check-mark">✓</span></div>'
-        + thumbHtml
-        + '<div class="luggage-name '+(item.done?'done':'')+'" style="flex:1">'+item.name
-        + (item.note ? '<div style="font-size:13px;color:var(--text-soft);font-weight:400;margin-top:2px;">'+item.note+'</div>' : '')
-        + '</div>'
-        + '<div class="qty-control">'
-        + '<button class="qty-btn" onclick="changeQty('+i+',-1)">-</button>'
-        + '<span class="qty-num">'+(item.qty||1)+'</span>'
-        + '<button class="qty-btn" onclick="changeQty('+i+',1)">+</button>'
-        + '</div>'
-        + '<button onclick="deleteLuggage('+i+')" style="background:none;border:none;color:var(--text-soft);cursor:pointer;font-size:16px;font-family:var(--font);">✕</button>'
-        + '</div>';
+function renderLuggage(){
+  var items=luggageData[currentLuggageCat];
+  var list=document.getElementById('luggage-list');
+  if(!items.length){list.innerHTML='<div class="empty-state">清單是空的</div>';return;}
+
+  if(currentLuggageCat==='shopping'){
+    list.innerHTML=items.map(function(item,i){
+      var thumbHtml=item.photo
+        ?'<img class="shopping-thumb" src="'+item.photo+'" alt="'+item.name+'" onclick="openLightbox(\''+encodeURIComponent(item.photo)+'\')" />'
+        :'<div class="shopping-thumb-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="var(--lavender-mid)" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>';
+      return '<div class="shopping-item" draggable="true" data-idx="'+i+'">'
+        +HANDLE_SVG
+        +'<div class="luggage-check '+(item.done?'checked':'')+'" onclick="toggleLuggage('+i+')"><span class="check-mark">✓</span></div>'
+        +thumbHtml
+        +'<div class="luggage-name '+(item.done?'done':'')+'" style="flex:1">'+item.name
+        +(item.note?'<div style="font-size:13px;color:var(--text-soft);font-weight:400;margin-top:2px;">'+item.note+'</div>':'')
+        +'</div>'
+        +'<div class="qty-control">'
+        +'<button class="qty-btn" onclick="changeQty('+i+',-1)">-</button>'
+        +'<span class="qty-num">'+(item.qty||1)+'</span>'
+        +'<button class="qty-btn" onclick="changeQty('+i+',1)">+</button>'
+        +'</div>'
+        +'<button onclick="deleteLuggage('+i+')" style="background:none;border:none;color:var(--text-soft);cursor:pointer;font-size:16px;font-family:var(--font);">✕</button>'
+        +'</div>';
     }).join('');
   } else {
-    // 一般清單
-    list.innerHTML = items.map(function(item, i) {
-      return '<div class="luggage-item">'
-        + '<div class="luggage-check '+(item.done?'checked':'')+'" onclick="toggleLuggage('+i+')"><span class="check-mark">✓</span></div>'
-        + '<div class="luggage-name '+(item.done?'done':'')+'" style="flex:1">'+item.name
-        + (item.note ? '<div style="font-size:13px;color:var(--text-soft);font-weight:400;margin-top:2px;">'+item.note+'</div>' : '')
-        + '</div>'
-        + '<div class="qty-control">'
-        + '<button class="qty-btn" onclick="changeQty('+i+',-1)">-</button>'
-        + '<span class="qty-num">'+(item.qty||1)+'</span>'
-        + '<button class="qty-btn" onclick="changeQty('+i+',1)">+</button>'
-        + '</div>'
-        + '<button onclick="deleteLuggage('+i+')" style="background:none;border:none;color:var(--text-soft);cursor:pointer;font-size:16px;font-family:var(--font);">✕</button>'
-        + '</div>';
+    list.innerHTML=items.map(function(item,i){
+      return '<div class="luggage-item" draggable="true" data-idx="'+i+'">'
+        +HANDLE_SVG
+        +'<div class="luggage-check '+(item.done?'checked':'')+'" onclick="toggleLuggage('+i+')"><span class="check-mark">✓</span></div>'
+        +'<div class="luggage-name '+(item.done?'done':'')+'" style="flex:1">'+item.name
+        +(item.note?'<div style="font-size:13px;color:var(--text-soft);font-weight:400;margin-top:2px;">'+item.note+'</div>':'')
+        +'</div>'
+        +'<div class="qty-control">'
+        +'<button class="qty-btn" onclick="changeQty('+i+',-1)">-</button>'
+        +'<span class="qty-num">'+(item.qty||1)+'</span>'
+        +'<button class="qty-btn" onclick="changeQty('+i+',1)">+</button>'
+        +'</div>'
+        +'<button onclick="deleteLuggage('+i+')" style="background:none;border:none;color:var(--text-soft);cursor:pointer;font-size:16px;font-family:var(--font);">✕</button>'
+        +'</div>';
     }).join('');
   }
+
+  bindDrag();
 }
 renderLuggage();
 
-// ── 燈箱 ──
-function openLightbox(encodedSrc) {
-  document.getElementById('lightbox-img').src = decodeURIComponent(encodedSrc);
+// ============================================================
+// 拖曳排序（桌機 drag + 手機 touch 雙支援）
+// ============================================================
+var dragSrcIdx=null;
+var touchStartY=0;
+var touchItem=null;
+var touchClone=null;
+var touchOverIdx=null;
+
+function bindDrag(){
+  var list=document.getElementById('luggage-list');
+  var items=list.querySelectorAll('[draggable="true"]');
+
+  items.forEach(function(el){
+    // ── 桌機 drag events ──
+    el.addEventListener('dragstart',function(e){
+      dragSrcIdx=parseInt(el.getAttribute('data-idx'));
+      el.classList.add('dragging');
+      e.dataTransfer.effectAllowed='move';
+    });
+    el.addEventListener('dragend',function(){
+      el.classList.remove('dragging');
+      list.querySelectorAll('.drag-over').forEach(function(x){x.classList.remove('drag-over');});
+    });
+    el.addEventListener('dragover',function(e){
+      e.preventDefault();
+      e.dataTransfer.dropEffect='move';
+      list.querySelectorAll('.drag-over').forEach(function(x){x.classList.remove('drag-over');});
+      el.classList.add('drag-over');
+    });
+    el.addEventListener('drop',function(e){
+      e.preventDefault();
+      var targetIdx=parseInt(el.getAttribute('data-idx'));
+      if(dragSrcIdx===null||dragSrcIdx===targetIdx)return;
+      reorder(dragSrcIdx,targetIdx);
+      dragSrcIdx=null;
+    });
+
+    // ── 手機 touch events（透過把手觸發）──
+    var handle=el.querySelector('.drag-handle');
+    handle.addEventListener('touchstart',function(e){
+      touchItem=el;
+      touchSrcIdx=parseInt(el.getAttribute('data-idx'));
+      touchStartY=e.touches[0].clientY;
+
+      // 建立跟手的幽靈元素
+      touchClone=el.cloneNode(true);
+      touchClone.style.cssText='position:fixed;left:16px;right:16px;z-index:500;opacity:0.85;pointer-events:none;border-radius:12px;box-shadow:0 8px 24px rgba(184,169,217,0.35);';
+      var rect=el.getBoundingClientRect();
+      touchClone.style.top=rect.top+'px';
+      document.body.appendChild(touchClone);
+      el.style.opacity='0.3';
+      e.preventDefault();
+    },{passive:false});
+
+    handle.addEventListener('touchmove',function(e){
+      if(!touchClone)return;
+      e.preventDefault();
+      var y=e.touches[0].clientY;
+      var rect=touchItem.getBoundingClientRect();
+      touchClone.style.top=(rect.top+(y-touchStartY))+'px';
+
+      // 找出目前懸停的項目
+      var allItems=list.querySelectorAll('[draggable="true"]');
+      var found=null;
+      allItems.forEach(function(it){
+        var r=it.getBoundingClientRect();
+        if(y>=r.top&&y<=r.bottom) found=it;
+      });
+      list.querySelectorAll('.drag-over').forEach(function(x){x.classList.remove('drag-over');});
+      if(found&&found!==touchItem){
+        found.classList.add('drag-over');
+        touchOverIdx=parseInt(found.getAttribute('data-idx'));
+      } else {
+        touchOverIdx=null;
+      }
+    },{passive:false});
+
+    handle.addEventListener('touchend',function(){
+      if(touchClone){touchClone.remove();touchClone=null;}
+      if(touchItem)touchItem.style.opacity='';
+      list.querySelectorAll('.drag-over').forEach(function(x){x.classList.remove('drag-over');});
+      if(touchSrcIdx!==null&&touchOverIdx!==null&&touchSrcIdx!==touchOverIdx){
+        reorder(touchSrcIdx,touchOverIdx);
+      }
+      touchItem=null; touchSrcIdx=null; touchOverIdx=null;
+    });
+  });
+}
+
+var touchSrcIdx=null;
+
+function reorder(from,to){
+  var arr=luggageData[currentLuggageCat];
+  var moved=arr.splice(from,1)[0];
+  arr.splice(to,0,moved);
+  localStorage.setItem('busan_luggage',JSON.stringify(luggageData));
+  renderLuggage();
+}
+
+// 燈箱
+function openLightbox(encodedSrc){
+  document.getElementById('lightbox-img').src=decodeURIComponent(encodedSrc);
   document.getElementById('lightbox').classList.add('open');
 }
-function closeLightbox() {
+function closeLightbox(){
   document.getElementById('lightbox').classList.remove('open');
-  document.getElementById('lightbox-img').src = '';
+  document.getElementById('lightbox-img').src='';
 }
 </script>
 </body>
