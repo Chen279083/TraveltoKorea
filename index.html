@@ -531,6 +531,125 @@ var luggageData=loadLuggageData();
 var currentLuggageCat='backpack';
 var pendingPhotoDataUrl=null;
 
+var PHOTO_DB_NAME='busan_photo_db';
+var PHOTO_DB_VERSION=1;
+var PHOTO_STORE_NAME='photos';
+var photoDbPromise=null;
+
+function openPhotoDb(){
+  if(photoDbPromise)return photoDbPromise;
+  photoDbPromise=new Promise(function(resolve,reject){
+    if(!window.indexedDB){
+      reject(new Error('這個瀏覽器不支援照片資料庫'));
+      return;
+    }
+
+    var request=indexedDB.open(PHOTO_DB_NAME,PHOTO_DB_VERSION);
+
+    request.onupgradeneeded=function(evt){
+      var db=evt.target.result;
+      if(!db.objectStoreNames.contains(PHOTO_STORE_NAME)){
+        db.createObjectStore(PHOTO_STORE_NAME,{keyPath:'id'});
+      }
+    };
+
+    request.onsuccess=function(evt){
+      resolve(evt.target.result);
+    };
+
+    request.onerror=function(){
+      reject(request.error||new Error('照片資料庫開啟失敗'));
+    };
+  });
+  return photoDbPromise;
+}
+
+function withPhotoStore(mode,handler){
+  return openPhotoDb().then(function(db){
+    return new Promise(function(resolve,reject){
+      var tx=db.transaction(PHOTO_STORE_NAME,mode);
+      var store=tx.objectStore(PHOTO_STORE_NAME);
+      var result;
+
+      try{
+        result=handler(store);
+      }catch(err){
+        reject(err);
+        return;
+      }
+
+      tx.oncomplete=function(){resolve(result);};
+      tx.onerror=function(){reject(tx.error||new Error('照片資料庫操作失敗'));};
+      tx.onabort=function(){reject(tx.error||new Error('照片資料庫操作中止'));};
+    });
+  });
+}
+
+function savePhotoData(dataUrl){
+  var id='photo_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+  return withPhotoStore('readwrite',function(store){
+    store.put({id:id,dataUrl:dataUrl,createdAt:Date.now()});
+    return id;
+  });
+}
+
+function getPhotoData(photoId){
+  if(!photoId)return Promise.resolve(null);
+  return openPhotoDb().then(function(db){
+    return new Promise(function(resolve){
+      var tx=db.transaction(PHOTO_STORE_NAME,'readonly');
+      var store=tx.objectStore(PHOTO_STORE_NAME);
+      var request=store.get(photoId);
+
+      request.onsuccess=function(){
+        resolve(request.result?request.result.dataUrl:null);
+      };
+
+      request.onerror=function(){
+        console.error('讀取照片失敗：',request.error);
+        resolve(null);
+      };
+    });
+  }).catch(function(err){
+    console.error('讀取照片資料庫失敗：',err);
+    return null;
+  });
+}
+
+function deletePhotoData(photoId){
+  if(!photoId)return Promise.resolve();
+  return withPhotoStore('readwrite',function(store){
+    store.delete(photoId);
+  }).catch(function(err){
+    console.error('刪除照片失敗：',err);
+  });
+}
+
+function migrateLegacyPhotos(){
+  var tasks=[];
+  var changed=false;
+
+  ['backpack','cabin','checked','shopping'].forEach(function(cat){
+    (luggageData[cat]||[]).forEach(function(item){
+      if(item.photo&&/^data:image\//.test(item.photo)&&!item.photoId){
+        tasks.push(savePhotoData(item.photo).then(function(photoId){
+          item.photoId=photoId;
+          delete item.photo;
+          changed=true;
+        }));
+      }
+    });
+  });
+
+  if(!tasks.length)return Promise.resolve();
+
+  return Promise.all(tasks).then(function(){
+    if(changed)persistLuggageData();
+  }).catch(function(err){
+    console.error('舊照片搬移失敗：',err);
+  });
+}
+
 function switchLuggage(cat,btn){
   currentLuggageCat=cat;
   document.querySelectorAll('#page-luggage .day-tab').forEach(function(t){t.classList.remove('active');});
@@ -611,17 +730,31 @@ function clearPhoto(){
   document.getElementById('photo-preview-area').style.display='none';
 }
 
-function addShoppingItem(){
+async function addShoppingItem(){
   var val=document.getElementById('shopping-input').value.trim();
   if(!val&&!pendingPhotoDataUrl)return;
   if(!_lock())return;
 
   var note=document.getElementById('shopping-note').value.trim();
   var nextData=cloneLuggageData();
+  var photoId=null;
 
-  nextData.shopping.push({name:val||'（未命名）',done:false,qty:1,photo:pendingPhotoDataUrl||null,note:note||''});
+  if(pendingPhotoDataUrl){
+    try{
+      photoId=await savePhotoData(pendingPhotoDataUrl);
+    }catch(err){
+      console.error('照片儲存失敗：',err);
+      alert('照片儲存失敗，請再試一次，或換一張較小的照片。');
+      return;
+    }
+  }
 
-  if(!saveLuggageData(nextData))return;
+  nextData.shopping.push({name:val||'（未命名）',done:false,qty:1,photoId:photoId,note:note||''});
+
+  if(!saveLuggageData(nextData)){
+    if(photoId)await deletePhotoData(photoId);
+    return;
+  }
 
   document.getElementById('shopping-input').value='';
   document.getElementById('shopping-note').value='';
@@ -658,24 +791,27 @@ function changeQty(i,delta){
   if(!persistLuggageData())return;
   renderLuggage();
 }
-function deleteLuggage(i){
+async function deleteLuggage(i){
+  var item=luggageData[currentLuggageCat][i];
   luggageData[currentLuggageCat].splice(i,1);
   if(!persistLuggageData())return;
+  if(item&&item.photoId)await deletePhotoData(item.photoId);
   renderLuggage();
 }
 
 // ── 把手 SVG ──
 var HANDLE_SVG='<div class="drag-handle"><span></span><span></span><span></span></div>';
 
-function renderLuggage(){
+async function renderLuggage(){
   var items=luggageData[currentLuggageCat];
   var list=document.getElementById('luggage-list');
   if(!items.length){list.innerHTML='<div class="empty-state">清單是空的</div>';return;}
 
   if(currentLuggageCat==='shopping'){
-    list.innerHTML=items.map(function(item,i){
-      var thumbHtml=item.photo
-        ?'<img class="shopping-thumb" src="'+item.photo+'" alt="'+item.name+'" onclick="openLightbox(\''+encodeURIComponent(item.photo)+'\')" />'
+    var rows=await Promise.all(items.map(async function(item,i){
+      var photoSrc=item.photoId?await getPhotoData(item.photoId):item.photo;
+      var thumbHtml=photoSrc
+        ?'<img class="shopping-thumb" src="'+photoSrc+'" alt="'+item.name+'" onclick="openLightbox(\''+encodeURIComponent(photoSrc)+'\')" />'
         :'<div class="shopping-thumb-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="var(--lavender-mid)" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>';
       return '<div class="shopping-item" draggable="true" data-idx="'+i+'">'
         +HANDLE_SVG
@@ -691,7 +827,8 @@ function renderLuggage(){
         +'</div>'
         +'<button onclick="deleteLuggage('+i+')" style="background:none;border:none;color:var(--text-soft);cursor:pointer;font-size:16px;font-family:var(--font);">✕</button>'
         +'</div>';
-    }).join('');
+    }));
+    list.innerHTML=rows.join('');
   } else {
     list.innerHTML=items.map(function(item,i){
       return '<div class="luggage-item" draggable="true" data-idx="'+i+'">'
@@ -712,7 +849,9 @@ function renderLuggage(){
 
   bindDrag();
 }
-renderLuggage();
+migrateLegacyPhotos().then(function(){
+  renderLuggage();
+});
 
 // ============================================================
 // 拖曳排序（桌機 drag + 手機 touch 雙支援）
