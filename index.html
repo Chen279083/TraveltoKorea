@@ -483,11 +483,11 @@ function renderCatChart(rate){
   if(!expenses.length){section.style.display='none';return;}
   section.style.display='block';
 
-  // 計算各分類 KRW 總和
+  // 計算各分類 TWD 總和
   var catMap={};
   expenses.forEach(function(e){
-    var krw=e.currency==='KRW'?e.amount:e.amount/rate;
-    catMap[e.cat]=(catMap[e.cat]||0)+krw;
+    var twd=e.currency==='TWD'?e.amount:e.amount*rate;
+    catMap[e.cat]=(catMap[e.cat]||0)+twd;
   });
 
   var cats=Object.keys(catMap);
@@ -528,14 +528,14 @@ function renderCatChart(rate){
   // 圖例
   var legend=document.getElementById('cat-legend');
   legend.innerHTML=cats.map(function(cat,i){
-    var krw=Math.round(catMap[cat]);
+    var twd=Math.round(catMap[cat]);
     var pct=Math.round((catMap[cat]/total)*100);
     return '<div style="display:flex;align-items:center;gap:7px;">'
       +'<div style="width:10px;height:10px;border-radius:3px;background:'+palette[i%palette.length]+';flex-shrink:0;"></div>'
       +'<div style="flex:1;font-size:12px;font-weight:600;color:var(--text-dark);">'+cat+'</div>'
       +'<div style="text-align:right;">'
       +'<div style="font-size:11px;font-weight:700;color:var(--text-dark);">'+pct+'%</div>'
-      +'<div style="font-size:10px;color:var(--text-soft);">KRW '+krw.toLocaleString()+'</div>'
+      +'<div style="font-size:10px;color:var(--text-soft);">TWD '+twd.toLocaleString()+'</div>'
       +'</div>'
       +'</div>';
   }).join('');
